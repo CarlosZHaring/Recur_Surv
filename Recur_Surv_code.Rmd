@@ -162,11 +162,21 @@ clinData <- clinData %>%
 
 ##recoding local reaccuance 
 ```{r}
-clinData <-  clinData %>%
-  mutate(Days.to.local.recurrence..from.the.date.of.diagnosis.clean = recode(
-      Days.to.local.recurrence..from.the.date.of.diagnosis., "NP" =  NA_character_)) %>%
-  mutate(Days.to.local.recurrence..from.the.date.of.diagnosis.clean = as.numeric(Days.to.local.recurrence..from.the.date.of.diagnosis.clean))
-clinData$Days.to.local.recurrence..from.the.date.of.diagnosis.clean
+clinData <- clinData %>%
+  mutate(
+    time_to_recurrence = case_when(
+      !is.na(Days.to.local.recurrence.from.the.date.of.diagnosis.clean) &
+        !is.na(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean) ~
+        pmin(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean,
+             Days.to.distant.recurrence.from.the.date.of.diagnosis.clean,
+             na.rm = TRUE),
+      !is.na(Days.to.local.recurrence.from.the.date.of.diagnosis.clean) ~
+        Days.to.local.recurrence.from.the.date.of.diagnosis.clean,
+      !is.na(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean) ~
+        Days.to.distant.recurrence.from.the.date.of.diagnosis.clean,
+       TRUE ~ NA_real_
+    ))
+dfSummary(clinData$time_to_recurrence)
 
 ```
 
@@ -183,6 +193,10 @@ clinData$Days.to.distant.recurrence.from.the.date.of.diagnosis.clean
 We have determined that there are some patients have both local and distant reacuance, to get the most aount of data to use we are going to look at when first reacurrance occurs
 
 ```{r}
+clinData <- clinData %>%
+  mutate(Days.to.first.recurrence = case_when(!is.na(Days.to.local.recurrence.from.the.date.of.diagnosis.clean) & !is.na(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean) ~ pmin(Days.to.local.recurrence.from.the.date.of.diagnosis.clean, Days.to.distant.recurrence.from.the.date.of.diagnosis.clean)))
+
+clinData$Days.to.first.recurrence
 ```
 
 ##Exploring the general outcome
