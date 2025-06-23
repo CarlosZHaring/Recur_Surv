@@ -154,7 +154,7 @@ mutate(Metastatic.at.Presentation..Outside.of.Lymph.Nodes.clean = case_when(Meta
 
 ##recoding race
 ```{r}
-RclinData <- clinData %>%
+clinData <- clinData %>%
   mutate(Recurrence.event.s.clean = case_when(
       Recurrence.event.s. == 1 ~ "Recurrence",
       Recurrence.event.s. == 0 ~ "No Recurrence"))
