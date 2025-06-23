@@ -160,3 +160,54 @@ clinData <- clinData %>%
       Recurrence.event.s. == 0 ~ "No Recurrence"))
 ```
 
+##recoding local reaccuance 
+```{r}
+clinData <-  clinData %>%
+  mutate(Days.to.local.recurrence..from.the.date.of.diagnosis.clean = recode(
+      Days.to.local.recurrence..from.the.date.of.diagnosis., "NP" =  NA_character_)) %>%
+  mutate(Days.to.local.recurrence..from.the.date.of.diagnosis.clean = as.numeric(Days.to.local.recurrence..from.the.date.of.diagnosis.clean))
+clinData$Days.to.local.recurrence..from.the.date.of.diagnosis.clean
+
+```
+
+##recoding distant reaccuance 
+
+```{r}
+clinData <-  clinData %>%
+  mutate(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean = recode(
+      Days.to.distant.recurrence.from.the.date.of.diagnosis., "NP" =  NA_character_)) %>%
+  mutate(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean = as.numeric(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean))
+clinData$Days.to.distant.recurrence.from.the.date.of.diagnosis.clean
+```
+
+We have determined that there are some patients have both local and distant reacuance, to get the most aount of data to use we are going to look at when first reacurrance occurs
+
+```{r}
+```
+
+##Exploring the general outcome
+
+#Day to local reacurrance
+```{r}
+hist(clinData$Days.to.local.recurrence..from.the.date.of.diagnosis.clean)
+summarytools::dfSummary(clinData$Days.to.local.recurrence..from.the.date.of.diagnosis.clean)
+```
+#Day to local reacurrance
+```{r}
+hist(clinData$Days.to.distant.recurrence.from.the.date.of.diagnosis.clean)
+summarytools::dfSummary(clinData$Days.to.distant.recurrence.from.the.date.of.diagnosis.clean)
+
+```
+
+#Tumor response investigation 
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
