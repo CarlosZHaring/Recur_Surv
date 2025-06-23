@@ -1,0 +1,162 @@
+---
+title: "Carlos_prelim_anaylsis"
+author: "Carlos Haring"
+date: "2025-06-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+cdc <- read.csv("https://raw.githubusercontent.com/BDSI-CDS-2025/tcia/refs/heads/main/data/clinicalData_clean.csv")
+img <- read.csv("https://raw.githubusercontent.com/BDSI-CDS-2025/tcia/refs/heads/Carlos-Branch/data/imagingFeatures.csv")
+```
+
+Load packages that are necessary for running all code below.
+```{r}
+#' example code for installing packages for first time:
+#' install.packages("tidyverse")
+
+library(tidyverse)
+library(ggplot2)
+library(survival)
+library(ggfortify)
+library(devtools)
+#' install_github("jokergoo/ComplexHeatmap")
+library(ComplexHeatmap)
+library(umap)
+library(gtsummary)
+library(summarytools)
+library(flextable)
+```
+
+
+## Reading Clinical Data
+
+```{r}
+clinData <- cdc
+clinData <- clinData[,-1] # remove first column of row numbers since we have
+# patient ID
+```
+
+The '<-' is the assignment operator in R. clinData <- read.csv(...) assigns 
+the output of read.csv() into a variable/object called clinData. Keyboard 
+shortcut on a Mac is option, -. You can also use '='. '<-' is used to
+differentiate setting function arguments versus assigning data to a variable.
+
+## Reading Image Features
+```{r}
+imFeatures <- img
+imFeatures <- imFeatures[,-1]
+```
+
+In general, the featureCitations.docx file describes the features and provides 
+citations. The features are grouped into the categories listed below.
+
+Breast and fibroglandular tissue (FGT) volume features: volume and density of 
+breast area and fibroglandular area.
+
+Tumor size and morphology: regularity/roundness vs irregularity of tumor
+shape and size.
+
+FGT enhancement: measure how much FGT is enhanced when we add contrast.
+This is referred to as BPE, background parenchymal enhancement, which may 
+confound tumor enhancement/identification.
+
+Tumor enhancement: measure how much tumor is enhanced when we add contrast
+
+Combining tumor and FGT enhancement: measure how tumor and FGT are 
+enhanced when adding contrast
+
+FGT enhancement texture: describe the enhancement due to contrast. Looking at
+local patterns, does enhancement look gritty or smooth?
+
+Tumor enhancement texture: same as FGT but for tumor area.
+
+Tumor Enhancement Spatial Heterogeneity: measure similarity between tumor
+subregions of the tumor.
+
+FGT enhancement variation: global variation of contrast enhancement of FGT
+
+Tumor enhancement variation: global variation of contrast enhancement of tumor
+
+## Task 1: What is in the data?
+
+How many patients are in the dataset?
+
+```{r}
+nrow(clinData)
+#922 patients
+```
+
+
+How many missing values are there among image features?
+
+```{r}
+sum(is.na(imFeatures))
+
+missingness <- apply(
+  imFeatures, 2, function(x){
+    sum(is.na(x))
+  }
+)
+sum(missingness == 0) # there are 490 variables with no missingness
+sum(missingness != 0) # the remaining 40 variables have some missing values
+missingness[missingness != 0]
+```
+
+How many missing values are there among clinical features?
+
+```{r}
+sum(is.na(clinData))
+
+sum(missingness == 0) #490 has no missing values
+sum(missigness =! 0) #only one missing value
+```
+
+
+What types of variables are in the clinical dataset? Are they quantitative?
+
+```{r}
+str(clinData)
+clinData %>%
+  select(where(is.character)) #36 character column
+
+clinData %>%
+  select(where(is.integer)) #59 quantitative
+
+clinData %>%
+  select(where(is.factor)) #no factors
+
+clinData %>%
+  select(where(is.numeric)) #61 are numeric
+
+ncol(clinData)
+```
+
+# Data cleaning 
+## changing race
+```{r}
+clinData <- clinData %>%
+  mutate(Race.and.Ethnicity.clean = case_when(Race.and.Ethnicity == 1 ~ "White", Race.and.Ethnicity %in% c(2 ,3, 4, 5, 6, 7) ~ "Other"))
+
+```
+
+##recoding molecular subtype
+```{r}
+clinData <- clinData %>% 
+mutate(Mol.Subtype.clean = case_when(Mol.Subtype == 0 ~ "luminal-like", Mol.Subtype == 1 ~ "ER/PR pos, HER2 pos", Mol.Subtype == 2 ~ "HER2 pos", Mol.Subtype == 3 ~ "triple neg"))
+```
+
+##recoding Metastatic at presentation
+```{r}
+clinData <- clinData %>% 
+mutate(Metastatic.at.Presentation..Outside.of.Lymph.Nodes.clean = case_when(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 0 ~ "No", Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 1 ~ "Yes"))
+```
+
+##recoding race
+```{r}
+RclinData <- clinData %>%
+  mutate(Recurrence.event.s.clean = case_when(
+      Recurrence.event.s. == 1 ~ "Recurrence",
+      Recurrence.event.s. == 0 ~ "No Recurrence"))
+```
+
