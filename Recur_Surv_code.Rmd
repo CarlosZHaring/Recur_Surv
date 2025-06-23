@@ -48,7 +48,7 @@ imFeatures <- img
 imFeatures <- imFeatures[,-1]
 ```
 
-In general, the featureCitations.docx file describes the features and provides 
+In general, the feature Citations.docx file describes the features and provides 
 citations. The features are grouped into the categories listed below.
 
 Breast and fibroglandular tissue (FGT) volume features: volume and density of 
@@ -136,27 +136,163 @@ ncol(clinData)
 ## changing race
 ```{r}
 clinData <- clinData %>%
-  mutate(Race.and.Ethnicity.clean = case_when(Race.and.Ethnicity == 1 ~ "White", Race.and.Ethnicity %in% c(2 ,3, 4, 5, 6, 7) ~ "Other"))
+  mutate(Race.and.Ethnicity = case_when(Race.and.Ethnicity == 1 ~ "White", Race.and.Ethnicity %in% c(2 ,3, 4, 5, 6, 7) ~ "Other"))
 
 ```
 
 ##recoding molecular subtype
 ```{r}
 clinData <- clinData %>% 
-mutate(Mol.Subtype.clean = case_when(Mol.Subtype == 0 ~ "luminal-like", Mol.Subtype == 1 ~ "ER/PR pos, HER2 pos", Mol.Subtype == 2 ~ "HER2 pos", Mol.Subtype == 3 ~ "triple neg"))
+mutate(Mol.Subtype = case_when(Mol.Subtype == 0 ~ "luminal-like", Mol.Subtype == 1 ~ "ER/PR pos, HER2 pos", Mol.Subtype == 2 ~ "HER2 pos", Mol.Subtype == 3 ~ "triple neg"))
 ```
 
 ##recoding Metastatic at presentation
 ```{r}
 clinData <- clinData %>% 
-mutate(Metastatic.at.Presentation..Outside.of.Lymph.Nodes.clean = case_when(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 0 ~ "No", Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 1 ~ "Yes"))
+mutate(Metastatic.at.Presentation..Outside.of.Lymph.Nodes = case_when(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 0 ~ "No", Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 1 ~ "Yes"))
 ```
 
 ##recoding race
 ```{r}
-RclinData <- clinData %>%
-  mutate(Recurrence.event.s.clean = case_when(
+clinData <- clinData %>%
+  mutate(Recurrence.event.s = as.factor(case_when(
       Recurrence.event.s. == 1 ~ "Recurrence",
-      Recurrence.event.s. == 0 ~ "No Recurrence"))
+      Recurrence.event.s. == 0 ~ "No Recurrence")))
+```
+
+
+```{r}
+clinData <- clinData[,c(20:56,61:67)]
+
+clinData <- clinData %>%
+  mutate(
+    Days.to.local.recurrence = as.numeric(na_if(Days.to.local.recurrence..from.the.date.of.diagnosis., "NP")),
+    Days.to.distant.recurrence = as.numeric(na_if(Days.to.distant.recurrence.from.the.date.of.diagnosis., "NP")),
+    Days.to.last.recurrence.free = as.numeric(na_if(Days.to.last.local.recurrence.free.assessment..from.the.date.of.diagnosis., "NP"))
+  ) %>%
+  mutate(
+    time.to.recurrence = case_when(
+      !is.na(Days.to.local.recurrence) & !is.na(Days.to.distant.recurrence) ~
+        pmin(Days.to.local.recurrence, Days.to.distant.recurrence, na.rm = TRUE),
+      
+      !is.na(Days.to.local.recurrence) ~ Days.to.local.recurrence,
+      
+      !is.na(Days.to.distant.recurrence) ~ Days.to.distant.recurrence,
+      
+      TRUE ~ Days.to.last.recurrence.free  
+    )
+  )
+
+clinData <- clinData[,-c(39:47)]
+```
+
+```{r,fig.height=20,fig.width=20}
+Surv_obj <-  Surv(time = clinData$time.to.recurrence, event = clinData$Recurrence.event.s.)
+
+cox_demographics <- coxph(Surv_obj ~ Date.of.Birth..Days. 
+                   + Menopause..at.diagnosis. + Race.and.Ethnicity +
+                     Metastatic.at.Presentation..Outside.of.Lymph.Nodes., 
+                   data = clinData)
+summary(cox_demographics)
+
+KP_race <- survfit(Surv_obj ~ Race.and.Ethnicity, data = clinData)
+KP_meta <- survfit(Surv_obj ~ Metastatic.at.Presentation..Outside.of.Lymph.Nodes., data = clinData)
+
+ggsurvplot(KP_race, data = clinData)
+ggsurvplot(KP_meta, data = clinData)
+```
+
+
+```{r,fig.height=20,fig.width=20}
+clinData <- clinData %>%
+  mutate(
+    Mol.Subtype = as.factor(Mol.Subtype),
+    Staging.Tumor.Size....T. = factor(Staging.Tumor.Size....T.,
+                     levels = c(1, 2, 3, 4),
+                     ordered = TRUE),
+
+    Staging.Nodes...Nx.replaced.by..1..N. = factor(na_if(Staging.Nodes...Nx.replaced.by..1..N., -1),
+                     levels = c(0, 1, 2, 3),
+                     ordered = TRUE),
+
+    Staging.Metastasis...Mx..replaced.by..1..M. = factor(na_if(Staging.Metastasis...Mx..replaced.by..1..M., -1),
+                     levels = c(0, 1),
+                     ordered = TRUE)
+  )
+
+cox_tumortype <- coxph(Surv_obj ~ Mol.Subtype, data = clinData)
+summary(cox_tumortype)
+
+KP_tumortype <- survfit(Surv_obj ~ Mol.Subtype, data = clinData)
+
+ggsurvplot(KP_tumortype, data = clinData)
+
+# Oncotype DX Recurrence Score too many NAs
+```
+
+
+```{r,fig.height=20,fig.width=20}
+cox_stage <- coxph(Surv_obj ~ Staging.Tumor.Size....T. + Staging.Nodes...Nx.replaced.by..1..N. + Staging.Metastasis...Mx..replaced.by..1..M., data = clinData)
+
+summary(cox_stage)
+
+KP_T <- survfit(Surv_obj ~ Staging.Tumor.Size....T., data = clinData)
+KP_N <- survfit(Surv_obj ~ Staging.Nodes...Nx.replaced.by..1..N., data = clinData)
+KP_M <- survfit(Surv_obj ~ Staging.Metastasis...Mx..replaced.by..1..M., data = clinData)
+
+ggsurvplot(KP_T, data = clinData)
+ggsurvplot(KP_N, data = clinData)
+ggsurvplot(KP_M, data = clinData)
+```
+
+
+```{r,fig.height=20,fig.width=20}
+clinData <- clinData %>%
+  mutate(
+    Nottingham_total_score = as.numeric(TumorGradeT) + as.numeric(TumorGradeN) + as.numeric(TumorGradeM)
+  )
+
+cox_nott <- coxph(Surv_obj ~ Nottingham_total_score, data = clinData)
+summary(cox_nott)
+
+KP_nott <- survfit(Surv_obj ~ Nottingham.grade, data = clinData)
+ggsurvplot(KP_nott, data = clinData)
+```
+
+```{r,fig.height=20,fig.width=20}
+table(clinData$Histologic.type)
+
+cox_his <- coxph(Surv_obj ~ Histologic.type, data = clinData)
+summary(cox_his)
+
+KP_his <- survfit(Surv_obj ~ Histologic.type, data = clinData)
+ggsurvplot(KP_his, data = clinData)
+```
+
+
+```{r}
+clinData <- clinData %>% 
+  mutate(Bilateral.Information = as.factor(na_if(Bilateral.Information, "NC")))
+
+cox_bi <- coxph(Surv_obj ~ factor(Bilateral.Information), data = clinData)
+summary(cox_bi)
+```
+
+```{r}
+clinData <- clinData %>%
+  mutate(
+    Surgery = as.factor(Surgery),
+    Definitive.Surgery.Type = as.factor(na_if(Definitive.Surgery.Type, "NP")),
+    Days.to.Surgery..from.the.date.of.diagnosis. = as.numeric(Days.to.Surgery..from.the.date.of.diagnosis.),
+    
+    Days.to.Surgery = ifelse(
+      Days.to.Surgery..from.the.date.of.diagnosis. < 0, 
+      NA,  # 或者你可以写 0 或 "abs()" 或另设一列记录为负
+      Days.to.Surgery..from.the.date.of.diagnosis.
+    )
+  )
+
+cox_surgery <- coxph(Surv_obj ~ Surgery + Days.to.Surgery + Definitive.Surgery.Type, data = clinData)
+summary(cox_surgery)
 ```
 
