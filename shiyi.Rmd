@@ -1,0 +1,439 @@
+---
+title: "Carlos_prelim_anaylsis"
+author: "Carlos Haring"
+date: "2025-06-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+cdc <- read.csv("https://raw.githubusercontent.com/BDSI-CDS-2025/tcia/refs/heads/main/data/clinicalData_clean.csv")
+# img <- read.csv("https://raw.githubusercontent.com/BDSI-CDS-2025/tcia/refs/heads/Carlos-Branch/data/imagingFeatures.csv")
+```
+
+Load packages that are necessary for running all code below.
+```{r}
+#' example code for installing packages for first time:
+#' install.packages("tidyverse")
+
+library(tidyverse)
+library(ggplot2)
+library(survival)
+library(ggfortify)
+library(devtools)
+#' install_github("jokergoo/ComplexHeatmap")
+library(ComplexHeatmap)
+library(umap)
+library(gtsummary)
+library(summarytools)
+library(flextable)
+library(forcats)
+```
+
+
+## Reading Clinical Data
+
+```{r}
+clinData <- cdc
+clinData <- clinData[,-1] # remove first column of row numbers since we have
+# patient ID
+```
+
+The '<-' is the assignment operator in R. clinData <- read.csv(...) assigns 
+the output of read.csv() into a variable/object called clinData. Keyboard 
+shortcut on a Mac is option, -. You can also use '='. '<-' is used to
+differentiate setting function arguments versus assigning data to a variable.
+
+## Reading Image Features
+```{r eval=FALSE, include=FALSE}
+imFeatures <- img
+imFeatures <- imFeatures[,-1]
+```
+
+In general, the feature Citations.docx file describes the features and provides 
+citations. The features are grouped into the categories listed below.
+
+Breast and fibroglandular tissue (FGT) volume features: volume and density of 
+breast area and fibroglandular area.
+
+Tumor size and morphology: regularity/roundness vs irregularity of tumor
+shape and size.
+
+FGT enhancement: measure how much FGT is enhanced when we add contrast.
+This is referred to as BPE, background parenchymal enhancement, which may 
+confound tumor enhancement/identification.
+
+Tumor enhancement: measure how much tumor is enhanced when we add contrast
+
+Combining tumor and FGT enhancement: measure how tumor and FGT are 
+enhanced when adding contrast
+
+FGT enhancement texture: describe the enhancement due to contrast. Looking at
+local patterns, does enhancement look gritty or smooth?
+
+Tumor enhancement texture: same as FGT but for tumor area.
+
+Tumor Enhancement Spatial Heterogeneity: measure similarity between tumor
+subregions of the tumor.
+
+FGT enhancement variation: global variation of contrast enhancement of FGT
+
+Tumor enhancement variation: global variation of contrast enhancement of tumor
+
+## Task 1: What is in the data?
+
+How many patients are in the dataset?
+
+```{r eval=FALSE, include=FALSE}
+nrow(clinData)
+#922 patients
+```
+
+
+How many missing values are there among image features?
+
+```{r eval=FALSE, include=FALSE}
+sum(is.na(imFeatures))
+
+missingness <- apply(
+  imFeatures, 2, function(x){
+    sum(is.na(x))
+  }
+)
+sum(missingness == 0) # there are 490 variables with no missingness
+sum(missingness != 0) # the remaining 40 variables have some missing values
+missingness[missingness != 0]
+```
+
+How many missing values are there among clinical features?
+
+```{r eval=FALSE, include=FALSE}
+sum(is.na(clinData))
+
+sum(missingness == 0) #490 has no missing values
+sum(missigness =! 0) #only one missing value
+```
+
+
+What types of variables are in the clinical dataset? Are they quantitative?
+
+```{r eval=FALSE, include=FALSE}
+str(clinData)
+clinData %>%
+  select(where(is.character)) #36 character column
+
+clinData %>%
+  select(where(is.integer)) #59 quantitative
+
+clinData %>%
+  select(where(is.factor)) #no factors
+
+clinData %>%
+  select(where(is.numeric)) #61 are numeric
+
+ncol(clinData)
+```
+
+# Data cleaning 
+## changing race
+```{r}
+clinData <- clinData %>%
+  mutate(Race.and.Ethnicity = case_when(Race.and.Ethnicity == 1 ~ "White", Race.and.Ethnicity %in% c(2 ,3, 4, 5, 6, 7) ~ "Other"))
+
+```
+
+##recoding molecular subtype
+```{r}
+clinData <- clinData %>% 
+mutate(Mol.Subtype = case_when(Mol.Subtype == 0 ~ "luminal-like", Mol.Subtype == 1 ~ "ER/PR pos, HER2 pos", Mol.Subtype == 2 ~ "HER2 pos", Mol.Subtype == 3 ~ "triple neg"))
+```
+
+
+##recoding Metastatic at presentation
+```{r}
+clinData <- clinData %>% 
+mutate(Metastatic.at.Presentation..Outside.of.Lymph.Nodes = case_when(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 0 ~ "No", Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 1 ~ "Yes"))
+```
+
+##recoding race
+```{r}
+clinData <- clinData %>%
+  mutate(Recurrence.event.s = as.factor(case_when(
+      Recurrence.event.s. == 1 ~ "Recurrence",
+      Recurrence.event.s. == 0 ~ "No Recurrence")))
+```
+
+
+```{r}
+clinData <- clinData[,c(20:56,61:67)]
+
+clinData <- clinData %>%
+  mutate(
+    Days.to.local.recurrence = as.numeric(na_if(Days.to.local.recurrence..from.the.date.of.diagnosis., "NP")),
+    Days.to.distant.recurrence = as.numeric(na_if(Days.to.distant.recurrence.from.the.date.of.diagnosis., "NP")),
+    Days.to.last.recurrence.free = as.numeric(na_if(Days.to.last.local.recurrence.free.assessment..from.the.date.of.diagnosis., "NP"))
+  ) %>%
+  mutate(
+    time.to.recurrence = case_when(
+      !is.na(Days.to.local.recurrence) & !is.na(Days.to.distant.recurrence) ~
+        pmin(Days.to.local.recurrence, Days.to.distant.recurrence, na.rm = TRUE),
+      
+      !is.na(Days.to.local.recurrence) ~ Days.to.local.recurrence,
+      
+      !is.na(Days.to.distant.recurrence) ~ Days.to.distant.recurrence,
+      
+      TRUE ~ Days.to.last.recurrence.free  
+    )
+  )
+
+clinData <- clinData[,-c(39:47)]
+```
+
+
+```{r,fig.height=20,fig.width=20}
+Surv_obj <-  Surv(time = clinData$time.to.recurrence, event = clinData$Recurrence.event.s.)
+
+cox_demographics <- coxph(Surv_obj ~ Date.of.Birth..Days. 
+                   + Menopause..at.diagnosis. + Race.and.Ethnicity +
+                     Metastatic.at.Presentation..Outside.of.Lymph.Nodes., 
+                   data = clinData)
+summary(cox_demographics)
+
+
+KP_race <- survfit(Surv_obj ~ Race.and.Ethnicity, data = clinData)
+ggsurvplot(KP_race,
+           data = clinData,
+           pval = T,
+           legend.labs = c("Other", "White"),
+           legend.title = "Race and Ethnicity")
+
+KP_meta <- survfit(Surv_obj ~ Metastatic.at.Presentation..Outside.of.Lymph.Nodes., data = clinData)
+ggsurvplot(KP_meta,
+           data = clinData,
+           pval = T,
+           legend.labs = c("No Metastasis", "Metastasis Outside Lymph Nodes"), 
+           legend.title = "Metastatic Status")
+
+table(clinData$Metastatic.at.Presentation..Outside.of.Lymph.Nodes.)
+survdiff(Surv_obj ~ Metastatic.at.Presentation..Outside.of.Lymph.Nodes., data = clinData)
+# Race and Metastatic are significant.
+```
+
+
+```{r,fig.height=20,fig.width=20}
+clinData <- clinData %>% 
+  mutate(Mol.Subtype = as.factor(Mol.Subtype))
+
+cox_tumortype <- coxph(Surv_obj ~ Mol.Subtype, data = clinData)
+summary(cox_tumortype)
+
+KP_tumortype <- survfit(Surv_obj ~ Mol.Subtype, data = clinData)
+
+table(clinData$Mol.Subtype)
+
+ggsurvplot(KP_tumortype, 
+           data = clinData,
+           pval = T,
+           legend.labs = c("ER/PR+ HER2+", "HER2-enriched", "Luminal-like", "Triple Negative"),
+           legend.title = "Molecular Subtype"
+           )
+
+survdiff(Surv_obj ~ Mol.Subtype, data = clinData)
+
+# Triple Negtive are different.
+# hazard 2 times
+
+sum(is.na(clinData$Oncotype.score))
+# Oncotype DX Recurrence Score too many NAs
+```
+
+
+```{r,fig.height=20,fig.width=20}
+clinData <- clinData %>%
+  mutate(
+    Staging.Tumor.Size....T. = factor(Staging.Tumor.Size....T.,
+                     levels = c(1, 2, 3, 4),
+                     ordered = TRUE),
+
+    Staging.Nodes...Nx.replaced.by..1..N. = factor(na_if(Staging.Nodes...Nx.replaced.by..1..N., -1),
+                     levels = c(0, 1, 2, 3),
+                     ordered = TRUE),
+
+    Staging.Metastasis...Mx..replaced.by..1..M. = factor(na_if(Staging.Metastasis...Mx..replaced.by..1..M., -1),
+                     levels = c(0, 1),
+                     ordered = TRUE)
+  )
+
+
+# cox_stage <- coxph(Surv_obj ~ Staging.Tumor.Size....T. + 
+#                      Staging.Nodes...Nx.replaced.by..1..N. +
+#                      Staging.Metastasis...Mx..replaced.by..1..M.,
+#                    data = clinData)
+# summary(cox_stage)
+
+
+table(clinData$Staging.Tumor.Size....T.)
+KP_T <- survfit(Surv_obj ~ Staging.Tumor.Size....T., data = clinData)
+ggsurvplot(KP_T, 
+           data = clinData,
+           pval = T,
+           legend.labs = c("T1", "T2", "T3", "T4"),
+           legend.title = "Tumor Size"
+           )
+
+cox_size <- coxph(Surv_obj ~ Staging.Tumor.Size....T., data = clinData)
+summary(cox_size)
+
+
+table(clinData$Staging.Nodes...Nx.replaced.by..1..N.)
+KP_N <- survfit(Surv_obj ~ Staging.Nodes...Nx.replaced.by..1..N., data = clinData)
+ggsurvplot(KP_N, 
+           data = clinData,
+           pval = T,
+           legend.labs = c("N0", "N1", "N2", "N3"),
+           legend.title = "Nodes (Regional lymph node metastasis status)")
+
+cox_nodes <- coxph(Surv_obj ~ Staging.Nodes...Nx.replaced.by..1..N., data = clinData)
+summary(cox_nodes)
+
+
+table(clinData$Staging.Metastasis...Mx..replaced.by..1..M.)
+KP_M <- survfit(Surv_obj ~ Staging.Metastasis...Mx..replaced.by..1..M., data = clinData)
+ggsurvplot(KP_M, 
+           data = clinData,
+           pval = T,
+           legend.labs = c("M0", "M1"),
+           legend.title = "Metastasis (Distant metastasis status)")
+
+cox_meta <- coxph(Surv_obj ~ Staging.Metastasis...Mx..replaced.by..1..M., data = clinData)
+summary(cox_meta)
+
+#all significant
+```
+
+
+```{r,fig.height=20,fig.width=20}
+clinData <- clinData %>%
+  mutate(
+    Nottingham_total_score = as.numeric(TumorGradeT) + as.numeric(TumorGradeN) + as.numeric(TumorGradeM)
+  )
+
+
+KP_nott <- survfit(Surv_obj ~ Nottingham.grade, data = clinData)
+ggsurvplot(KP_nott, 
+           data = clinData,
+           pval = T,
+           legend.labs = c("low", "intermediate", "high"),
+           legend.title = "Nottingham grade")
+
+cox_nott <- coxph(Surv_obj ~ Nottingham_total_score, data = clinData)
+summary(cox_nott)
+
+# It does matter
+```
+
+
+```{r,fig.height=20,fig.width=20}
+table(clinData$Histologic.type, clinData$Recurrence.event.s.)
+
+
+clinData$Histologic.type.new <- fct_collapse(
+  factor(clinData$Histologic.type),
+  Ductal = c("1"),
+  Other = c("0","2", "3", "4", "5", "6", "7", "8", "9", "10")
+)
+
+table(clinData$Histologic.type.new, clinData$Recurrence.event.s.)
+
+KP_histologic <- survfit(Surv_obj ~ Histologic.type.new, data = clinData)
+ggsurvplot(KP_histologic, 
+           data = clinData,
+           pval = T,
+           legend.labs = c("Other", "Ductal"),
+           legend.title = "Histologic type")
+
+cox_histologic <- coxph(Surv_obj ~ Histologic.type.new, data = clinData)
+summary(cox_histologic)
+
+# Not sure
+# combining some category
+```
+
+
+```{r,fig.height=20,fig.width=20}
+clinData <- clinData %>% 
+  mutate(Bilateral.Information = as.factor(na_if(Bilateral.Information, "NC")))
+
+table(clinData$Bilateral.Information, clinData$Recurrence.event.s.)
+
+survdiff(Surv_obj ~ Bilateral.Information, data = clinData)
+
+cox_bi <- coxph(Surv_obj ~ Bilateral.Information, data = clinData)
+summary(cox_bi)
+
+#Not enough data
+```
+
+
+```{r,fig.height=20,fig.width=20}
+clinData <- clinData %>%
+  mutate(
+    Surgery = as.factor(Surgery),
+    Definitive.Surgery.Type = as.factor(na_if(Definitive.Surgery.Type, "NP")),
+    Days.to.Surgery..from.the.date.of.diagnosis. = as.numeric(Days.to.Surgery..from.the.date.of.diagnosis.),
+    
+    Days.to.Surgery = ifelse(
+      Days.to.Surgery..from.the.date.of.diagnosis. < 0, 
+      NA,  
+      Days.to.Surgery..from.the.date.of.diagnosis.
+    )
+  )
+
+table(clinData$Surgery, clinData$Recurrence.event.s.)
+# not enough data for surgery
+
+table(clinData$Definitive.Surgery.Type, clinData$Recurrence.event.s.)
+
+KP_surgery <- survfit(Surv_obj ~ Definitive.Surgery.Type, data = clinData)
+ggsurvplot(KP_surgery, 
+           data = clinData,
+           pval = T,
+           legend.labs = c("BCS", "mastectomy"),
+           legend.title = "Definitive Surgery Type")
+
+cox_surgery <- coxph(Surv_obj ~ Definitive.Surgery.Type, data = clinData)
+summary(cox_surgery)
+
+# 2 times hazard for Mastectomy
+```
+
+
+```{r sensitive analysis}
+clinData <- clinData %>%
+  mutate(
+    time.to.recurrence.new = ifelse(
+      !is.na(Days.to.Surgery) & !is.na(time.to.recurrence),
+      time.to.recurrence - Days.to.Surgery,
+      NA_real_
+    )
+  )
+
+
+ggplot(clinData, aes(x = time.to.recurrence, y = time.to.recurrence.new)) +
+  geom_point(alpha = 0.8, color = "#A5DEE4", size = 1, shape = 2) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "#D0104C") +
+  labs(title = "difference of recurrence time",
+       x = "time to recurrence from diagnose",
+       y = "time to recurrence from surgery")
+
+```
+Definitive.Surgery.Type  
+Nottingham.grade 
+Staging.Tumor.Size....T. 
+Staging.Nodes...Nx.replaced.by..1..N. 
+Staging.Metastasis...Mx..replaced.by..1..M. 
+Mol.Subtype 
+Race
+Metastatic
+
+
+
