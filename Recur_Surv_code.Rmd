@@ -132,104 +132,428 @@ clinData %>%
 ncol(clinData)
 ```
 
-# Data cleaning 
-## changing race
+## Data cleaning 
+
+### changing race
+
 ```{r}
 clinData <- clinData %>%
-  mutate(Race.and.Ethnicity.clean = case_when(Race.and.Ethnicity == 1 ~ "White", Race.and.Ethnicity %in% c(2 ,3, 4, 5, 6, 7) ~ "Other"))
+  mutate(Race.and.Ethnicity = case_when(Race.and.Ethnicity == 1 ~ "White", Race.and.Ethnicity %in% c(2 ,3, 4, 5, 6, 7) ~ "Other"))
 
 ```
 
-##recoding molecular subtype
+### recoding molecular subtype
+
 ```{r}
 clinData <- clinData %>% 
-mutate(Mol.Subtype.clean = case_when(Mol.Subtype == 0 ~ "luminal-like", Mol.Subtype == 1 ~ "ER/PR pos, HER2 pos", Mol.Subtype == 2 ~ "HER2 pos", Mol.Subtype == 3 ~ "triple neg"))
+mutate(Mol.Subtype. = case_when(Mol.Subtype == 0 ~ "luminal-like", Mol.Subtype == 1 ~ "ER/PR pos, HER2 pos", Mol.Subtype == 2 ~ "HER2 pos", Mol.Subtype == 3 ~ "triple neg"))
 ```
 
-##recoding Metastatic at presentation
+### recoding Metastatic at presentation
+
 ```{r}
 clinData <- clinData %>% 
-mutate(Metastatic.at.Presentation..Outside.of.Lymph.Nodes.clean = case_when(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 0 ~ "No", Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 1 ~ "Yes"))
+mutate(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. = case_when(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 0 ~ "No", Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 1 ~ "Yes"))
 ```
 
-##recoding race
+### recoding race
+
 ```{r}
 clinData <- clinData %>%
-  mutate(Recurrence.event.s.clean = case_when(
+  mutate(Recurrence.event.s.clean = as.factor(case_when(
       Recurrence.event.s. == 1 ~ "Recurrence",
-      Recurrence.event.s. == 0 ~ "No Recurrence"))
+      Recurrence.event.s. == 0 ~ "No Recurrence"))) %>%
+  filter(!is.na(Recurrence.event.s.clean))
+  
 ```
 
-##recoding local reaccuance 
-```{r}
-clinData <-  clinData %>%
-  mutate(Days.to.local.recurrence.from.the.date.of.diagnosis.clean = recode(
-      Days.to.local.recurrence..from.the.date.of.diagnosis., "NP" =  NA_character_)) %>%
-  mutate(Days.to.local.recurrence.from.the.date.of.diagnosis.clean = as.numeric(Days.to.local.recurrence.from.the.date.of.diagnosis.clean))
-clinData$Days.to.local.recurrence.from.the.date.of.diagnosis.clean
-```
-
-##recoding distant reaccuance 
-
-```{r}
-clinData <-  clinData %>%
-  mutate(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean = recode(
-      Days.to.distant.recurrence.from.the.date.of.diagnosis., "NP" =  NA_character_)) %>%
-  mutate(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean = as.numeric(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean))
-clinData$Days.to.distant.recurrence.from.the.date.of.diagnosis.clean
-```
-
-We have determined that there are some patients have both local and distant reacuance, to get the most aount of data to use we are going to look at when first reacurrance occurs
+### recoding  reaccuance 
 
 ```{r}
 clinData <- clinData %>%
   mutate(
+    Days.to.local.recurrence = as.numeric(na_if(Days.to.local.recurrence..from.the.date.of.diagnosis., "NP")),
+    Days.to.distant.recurrence = as.numeric(na_if(Days.to.distant.recurrence.from.the.date.of.diagnosis., "NP")),
+    Days.to.last.recurrence.free = as.numeric(na_if(Days.to.last.local.recurrence.free.assessment..from.the.date.of.diagnosis., "NP"))
+  ) %>%
+  mutate(
     time.to.recurrence = case_when(
-      !is.na(Days.to.local.recurrence.from.the.date.of.diagnosis.clean) &
-        !is.na(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean) ~
-        pmin(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean,
-             Days.to.distant.recurrence.from.the.date.of.diagnosis.clean,
-             na.rm = TRUE),
-      !is.na(Days.to.local.recurrence.from.the.date.of.diagnosis.clean) ~
-        Days.to.local.recurrence.from.the.date.of.diagnosis.clean,
-      !is.na(Days.to.distant.recurrence.from.the.date.of.diagnosis.clean) ~
-        Days.to.distant.recurrence.from.the.date.of.diagnosis.clean,
-       TRUE ~ NA_real_
-    ))
-dfSummary(clinData$time.to.recurrence)
+      !is.na(Days.to.local.recurrence) & !is.na(Days.to.distant.recurrence) ~
+        pmin(Days.to.local.recurrence, Days.to.distant.recurrence, na.rm = TRUE),
+      
+      !is.na(Days.to.local.recurrence) ~ Days.to.local.recurrence,
+      
+      !is.na(Days.to.distant.recurrence) ~ Days.to.distant.recurrence,
+      
+      TRUE ~ Days.to.last.recurrence.free  
+    )
+  )
 ```
 
-##Exploring the general outcome
-
-#Day to local reacurrance
-```{r}
-hist(clinData$Days.to.local.recurrence..from.the.date.of.diagnosis.clean)
-summarytools::dfSummary(clinData$Days.to.local.recurrence..from.the.date.of.diagnosis.clean)
-```
-#Day to local reacurrance
-```{r}
-hist(clinData$Days.to.distant.recurrence.from.the.date.of.diagnosis.clean)
-summarytools::dfSummary(clinData$Days.to.distant.recurrence.from.the.date.of.diagnosis.clean)
-
-```
-
-#Day to first reaccurance 
-```{r}
-hist(clinData$Days.to.first.recurrence)
-summarytools::dfSummary(clinData$Days.to.first.recurrence)
-
-
-```
-
-#Tumor response investigation 
-```{r}
-```
-
+### recoding size
 
 ```{r}
+clinData <- clinData %>%
+  mutate(
+    TumorSize_mammo = as.numeric(na_if(na_if(TumorSize_mammo, "NC"), "NA")),
+    TumorSize_us = as.numeric(na_if(na_if(TumorSize_us, "NC"), "NA"))) %>%
+  rowwise() %>%
+  mutate(
+    size = case_when(
+      !is.na(TumorSize_mammo) & !is.na(TumorSize_us) ~
+        mean(c_across(c(TumorSize_mammo, TumorSize_us)), na.rm = TRUE),
+      
+      !is.na(TumorSize_mammo) ~ TumorSize_mammo,
+      
+      !is.na(TumorSize_us) ~ TumorSize_us,
+      
+      TRUE ~ NA_real_  
+    )
+  ) %>%
+  ungroup()
+
 ```
 
+### Anti her2 column
 
 ```{r}
+clinData <- clinData %>%
+  mutate(Anti.Her2.Neu.Therapy = case_when(Neoadjuvant.Anti.Her2.Neu.Therapy == 1 &  Adjuvant.Anti.Her2.Neu.Therapy == 1 ~ "Her2 Therapy",
+    Neoadjuvant.Anti.Her2.Neu.Therapy == 1 ~ "Her2 Therapy", 
+    Adjuvant.Anti.Her2.Neu.Therapy == 1 ~ "Her2 Therapy", 
+    Neoadjuvant.Anti.Her2.Neu.Therapy == 0 ~ "No Her2 Therapy", 
+    Adjuvant.Anti.Her2.Neu.Therapy == 0 ~ "No Her2 Therapy"))
 ```
+
+### Endocrine therapy column
+
+```{r}
+clinData <- clinData %>%
+   mutate(Endocrine.Therapy.Medication = case_when(Neoadjuvant.Endocrine.Therapy.Medications == 1 ~ "Endocrine Therapy", 
+                                                   Adjuvant.Endocrine.Therapy.Medications == 1 ~ "Endocrine Therapy", 
+                                                   Neoadjuvant.Endocrine.Therapy.Medications == 0 ~ " No Endocrine Therapy", 
+                                                   Adjuvant.Endocrine.Therapy.Medications == 0 ~ "No Endocrine Therapy"))
+```
+
+### Radiation therapy column
+
+```{r}
+clinData <- clinData %>%
+  mutate(Chemotherapy = case_when(Adjuvant.Chemotherapy == 1 ~ "Chemotherapy", 
+                                  Neoadjuvant.Chemotherapy == 1 ~ "Chemotherapy", 
+                                  Adjuvant.Chemotherapy == 0 ~ "No Chemotherapy", 
+                                  Adjuvant.Chemotherapy == 0~ "No Chemotherapy"))
+```
+
+### chemotherapy column
+
+```{r}
+clinData <- clinData %>%
+  mutate(Radiation.Therapy = case_when(Adjuvant.Radiation.Therapy == 1 ~ "Radiation Therapy", 
+                                Neoadjuvant.Endocrine.Therapy.Medications == 1 ~"Radiation Therapy", 
+                                Adjuvant.Radiation.Therapy == 0~ "No Radiation Therapy", 
+                                Neoadjuvant.Endocrine.Therapy.Medications == 0 ~"No Radiation Therapy"))
+```
+
+### ovaries in situ 
+
+```{r}
+clinData <- clinData %>%
+  mutate(Number.of.Ovaries.In.Situ.. = case_when(Number.of.Ovaries.In.Situ.. %in% c(1, 2) ~ "Intact Ovaries ≥ 1", 
+                                Number.of.Ovaries.In.Situ.. == 0 ~"No Ovaries Intact", 
+ 
+                               Number.of.Ovaries.In.Situ.. == "NP" ~ NA_character_))
+```
+
+### pathologic response T
+
+```{r}
+clinData <- clinData %>%
+  mutate(Pathologic.response.T = case_when(Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy %in% c("1", "0") ~ "Small/ no Tumor remains", 
+                                Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy %in% c("2", "3", "4", "5") ~ "DCIS or ≥ medium tumor", 
+ 
+                               Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy %in% c("NA", "-1") ~ NA_character_))
+```
+
+### pathologic response N
+
+```{r}
+clinData <- clinData %>%
+  mutate(Pathologic.response.N = case_when(Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy ==  "0" ~ "Cancer in not lymph", 
+                                Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy %in% c("1", "2", "3") ~ "Cancer in not lymph", 
+                               Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy %in% c("NA", "-1") ~ NA_character_))
+```
+
+
+# Data exploration 
+
+## exploring non binonial variables 
+
+### N response 
+
+```{r}
+table(clinData$Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy, clinData$Recurrence.event.s.) # usable but needs combination 
+```
+### pathologic response M
+
+```{r}
+table(clinData$Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy, clinData$Recurrence.event.s.) # not usable 
+```
+### near complete response looser
+
+```{r}
+table(clinData$Overall.Near.complete.Response...Looser.Definition, clinData$Recurrence.event.s.) # not usable 
+
+```
+### near complete response stricter
+
+```{r}
+table(clinData$Overall.Near.complete.Response...Stricter.Definition, clinData$Recurrence.event.s.) # not usable 
+```
+### near complete response stricter
+
+```{r}
+table(clinData$Near.complete.Response..Graded.Measure., clinData$Recurrence.event.s.) # not usable 
+```
+
+### tumor response investigation
+
+```{r}
+table(clinData$Clinical.Response..Evaluated.Through.Imaging, clinData$Recurrence.event.s.) # clinical response not usable 
+```
+
+### Patholigc response to Neoadjuvent Therapy investigation
+
+```{r}
+table(clinData$Pathologic.Response.to.Neoadjuvant.Therapy, clinData$Recurrence.event.s.) # Pathologic response not usable 
+```
+
+### Breast density 
+
+```{r}
+clinData_clean <- clinData %>% filter(!is.na(Age.at.mammo..days.), !is.na(time.to.recurrence))
+ggplot(clinData_clean, aes(x = Age.at.mammo..days., y = time.to.recurrence, color = Recurrence.event.s.)) +
+  geom_point() +
+  geom_smooth(method = "lm", formula = y ~ x)
+```
+
+### breast density
+
+```{r}
+table(clinData$Breast.Density, clinData$Recurrence.event.s.) # breast not usable 
+
+```
+
+### breast shape
+
+```{r}
+table(clinData$Margin_mammo, clinData$Recurrence.event.s.) # not usable
+```
+### mass density
+
+```{r}
+table(clinData$Mass.Density, clinData$Recurrence.event.s.) # not usable
+```
+
+### calcifications
+
+```{r}
+table(clinData$Calcifications, clinData$Recurrence.event.s.) # not usable
+```
+
+### tumor size us
+```{r}
+table(clinData$TumorSize_us, clinData$Recurrence.event.s.) # not usable
+```
+
+### margin us 
+
+```{r}
+table(clinData$Recurrence.event.s., clinData$Margin_us) # not usable
+```
+
+### margin us 
+
+```{r}
+table(clinData$Echogenicity, clinData$Recurrence.event.s.) # not usable)
+```
+
+### margin ovary number in situ 
+
+```{r}
+table(clinData$Number.of.Ovaries.In.Situ.., clinData$Recurrence.event.s.) #was non binomial now is binomial usable 
+```
+### margin ovary number in situ 
+
+```{r}
+table(clinData$Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy, clinData$Recurrence.event.s.) #was non binomial now is binomial usable 
+```
+
+## Exploring the general outcome
+
+### Day to local reacurrance
+
+```{r}
+hist(clinData$Days.to.local.recurrence)
+summarytools::dfSummary(clinData$Days.to.local.recurrence)
+```
+
+### Day to distant reacurrance
+
+```{r}
+hist(clinData$Days.to.distant.recurrence)
+summarytools::dfSummary(clinData$Days.to.distant.recurrence)
+
+```
+
+### Day to first reaccurance
+
+```{r}
+hist(clinData$time.to.recurrence)
+summarytools::dfSummary(clinData$time.to.recurrence)
+```
+### table for 
+
+```{r}
+# smaller_df <- clinData %>% 
+#   tbl_summary(by = Recurrence.event.s., #by segregates our graph by Recurrence type
+#                       label = list(
+#                                   # labels each thing
+#                                    Race.and.Ethnicity.clean = "Race/Ethnicity",
+#                                    Mol.Subtype.clean = "Cancer Molecular Subtype",
+#                                    Surgery.clean = "Occurance of Surgery",
+#                                    Metastatic.at.Presentation..Outside.of.Lymph.Nodes.clean = "Metastatic Outside of Lymph Node")) %>%
+#   add_p() %>%  as_flex_table() %>%
+#   width(j = 1, width = 2, unit = "in") %>%
+#   width(j = 2:4, width = 1.3, unit = "in")
+```
+
+# determining which variables to check with kaplian myer
+
+## filter the variables i am responsible for
+
+```{r}
+car_clinData <- clinData[, 57:109]
+```
+
+## function for getting colnamees of functions with greater than 9 events
+
+```{r}
+valid_columns <- c()
+invalid_columns <- c()
+check_contingency_counts <- function(data, outcome_col = "Recurrence.event.s.") {
+    valid_columns <- c()
+  invalid_columns <- c()
+  for (colname in colnames(data)) {
+    if (colname == outcome_col) next 
+        tab <- table(data[[colname]], data[[outcome_col]])
+        if (all(tab >= 9)) {
+      valid_columns <- c(valid_columns, colname) 
+        } else {
+      invalid_columns <- c(invalid_columns, colname) 
+        }
+  }
+   return(list(valid = valid_columns, invalid = invalid_columns))
+}
+```
+
+## using said function 
+
+```{r}
+list <- check_contingency_counts(car_clinData)
+list$valid
+```
+
+# Kaplin Myers EDA
+
+## filter valid column
+
+```{r}
+car_clinData_valid <- car_clinData[ , c(list$valid, "time.to.recurrence", "Recurrence.event.s.")]
+car_clinData_valid
+```
+
+## function for creating Kaplian-Mayer
+
+```{r}
+
+Kap_creator <- function(the_data, the_event = "Recurrence.event.s.", the_time = "time.to.recurrence") {
+  plot_list <- list()
+  
+  for (colname in colnames(the_data)) {
+     if (colname == "Recurrence.event.s.") next 
+     if (colname == "time.to.recurrence") next 
+ttle <- paste0(colname)
+kmFit_subtype <- survfit(Surv(time = the_data[[the_time]], event = the_data[[the_event]]) ~ the_data[[colname]], data = the_data)
+the_plot <- autoplot(kmFit_subtype) +
+  labs(col = ttle, fill = ttle, title = ttle) 
+    plot_list[[colname]] <- the_plot
+  }
+  return(plot_list)
+}
+```
+
+## Checking if they work
+
+```{r}
+
+Kap_creator(car_clinData_valid)
+
+```
+
+
+## function for running the Log rank test 
+
+```{r}
+
+log_ranker <- function(the_data, the_event = "Recurrence.event.s.", the_time = "time.to.recurrence") {
+  sig_list <- c()
+  
+  for (colname in colnames(the_data)) {
+     if (colname == "Recurrence.event.s.") next 
+     if (colname == "time.to.recurrence") next 
+log_rank <- survdiff(Surv(the_data[[the_time]], the_data[[the_event]]) ~ the_data[[colname]])
+summary(log_rank)
+  if(log_rank$pvalue <= .05) {
+    sig_list <- c(sig_list, colname)
+    }
+  }
+  return(sig_list)
+}
+
+
+```
+
+```{r}
+log_ranker(car_clinData_valid)
+```
+
+## Cox regeression continious variables
+
+### Age at mammo (day)s
+
+```{r}
+df <- clinData %>% 
+  filter(!is.na(Age.at.mammo..days.))
+Surv_obj <-  Surv(time = clinData$time.to.recurrence, event = clinData$Recurrence.event.s.)
+cox_demographics <- coxph(Surv_obj ~ as.numeric(Age.at.mammo..days.), 
+                   data = clinData)
+summary(cox_demographics) #not significa t
+
+
+```
+
+### size general
+
+```{r}
+df <- clinData %>% 
+  filter(!is.na(Age.at.mammo..days.))
+Surv_obj <-  Surv(time = clinData$time.to.recurrence, event = clinData$Recurrence.event.s.)
+cox_demographics <- coxph(Surv_obj ~ as.numeric(size), 
+                   data = clinData)
+summary(cox_demographics) #not significant
+
+
+```
+
 
