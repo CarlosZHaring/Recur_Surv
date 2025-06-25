@@ -270,7 +270,7 @@ ggsurvplot(KP_his, data = clinData)
 ```
 
 
-```{r}
+```{r,fig.height=20,fig.width=20}
 clinData <- clinData %>% 
   mutate(Bilateral.Information = as.factor(na_if(Bilateral.Information, "NC")))
 
@@ -278,7 +278,7 @@ cox_bi <- coxph(Surv_obj ~ factor(Bilateral.Information), data = clinData)
 summary(cox_bi)
 ```
 
-```{r}
+```{r,fig.height=20,fig.width=20}
 clinData <- clinData %>%
   mutate(
     Surgery = as.factor(Surgery),
@@ -287,12 +287,17 @@ clinData <- clinData %>%
     
     Days.to.Surgery = ifelse(
       Days.to.Surgery..from.the.date.of.diagnosis. < 0, 
-      NA,  # 或者你可以写 0 或 "abs()" 或另设一列记录为负
+      NA,  
       Days.to.Surgery..from.the.date.of.diagnosis.
     )
   )
 
-cox_surgery <- coxph(Surv_obj ~ Surgery + Days.to.Surgery + Definitive.Surgery.Type, data = clinData)
+cox_surgery <- coxph(Surv_obj ~ Definitive.Surgery.Type, data = clinData)
 summary(cox_surgery)
+
+KP_surgery <- survfit(Surv_obj ~ Definitive.Surgery.Type, data = clinData)
+ggsurvplot(KP_surgery, data = clinData)
+
+
 ```
 
