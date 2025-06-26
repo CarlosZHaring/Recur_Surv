@@ -477,19 +477,40 @@ car_clinData_valid
 
 ```{r}
 
+Kap_creator_significant <- function(the_data, the_event = "Recurrence.event.s.", the_time = "time.to.recurrence") {
+  plot_list <- list()
+  
+  for (colname in colnames(the_data)) {
+     if (colname == "Recurrence.event.s.") next 
+     if (colname == "time.to.recurrence") next 
+ttle <- paste0("Time to Reaccurance by ",colname)
+kmFit_subtype <- survfit(Surv(time = the_data[[the_time]], event = the_data[[the_event]]) ~ the_data[[colname]], data = the_data)
+the_plot <- autoplot(kmFit_subtype) +
+  labs(col = ttle, fill = ttle, title = ttle) +  theme_light() + theme(legend.position = "bottom") + xlab("Time days") + ylab("Recurrence Free Probability")
+    plot_list[[colname]] <- the_plot
+    plotname <- paste0(colname,".png")
+    ggsave(plotname, the_plot, path = "/Users/carlosh/Documents/Michigan_stuff/project/Survival_rate/Recur_Surv/Carlos_KM_plot/Sig_plot", width = 8, height = 5)
+  }
+  return(plot_list)
+  
+}
+
 Kap_creator <- function(the_data, the_event = "Recurrence.event.s.", the_time = "time.to.recurrence") {
   plot_list <- list()
   
   for (colname in colnames(the_data)) {
      if (colname == "Recurrence.event.s.") next 
      if (colname == "time.to.recurrence") next 
-ttle <- paste0(colname)
+ttle <- paste0("Time to Reaccurance by ",colname)
 kmFit_subtype <- survfit(Surv(time = the_data[[the_time]], event = the_data[[the_event]]) ~ the_data[[colname]], data = the_data)
 the_plot <- autoplot(kmFit_subtype) +
-  labs(col = ttle, fill = ttle, title = ttle) 
+  labs(col = ttle, fill = ttle, title = ttle) +  theme_light() + theme(legend.position = "bottom") + xlab("Time days") + ylab("Recurrence Free Probability")
     plot_list[[colname]] <- the_plot
+    plotname <- paste0(colname,".png")
+    ggsave(plotname, the_plot, path = "/Users/carlosh/Documents/Michigan_stuff/project/Survival_rate/Recur_Surv/Carlos_KM_plot")
   }
   return(plot_list)
+  
 }
 ```
 
@@ -499,6 +520,16 @@ the_plot <- autoplot(kmFit_subtype) +
 
 Kap_creator(car_clinData_valid)
 
+```
+car_clinData_valid <- car_clinData[ , c(list$valid, "time.to.recurrence", "Recurrence.event.s.")]
+car_clinData_valid
+
+
+## singificant km creator
+
+```{r}
+car_clinData_valid <- car_clinData[ , c(sig_list, "time.to.recurrence", "Recurrence.event.s.")]
+Kap_creator(car_clinData_valid)
 ```
 
 
@@ -519,13 +550,18 @@ summary(log_rank)
     }
   }
   return(sig_list)
+
+  
 }
 
 
 ```
 
 ```{r}
-log_ranker(car_clinData_valid)
+sig_list <- log_ranker(car_clinData_valid)
+car_clinData_valid_sig <- car_clinData[ , c(sig_list, "time.to.recurrence", "Recurrence.event.s.")]
+Kap_creator_significant(car_clinData_valid_sig)
+
 ```
 
 ## Cox regeression continious variables
