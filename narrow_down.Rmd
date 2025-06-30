@@ -28,7 +28,9 @@ library(flextable)
 # 
 install.packages("Visdot")  
 library(Visdot)
-
+install.packages("installr")
+library(installr)
+updateR()
 ```
 
 
