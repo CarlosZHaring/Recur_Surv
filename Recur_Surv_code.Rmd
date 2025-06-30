@@ -280,7 +280,7 @@ clinData <- clinData %>%
 ```{r}
 clinData <- clinData %>%
   mutate(Pathologic.response.N = case_when(Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy ==  "0" ~ "Cancer in not lymph", 
-                                Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy %in% c("1", "2", "3") ~ "Cancer in not lymph", 
+                                Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy %in% c("1", "2", "3") ~ "Cancer not lymph", 
                                Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy %in% c("NA", "-1") ~ NA_character_))
 ```
 
@@ -471,6 +471,14 @@ list$valid
 ```{r}
 car_clinData_valid <- car_clinData[ , c(list$valid, "time.to.recurrence", "Recurrence.event.s.")]
 car_clinData_valid
+
+kmFit_subtype <- survfit(Surv(time = clinData[["time.to.recurrence"]], event = clinData[["Recurrence.event.s."]]) ~ clinData[["Pathologic.response.N"]], data = clinData)
+the_plot <- autoplot(kmFit_subtype)
+the_plot
+
+
+survdiff(Surv_obj~kmFit_subtype,data = clinData)
+
 ```
 
 ## function for creating Kaplian-Mayer
@@ -553,6 +561,8 @@ summary(log_rank)
 
   
 }
+log_rank <- survdiff(Surv(clinData[["time.to.recurrence"]], clinData[["Recurrence.event.s."]]) ~ clinData[["Pathologic.response.N"]])
+summary(log_rank)
 
 
 ```
