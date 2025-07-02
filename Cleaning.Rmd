@@ -1,0 +1,339 @@
+---
+title: "New start"
+author: "张诗懿"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(naniar)
+library(survival)
+```
+
+
+```{r}
+data <- read.csv("https://raw.githubusercontent.com/BDSI-CDS-2025/tcia/refs/heads/main/data/clinicalData_clean.csv")
+
+## Not Include MRI Technical Information.
+
+# First Recurrence 
+data <- data %>%
+  mutate(
+    Days.to.local.recurrence = as.numeric(na_if(Days.to.local.recurrence..from.the.date.of.diagnosis., "NP")),
+    Days.to.distant.recurrence = as.numeric(na_if(Days.to.distant.recurrence.from.the.date.of.diagnosis., "NP"))) %>%
+  mutate(
+    Recurrence.event.s. = case_when(
+      Recurrence.event.s. == 1 ~ "Recurrence",
+      Recurrence.event.s. == 0 & 
+        (!is.na(Days.to.local.recurrence) | 
+         !is.na(Days.to.distant.recurrence)) ~ "Recurrence",
+      Recurrence.event.s. == 0 ~ "No Recurrence",
+      TRUE ~ NA_character_
+    ),
+    Recurrence.event.s. = factor(Recurrence.event.s., levels = c("No Recurrence", "Recurrence"))
+    ) %>%
+  mutate(
+    Days.to.last.recurrence.free = case_when(
+      Recurrence.event.s. == "No Recurrence" ~ as.numeric(na_if(Days.to.last.local.recurrence.free.assessment..from.the.date.of.diagnosis., "NP")),
+      TRUE ~ NA_real_
+      )
+    ) %>%
+  mutate(
+    dignose.to.recurrence = case_when(
+      !is.na(Days.to.local.recurrence) & !is.na(Days.to.distant.recurrence) ~
+        pmin(Days.to.local.recurrence, Days.to.distant.recurrence, na.rm = TRUE),
+      
+      !is.na(Days.to.local.recurrence) ~ Days.to.local.recurrence,
+      
+      !is.na(Days.to.distant.recurrence) ~ Days.to.distant.recurrence,
+      
+      TRUE ~ Days.to.last.recurrence.free  
+    )
+  )
+
+# patient ID
+data <- data[,-1] 
+
+# Race and Metastatic at Presentation (selected)
+data<- data %>%
+  mutate(Race.and.Ethnicity = as.factor(case_when(Race.and.Ethnicity == 1 ~ "White", 
+                                                  Race.and.Ethnicity == 2 ~ "Black",
+                                                  Race.and.Ethnicity %in% c(3, 4, 5, 6, 7) ~ "Other")),
+         Metastatic.at.Presentation..Outside.of.Lymph.Nodes. = case_when(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 0 ~ "No", Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 1 ~ "Yes"))
+
+# Molecular Type and Tumor Staging (selected)
+data <- data %>% mutate(
+  Mol.Subtype = as.factor(Mol.Subtype),
+  Staging.Tumor.Size....T. = factor(Staging.Tumor.Size....T.,
+                     levels = c(1, 2, 3, 4),
+                     ordered = TRUE),
+  Staging.Nodes...Nx.replaced.by..1..N. = factor(na_if(Staging.Nodes...Nx.replaced.by..1..N., -1),
+                     levels = c(0, 1, 2, 3),
+                     ordered = TRUE),
+  Staging.Metastasis...Mx..replaced.by..1..M. = factor(na_if(Staging.Metastasis...Mx..replaced.by..1..M., -1),
+                     levels = c(0, 1),
+                     ordered = TRUE),
+  Nottingham.total.score = as.numeric(TumorGradeT) + as.numeric(TumorGradeN) + as.numeric(TumorGradeM))
+
+# 72% missing in Oncotype DX (selected)
+# Stratify the Oncotype or Imputation
+# oncotype_data <- data %>% filter(!is.na(Oncotype.score))
+
+# Collapsed Histologic Type (selected)
+data$Histologic.type.collapse <- fct_collapse(
+  factor(data$Histologic.type),
+  Ductal = c("1"),
+  Other = c("0","2", "3", "4", "5", "6", "7", "8", "9", "10")
+)
+
+# Bilateral Information (Optional: Detailed Analysis on Subgroup)
+data <- data %>% 
+  mutate(Bilateral.Information = as.factor(na_if(Bilateral.Information, "NC")))
+
+# MRI Findings (Not Selected Temporarily)
+data <- data %>%
+  mutate(
+    Multicentric.Multifocal = factor(Multicentric.Multifocal, levels = c(0, 1), labels = c("No", "Yes")),
+    Contralateral.Breast.Involvement = factor(Contralateral.Breast.Involvement, levels = c(0, 1), labels = c("No", "Yes")),
+    Lymphadenopathy.or.Suspicious.Nodes = factor(Lymphadenopathy.or.Suspicious.Nodes, levels = c(0, 1), labels = c("No", "Yes")),
+    Skin.Nipple.Invovlement = factor(Skin.Nipple.Invovlement, levels = c(0, 1), labels = c("No", "Yes")),
+    Pec.Chest.Involvement = factor(Pec.Chest.Involvement, levels = c(0, 1), labels = c("No", "Yes"))
+  )
+
+# Surgery (selected)
+data <- data %>%
+  mutate(
+    # Surgery = as.factor(Surgery),
+    Definitive.Surgery.Type = as.factor(na_if(Definitive.Surgery.Type, "NP")),
+    Days.to.Surgery..from.the.date.of.diagnosis. = as.numeric(Days.to.Surgery..from.the.date.of.diagnosis.),
+    
+    Days.to.Surgery = ifelse(
+      Days.to.Surgery..from.the.date.of.diagnosis. < 0, 
+      NA,  
+      Days.to.Surgery..from.the.date.of.diagnosis.
+    ),
+    surgery.to.recurrence = ifelse(
+      !is.na(Days.to.Surgery) & !is.na(dignose.to.recurrence),
+      dignose.to.recurrence - Days.to.Surgery,
+      NA_real_
+    )
+  ) %>%
+  filter(!is.na(surgery.to.recurrence))
+
+# Mammography Characteristics and US features (Optional: Detailed Analysis on Subgroup)
+
+# Therapy Type (selected)
+data <- data %>%
+  mutate(
+    Chemotherapy = case_when(
+      Neoadjuvant.Chemotherapy == 1 & Adjuvant.Chemotherapy == 1 ~ "Both",
+      Neoadjuvant.Chemotherapy == 1 & (Adjuvant.Chemotherapy == 0 | is.na(Adjuvant.Chemotherapy)) ~ "Neoadjuvant Only",
+      Adjuvant.Chemotherapy == 1 & (Neoadjuvant.Chemotherapy == 0 | is.na(Neoadjuvant.Chemotherapy)) ~ "Adjuvant Only",
+      Neoadjuvant.Chemotherapy == 0 & Adjuvant.Chemotherapy == 0 ~ "None",
+      TRUE ~ NA_character_
+    ) %>% as.factor(),
+
+    Radiationtherapy = case_when(
+      Neoadjuvant.Radiation.Therapy == 1 & Adjuvant.Radiation.Therapy == 1 ~ "Both",
+      Neoadjuvant.Radiation.Therapy == 1 & (Adjuvant.Radiation.Therapy == 0 | is.na(Adjuvant.Radiation.Therapy)) ~ "Neoadjuvant Only",
+      Adjuvant.Radiation.Therapy == 1 & (Neoadjuvant.Radiation.Therapy == 0 | is.na(Neoadjuvant.Radiation.Therapy)) ~ "Adjuvant Only",
+      Neoadjuvant.Radiation.Therapy == 0 & Adjuvant.Radiation.Therapy == 0 ~ "None",
+      TRUE ~ NA_character_
+    ) %>% as.factor(),
+
+    Endocrinetherapy = case_when(
+      Neoadjuvant.Endocrine.Therapy.Medications == 1 & Adjuvant.Endocrine.Therapy.Medications == 1 ~ "Both",
+      Neoadjuvant.Endocrine.Therapy.Medications == 1 & (Adjuvant.Endocrine.Therapy.Medications == 0 | is.na(Adjuvant.Endocrine.Therapy.Medications)) ~ "Neoadjuvant Only",
+      Adjuvant.Endocrine.Therapy.Medications == 1 & (Neoadjuvant.Endocrine.Therapy.Medications == 0 | is.na(Neoadjuvant.Endocrine.Therapy.Medications)) ~ "Adjuvant Only",
+      Neoadjuvant.Endocrine.Therapy.Medications == 0 & Adjuvant.Endocrine.Therapy.Medications == 0 ~ "None",
+      TRUE ~ NA_character_
+    ) %>% as.factor(),
+    
+    Antiher2therapy = case_when(
+      Neoadjuvant.Anti.Her2.Neu.Therapy == 1 & Adjuvant.Anti.Her2.Neu.Therapy == 1 ~ "Both",
+      Neoadjuvant.Anti.Her2.Neu.Therapy == 1 & (Adjuvant.Anti.Her2.Neu.Therapy == 0 | is.na(Adjuvant.Anti.Her2.Neu.Therapy)) ~ "Neoadjuvant Only",
+      Adjuvant.Anti.Her2.Neu.Therapy == 1 & (Neoadjuvant.Anti.Her2.Neu.Therapy == 0 | is.na(Neoadjuvant.Anti.Her2.Neu.Therapy)) ~ "Adjuvant Only",
+      Neoadjuvant.Anti.Her2.Neu.Therapy == 0 & Adjuvant.Anti.Her2.Neu.Therapy == 0 ~ "None",
+      TRUE ~ NA_character_
+    ) %>% as.factor()
+  )
+
+# Ovarian: Related to Endocrine Therapy (selected)
+data <- data %>%
+  mutate(
+    Known.Ovarian.Status = factor(Known.Ovarian.Status,
+                                   levels = c(0, 1),
+                                   labels = c("No", "Yes")),
+    
+    Number.of.Ovaries.In.Situ.. = na_if(Number.of.Ovaries.In.Situ.., "NP"),
+    Number.of.Ovaries.In.Situ.. = factor(as.numeric(Number.of.Ovaries.In.Situ..),
+                                         levels = c(0, 1, 2),
+                                         labels = c("0 ovaries", "1 ovary", "2 ovaries"),
+                                         ordered = TRUE),
+    
+    Therapeutic.or.Prophylactic.Oophorectomy.as.part.of.Endocrine.Therapy =
+      factor(Therapeutic.or.Prophylactic.Oophorectomy.as.part.of.Endocrine.Therapy,
+             levels = c(0, 1),
+             labels = c("No", "Yes"))
+  )
+
+# Neoadjuvant Therapy or not (selected)
+data <- data %>%
+  mutate(Received.Neoadjuvant.Therapy.or.Not = factor(case_when(
+    Received.Neoadjuvant.Therapy.or.Not == 1 ~ "Yes",
+    Received.Neoadjuvant.Therapy.or.Not == 2 ~ "No",
+    TRUE ~ NA_character_
+  )))
+
+## All the Variable Below Must be Analysis Using Subgroup (all below selected)
+
+# Tumor Response
+data <- data %>%
+  mutate(Clinical.Response..Evaluated.Through.Imaging = case_when(
+    Clinical.Response..Evaluated.Through.Imaging == 1 ~ "Complete",
+    Clinical.Response..Evaluated.Through.Imaging == 2 ~ "Not Complete",
+    Clinical.Response..Evaluated.Through.Imaging == 3 ~ NA_character_,  
+    TRUE ~ NA_character_
+  ),
+  Clinical.Response..Evaluated.Through.Imaging = factor(Clinical.Response..Evaluated.Through.Imaging, levels = c("Not Complete", "Complete"))) %>%
+  mutate(Pathologic.Response.to.Neoadjuvant.Therapy = case_when(
+    Pathologic.Response.to.Neoadjuvant.Therapy == 1 ~ "Complete",
+    Pathologic.Response.to.Neoadjuvant.Therapy == 2 ~ "Not Complete",
+    Pathologic.Response.to.Neoadjuvant.Therapy == 3 ~ "DCIS Only",
+    Pathologic.Response.to.Neoadjuvant.Therapy == 4 ~ "LCIS Only",
+    Pathologic.Response.to.Neoadjuvant.Therapy == 5 ~ NA_character_,
+    TRUE ~ NA_character_
+  ),
+  Pathologic.Response.to.Neoadjuvant.Therapy = factor(Pathologic.Response.to.Neoadjuvant.Therapy,
+                               levels = c("Not Complete", "DCIS Only", "LCIS Only", "Complete")))
+
+# Pathologic Stage 
+data <- data %>%
+  mutate(
+    Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy = na_if(Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy, -1),
+    Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy = na_if(Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy, -1)
+  ) %>%
+  mutate(
+    Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy = factor(Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy, levels = c(0, 1, 2, 3, 4, 5), ordered = TRUE),
+    Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy = factor(Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy, levels = c(0, 1, 2, 3), ordered = TRUE)
+  ) %>%
+  mutate(
+    Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy = case_when(
+      Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy == -1 ~ "MX",
+      Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy == 0 ~ "M0",
+      Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy == 1 ~ "M1",
+      TRUE ~ NA_character_
+    ),
+    Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy = factor(Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy,
+                                   levels = c("M0", "M1", "MX"),
+                                   ordered = FALSE)
+  )
+
+# Near Complete Response
+data <- data %>%
+  mutate(
+    Overall.Near.complete.Response...Stricter.Definition = case_when(
+      Overall.Near.complete.Response...Stricter.Definition == 3 ~ NA_real_,
+      TRUE ~ Overall.Near.complete.Response...Stricter.Definition
+    ),
+    Overall.Near.complete.Response...Looser.Definition = case_when(
+      Overall.Near.complete.Response...Looser.Definition == 3 ~ NA_real_,
+      TRUE ~ Overall.Near.complete.Response...Looser.Definition
+    ),
+    Near.complete.Response..Graded.Measure. = case_when(
+      Near.complete.Response..Graded.Measure. == 19 ~ NA_real_,
+      TRUE ~ Near.complete.Response..Graded.Measure.
+    ),
+    
+    Overall.Near.complete.Response...Stricter.Definition = factor(
+      Overall.Near.complete.Response...Stricter.Definition,
+      levels = c(0, 1, 2),
+      labels = c("Not complete", "Complete", "Near-complete")
+    ),
+    
+    Overall.Near.complete.Response...Looser.Definition = factor(
+      Overall.Near.complete.Response...Looser.Definition,
+      levels = c(0, 1, 2),
+      labels = c("Not complete", "Complete", "Near-complete")
+    ),
+    
+    Near.complete.Response..Graded.Measure. = factor(
+      Near.complete.Response..Graded.Measure.
+    )
+  )
+
+names(data)
+```
+
+
+```{r}
+cleaned_data <- data %>% select(
+  "Race.and.Ethnicity",
+  "Metastatic.at.Presentation..Outside.of.Lymph.Nodes.",
+  "Mol.Subtype",
+  "Staging.Tumor.Size....T.",
+  "Staging.Nodes...Nx.replaced.by..1..N.",
+  "Staging.Metastasis...Mx..replaced.by..1..M.",
+  "Nottingham.total.score",
+  "Oncotype.score",
+  "Histologic.type.collapse",
+  "Definitive.Surgery.Type",
+  "Chemotherapy",
+  "Radiationtherapy",
+  "Endocrinetherapy",
+  "Antiher2therapy",
+  "Known.Ovarian.Status",
+  "Number.of.Ovaries.In.Situ..",
+  "Therapeutic.or.Prophylactic.Oophorectomy.as.part.of.Endocrine.Therapy",
+  "Received.Neoadjuvant.Therapy.or.Not",
+  "Clinical.Response..Evaluated.Through.Imaging",
+  "Pathologic.Response.to.Neoadjuvant.Therapy",
+  "Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy",
+  "Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy",
+  "Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy",
+  "Overall.Near.complete.Response...Stricter.Definition",
+  "Overall.Near.complete.Response...Looser.Definition",
+  "Near.complete.Response..Graded.Measure.",
+  "Days.to.Surgery",
+  "Recurrence.event.s.",
+  "surgery.to.recurrence",
+) %>% 
+  rename(
+    Race = Race.and.Ethnicity,
+    Metastatic = Metastatic.at.Presentation..Outside.of.Lymph.Nodes.,
+    Mole_type = Mol.Subtype,
+    T_stage = Staging.Tumor.Size....T.,
+    N_stage = Staging.Nodes...Nx.replaced.by..1..N.,
+    M_stage = Staging.Metastasis...Mx..replaced.by..1..M.,
+    Nottingham_score = Nottingham.total.score,
+    Oncotype_score = Oncotype.score,
+    Histology = Histologic.type.collapse,
+    Surgery_type = Definitive.Surgery.Type,
+    Chemo = Chemotherapy,
+    Radiation = Radiationtherapy,
+    Endocrine = Endocrinetherapy,
+    Antiher2 = Antiher2therapy,
+    Ovarian_status = Known.Ovarian.Status,
+    Ovary_count = Number.of.Ovaries.In.Situ..,
+    Oophorectomy = Therapeutic.or.Prophylactic.Oophorectomy.as.part.of.Endocrine.Therapy,
+    Neoadjuvant = Received.Neoadjuvant.Therapy.or.Not,
+    Clinical_response = Clinical.Response..Evaluated.Through.Imaging,
+    Pathologic_response = Pathologic.Response.to.Neoadjuvant.Therapy,
+    Patho_T_stage = Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy,
+    Patho_N_stage = Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy,
+    Patho_M_stage = Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy,
+    Near_response_strict = Overall.Near.complete.Response...Stricter.Definition,
+    Near_response_loose = Overall.Near.complete.Response...Looser.Definition,
+    Near_response_grade = Near.complete.Response..Graded.Measure.,
+    Time_to_surgery = Days.to.Surgery,
+    Recurrence = Recurrence.event.s.,
+    Time_to_event = surgery.to.recurrence
+  )
+
+
+
+```
+

@@ -160,7 +160,7 @@ mutate(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. = case_when(Metastati
 
 ```{r}
 clinData <- clinData %>%
-  mutate(Recurrence.event.s.clean = as.factor(case_when(
+  mutate(Recurrence.event.s.clean = case_when(
       Recurrence.event.s. == 1 ~ "Recurrence",
       Recurrence.event.s. == 0 ~ "No Recurrence"))) %>%
   filter(!is.na(Recurrence.event.s.clean))
