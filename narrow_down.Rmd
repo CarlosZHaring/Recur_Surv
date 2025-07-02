@@ -1,0 +1,317 @@
+---
+title: "Narrow_Down"
+author: "Carlos Haring"
+date: "2025-06-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+clinData <- read.csv("https://raw.githubusercontent.com/BDSI-CDS-2025/tcia/refs/heads/main/data/clinicalData_clean.csv")
+```
+
+Load packages that are necessary for running all code below.
+```{r}
+#' example code for installing packages for first time:
+#' install.packages("tidyverse")
+
+library(tidyverse)
+library(ggplot2)
+library(survival)
+library(ggfortify)
+library(devtools)
+#' install_github("jokergoo/ComplexHeatmap")
+library(ComplexHeatmap)
+library(umap)
+library(gtsummary)
+library(summarytools)
+library(flextable)
+# 
+install.packages("Visdot")  
+library(Visdot)
+install.packages("installr")
+library(installr)
+updateR()
+```
+
+
+## Reading Clinical Data
+
+```{r}
+clinData <- clinData[,-1] # remove first column of row numbers since we have
+# patient ID
+```
+
+## Data cleaning 
+
+### changing race
+
+```{r}
+clinData <- clinData %>%
+  mutate(Race.and.Ethnicity = case_when(Race.and.Ethnicity == 1 ~ "White", Race.and.Ethnicity %in% c(2 ,3, 4, 5, 6, 7) ~ "Other"))
+
+```
+
+### recoding molecular subtype
+
+```{r}
+clinData <- clinData %>% 
+mutate(Mol.Subtype. = case_when(Mol.Subtype == 0 ~ "luminal-like", Mol.Subtype == 1 ~ "ER/PR pos, HER2 pos", Mol.Subtype == 2 ~ "HER2 pos", Mol.Subtype == 3 ~ "triple neg"))
+```
+
+### recoding Metastatic at presentation
+
+```{r}
+clinData <- clinData %>% 
+mutate(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. = case_when(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 0 ~ "No", Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 1 ~ "Yes"))
+```
+
+### recoding race
+
+```{r}
+clinData <- clinData %>%
+  mutate(Recurrence.event.s.clean = as.factor(case_when(
+      Recurrence.event.s. == 1 ~ "Recurrence",
+      Recurrence.event.s. == 0 ~ "No Recurrence"))) %>%
+  filter(!is.na(Recurrence.event.s.clean))
+  
+```
+
+### recoding  reaccuance 
+
+```{r}
+clinData <- clinData %>%
+  mutate(
+    Days.to.local.recurrence = as.numeric(na_if(Days.to.local.recurrence..from.the.date.of.diagnosis., "NP")),
+    Days.to.distant.recurrence = as.numeric(na_if(Days.to.distant.recurrence.from.the.date.of.diagnosis., "NP")),
+    Days.to.last.recurrence.free = as.numeric(na_if(Days.to.last.local.recurrence.free.assessment..from.the.date.of.diagnosis., "NP"))
+  ) %>%
+  mutate(
+    time.to.recurrence = case_when(
+      !is.na(Days.to.local.recurrence) & !is.na(Days.to.distant.recurrence) ~
+        pmin(Days.to.local.recurrence, Days.to.distant.recurrence, na.rm = TRUE),
+      
+      !is.na(Days.to.local.recurrence) ~ Days.to.local.recurrence,
+      
+      !is.na(Days.to.distant.recurrence) ~ Days.to.distant.recurrence,
+      
+      TRUE ~ Days.to.last.recurrence.free  
+    )
+  )
+```
+
+### recoding size
+
+```{r}
+clinData <- clinData %>%
+  mutate(
+    TumorSize_mammo = as.numeric(na_if(na_if(TumorSize_mammo, "NC"), "NA")),
+    TumorSize_us = as.numeric(na_if(na_if(TumorSize_us, "NC"), "NA"))) %>%
+  rowwise() %>%
+  mutate(
+    size = case_when(
+      !is.na(TumorSize_mammo) & !is.na(TumorSize_us) ~
+        mean(c_across(c(TumorSize_mammo, TumorSize_us)), na.rm = TRUE),
+      
+      !is.na(TumorSize_mammo) ~ TumorSize_mammo,
+      
+      !is.na(TumorSize_us) ~ TumorSize_us,
+      
+      TRUE ~ NA_real_  
+    )
+  ) %>%
+  ungroup()
+
+```
+
+### Anti her2 column
+
+```{r}
+clinData <- clinData %>%
+  mutate(Anti.Her2.Neu.Therapy = case_when(Neoadjuvant.Anti.Her2.Neu.Therapy == 1 &  Adjuvant.Anti.Her2.Neu.Therapy == 1 ~ "Her2 Therapy",
+    Neoadjuvant.Anti.Her2.Neu.Therapy == 1 ~ "Her2 Therapy", 
+    Adjuvant.Anti.Her2.Neu.Therapy == 1 ~ "Her2 Therapy", 
+    Neoadjuvant.Anti.Her2.Neu.Therapy == 0 ~ "No Her2 Therapy", 
+    Adjuvant.Anti.Her2.Neu.Therapy == 0 ~ "No Her2 Therapy"))
+```
+
+### Endocrine therapy column
+
+```{r}
+clinData <- clinData %>%
+   mutate(Endocrine.Therapy.Medication = case_when(Neoadjuvant.Endocrine.Therapy.Medications == 1 ~ "Endocrine Therapy", 
+                                                   Adjuvant.Endocrine.Therapy.Medications == 1 ~ "Endocrine Therapy", 
+                                                   Neoadjuvant.Endocrine.Therapy.Medications == 0 ~ " No Endocrine Therapy", 
+                                                   Adjuvant.Endocrine.Therapy.Medications == 0 ~ "No Endocrine Therapy"))
+```
+
+### Radiation therapy column
+
+```{r}
+clinData <- clinData %>%
+  mutate(Chemotherapy = case_when(Adjuvant.Chemotherapy == 1 ~ "Chemotherapy", 
+                                  Neoadjuvant.Chemotherapy == 1 ~ "Chemotherapy", 
+                                  Adjuvant.Chemotherapy == 0 ~ "No Chemotherapy", 
+                                  Adjuvant.Chemotherapy == 0~ "No Chemotherapy"))
+```
+
+### chemotherapy column
+
+```{r}
+clinData <- clinData %>%
+  mutate(Radiation.Therapy = case_when(Adjuvant.Radiation.Therapy == 1 ~ "Radiation Therapy", 
+                                Neoadjuvant.Endocrine.Therapy.Medications == 1 ~"Radiation Therapy", 
+                                Adjuvant.Radiation.Therapy == 0~ "No Radiation Therapy", 
+                                Neoadjuvant.Endocrine.Therapy.Medications == 0 ~"No Radiation Therapy"))
+```
+
+### ovaries in situ 
+
+```{r}
+clinData <- clinData %>%
+  mutate(Number.of.Ovaries.In.Situ.. = case_when(Number.of.Ovaries.In.Situ.. %in% c(1, 2) ~ "Intact Ovaries ≥ 1", 
+                                Number.of.Ovaries.In.Situ.. == 0 ~"No Ovaries Intact", 
+ 
+                               Number.of.Ovaries.In.Situ.. == "NP" ~ NA_character_))
+```
+
+### pathologic response T
+
+```{r}
+clinData <- clinData %>%
+  mutate(Pathologic.response.T = case_when(Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy %in% c("1", "0") ~ "Small/ no Tumor remains", 
+                                Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy %in% c("2", "3", "4", "5") ~ "DCIS or ≥ medium tumor", 
+ 
+                               Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy %in% c("NA", "-1") ~ NA_character_))
+```
+
+### pathologic response N
+
+```{r}
+clinData <- clinData %>%
+  mutate(Pathologic.response.N = case_when(Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy ==  "0" ~ "Cancer in not lymph", 
+                                Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy %in% c("1", "2", "3") ~ "Cancer in not lymph", 
+                               Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy %in% c("NA", "-1") ~ NA_character_))
+```
+
+### Tumor size, staging nodes, staging metastasis
+
+```{r}
+
+clinData <- clinData %>%
+  mutate(
+    Staging.Tumor.Size....T. = factor(Staging.Tumor.Size....T.,
+                     levels = c(1, 2, 3, 4),
+                     ordered = TRUE),
+
+    Staging.Nodes...Nx.replaced.by..1..N. = factor(na_if(Staging.Nodes...Nx.replaced.by..1..N., -1),
+                     levels = c(0, 1, 2, 3),
+                     ordered = TRUE),
+
+    Staging.Metastasis...Mx..replaced.by..1..M. = factor(na_if(Staging.Metastasis...Mx..replaced.by..1..M., -1),
+                     levels = c(0, 1),
+                     ordered = TRUE)
+  )
+
+```
+
+### mole subtype
+
+```{r}
+clinData <- clinData %>% 
+  mutate(Mol.Subtype = as.factor(Mol.Subtype))
+```
+
+### Tumor Size, Stady Nodes, and Metastasis
+
+```{r}
+clinData <- clinData %>%
+  mutate(
+    Staging.Tumor.Size....T. = factor(Staging.Tumor.Size....T., 
+                                      levels = c(1, 2, 3, 4), 
+                                      ordered = TRUE),
+
+    Staging.Nodes...Nx.replaced.by..1..N. = factor(
+      na_if(as.numeric(as.character(Staging.Nodes...Nx.replaced.by..1..N.)), -1),
+      levels = c(0, 1, 2, 3),
+      ordered = TRUE
+    ),
+
+    Staging.Metastasis...Mx..replaced.by..1..M. = factor(
+      na_if(as.numeric(as.character(Staging.Metastasis...Mx..replaced.by..1..M.)), -1),
+      levels = c(0, 1),
+      ordered = TRUE
+    )
+  )
+
+```
+
+### Nottinham_total_score
+
+```{r}
+clinData <- clinData %>%
+  mutate(
+    Nottingham_total_score = as.numeric(TumorGradeT) + as.numeric(TumorGradeN) + as.numeric(TumorGradeM)
+  )
+```
+
+### Histologic Type 
+
+```{r}
+clinData$Histologic.type.new <- fct_collapse(
+  factor(clinData$Histologic.type),
+  Ductal = c("1"),
+  Other = c("0","2", "3", "4", "5", "6", "7", "8", "9", "10")
+)
+```
+
+### Bilateral Information
+
+```{r}
+clinData <- clinData %>% 
+  mutate(Bilateral.Information = as.factor(na_if(Bilateral.Information, "NC")))
+```
+
+### Definative surgery type 
+
+```{r}
+clinData <- clinData %>%
+  mutate(
+    Surgery = as.factor(Surgery),
+    Definitive.Surgery.Type = as.factor(na_if(Definitive.Surgery.Type, "NP")),
+    Days.to.Surgery..from.the.date.of.diagnosis. = as.numeric(Days.to.Surgery..from.the.date.of.diagnosis.),
+    
+    Days.to.Surgery = ifelse(
+      Days.to.Surgery..from.the.date.of.diagnosis. < 0, 
+      NA,  
+      Days.to.Surgery..from.the.date.of.diagnosis.
+    )
+  )
+
+```
+
+### Time To Recurrence 
+
+```{r}
+clinData <- clinData %>%
+  mutate(
+    time.to.recurrence.new = ifelse(
+      !is.na(Days.to.Surgery) & !is.na(time.to.recurrence),
+      time.to.recurrence - Days.to.Surgery,
+      NA_real_
+    )
+  )
+```
+
+## Filtering by significant variables 
+
+```{r}
+clinData_sig <- clinData %>%
+   select(c("Definitive.Surgery.Type", "Nottingham.grade", "Staging.Tumor.Size....T.", "Staging.Nodes...Nx.replaced.by..1..N.", "Mol.Subtype", "Race.and.Ethnicity", "Metastatic.at.Presentation..Outside.of.Lymph.Nodes.", "Neoadjuvant.Chemotherapy", "Chemotherapy", "Adjuvant.Endocrine.Therapy.Medications", "Pathologic.response.T", "Received.Neoadjuvant.Therapy.or.Not", "Endocrine.Therapy.Medication"))
+```
+
+## 
+
+```{r}
+
+```
+
