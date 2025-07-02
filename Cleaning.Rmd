@@ -11,6 +11,7 @@ library(tidyverse)
 library(readr)
 library(naniar)
 library(survival)
+library(visdat)
 ```
 
 
@@ -336,4 +337,6 @@ cleaned_data <- data %>% select(
 
 
 ```
+
+
 
