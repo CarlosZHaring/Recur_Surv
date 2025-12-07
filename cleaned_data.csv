@@ -1,0 +1,923 @@
+"Age","Race","Metastatic","Mole_type","T_stage","N_stage","M_stage","Nottingham_score","Oncotype_score","Histology","Surgery","Surgery_type","Chemo","Radiation","Endocrine","Antiher2","Ovarian_status","Ovary_count","Oophorectomy","Neoadjuvant","Clinical_response","Pathologic_response","Patho_T_stage","Patho_N_stage","Patho_M_stage","Near_response_strict","Near_response_loose","Near_response_grade","Time_to_surgery","Dignose_to_recurrence","Days_to_death","Recurrence","Time_to_event"
+41.6,"Black","No","2","2","1","0",6,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","Both","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",257,2940,NA,"No Recurrence",2683
+38.5,"Black","No","3","2","0","0",9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Complete","DCIS Only",NA,NA,NA,"Near-complete","Near-complete","4",192,1649,NA,"No Recurrence",1457
+62.1,"White","No","0","2","1","0",6,8,NA,1,"mastectomy","None","None","Both","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",168,1697,NA,"No Recurrence",1529
+58.8,"White","No","0","1","0","0",6,14,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,29,1990,NA,"No Recurrence",1961
+38.1,"Other","No","1","2","1","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Complete","Complete","0","0","MX","Complete","Complete","1",159,1845,NA,"No Recurrence",1686
+45.8,"White","No","0","1","0","0",3,7,NA,1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,77,1763,NA,"No Recurrence",1686
+44.1,"Black","No","1","1","0","0",5,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,1128,NA,"No Recurrence",1108
+45.9,"White","No","1","1","0","0",6,21,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,2930,NA,"No Recurrence",2882
+56.2,"White","No","3","2","0","0",9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Complete",NA,NA,NA,"Complete","Complete","1",138,1554,NA,"No Recurrence",1416
+67.7,"White","No","3","3","2","0",8,NA,"Other",1,"mastectomy","Both","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2","2","MX","Not complete","Not complete","0",98,407,471,"Recurrence",309
+53.1,"White","No","3","1","1","0",8,NA,NA,1,"mastectomy","Adjuvant Only","None","None","None","Yes","1 ovary","No","No",NA,NA,NA,NA,NA,NA,NA,NA,53,638,NA,"No Recurrence",585
+43.5,"Black","No","3","2","2",NA,9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","Yes","0 ovaries","Yes","Yes",NA,"Not Complete","2","2","MX","Not complete","Not complete","0",154,319,414,"Recurrence",165
+37.4,"Black","No","0","1","0","0",6,12,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","1 ovary","No","No",NA,NA,NA,NA,NA,NA,NA,NA,26,747,NA,"No Recurrence",721
+38.4,"Black","No","1","1","0","0",6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,29,1064,NA,"No Recurrence",1035
+63.1,"Black","No","1","2","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,2380,NA,"No Recurrence",2360
+52.2,"Other","Yes","0","3",NA,"1",7,NA,NA,0,NA,"None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,1055,NA,"No Recurrence",NA
+79,"Black","No","2","2","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","Adjuvant Only","Yes","1 ovary","No","No",NA,NA,NA,NA,NA,NA,NA,NA,105,1554,NA,"No Recurrence",1449
+79.8,"White","No","0","3","0","0",6,NA,"Other",1,"mastectomy","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,64,NA,"No Recurrence",29
+35.9,"White","No","0","1","1",NA,6,NA,"Ductal",1,"mastectomy","Both","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",132,2183,NA,"No Recurrence",2051
+47.6,"White","No","3","1","0","0",9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,34,2223,NA,"No Recurrence",2189
+43.4,"White","No","0","1","1",NA,7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes",NA,"Not Complete","1","1","MX","Not complete","Not complete","0",153,1416,NA,"No Recurrence",1263
+53.4,"White","No","1","2","0","0",6,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",216,2014,NA,"No Recurrence",1798
+37.2,"White","No","0","2","0",NA,9,30,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,39,1055,NA,"No Recurrence",1016
+60.3,"Black","No","0","1","0",NA,4,NA,"Ductal",1,"BCS","None","Both","Adjuvant Only","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,58,1375,NA,"No Recurrence",1317
+42.6,"White","No","0","1","0","0",8,17,"Ductal",1,"BCS","None","Adjuvant Only","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,690,NA,"No Recurrence",648
+63.6,"White","No","0","2","1",NA,6,14,"Ductal",1,"mastectomy","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,33,382,NA,"No Recurrence",349
+46.3,"White","No","1","2","0","0",7,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,41,1686,NA,"No Recurrence",1645
+41.9,"White","No","3","4","1",NA,9,NA,"Ductal",1,"mastectomy","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","3","0","MX","Not complete","Not complete","0",0,197,NA,"Recurrence",197
+64.1,"White","No","0","1","0",NA,3,NA,"Ductal",1,"BCS","None","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,1306,NA,"No Recurrence",1264
+56.2,"Black","No","0","1","1","0",3,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,1800,NA,"No Recurrence",NA
+62.5,"White","Yes","0","2",NA,"1",5,NA,"Other",0,NA,"None","Neoadjuvant Only","None","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,315,349,"No Recurrence",NA
+48.9,"Other","No","0","2","0","0",6,18,NA,1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2",NA,"MX","Not complete","Not complete","0",145,1525,NA,"No Recurrence",1380
+62.3,"White","No","0","3","1",NA,6,NA,"Other",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,52,795,NA,"No Recurrence",743
+48.5,"White","No","0","2","3","0",7,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,125,1819,NA,"No Recurrence",1694
+52.3,"White","No","0","1","0","0",8,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,17,1891,NA,"No Recurrence",1874
+55.7,"Black","No","0","1","1","0",8,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,64,1624,NA,"No Recurrence",1560
+61.1,"White","No","3","2","0","0",8,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,37,2166,NA,"No Recurrence",2129
+64.2,"Other","Yes","1","2","2","1",8,NA,"Ductal",1,"mastectomy","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,185,NA,NA,"No Recurrence",NA
+43.8,"Black","No","3","2","2",NA,9,NA,"Ductal",1,"BCS",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,24,38,NA,"No Recurrence",14
+48.2,"Black","No","0","3","2","0",6,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","Yes","Not Complete","Not Complete","2","2","MX","Not complete","Not complete","0",271,1985,NA,"No Recurrence",1714
+67.2,"White","No","0","2","0","0",6,27,"Ductal",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",252,2567,NA,"No Recurrence",2315
+80.6,"White","No","3","1","0","0",6,NA,"Other",1,"mastectomy","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,32,1232,NA,"Recurrence",1200
+46.5,"White","No","3","4","3",NA,NA,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",134,260,461,"Recurrence",126
+35,"White","No","2","1","0","0",NA,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","Both","Yes","0 ovaries","Yes","Yes","Complete","Complete",NA,NA,NA,"Complete","Complete","1",129,2170,NA,"No Recurrence",2041
+45.6,"White","No","1","2","0","0",7,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","Both","No",NA,"No","Yes","Complete","Complete","0",NA,"MX","Complete","Complete","1",162,1577,NA,"No Recurrence",1415
+53.9,"Black","No","0","4","1","0",8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","Adjuvant Only","No",NA,"No","Yes",NA,"Not Complete","3","2","MX","Not complete","Not complete","0",208,692,NA,"No Recurrence",484
+59.4,"White","No","0","1","0",NA,5,NA,"Ductal",1,"BCS","None","None","None","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,26,1222,NA,"Recurrence",1196
+40.5,"White","No","3","1","1","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","None","Yes","2 ovaries","No","Yes","Complete","Not Complete","1","0",NA,"Not complete","Not complete","0",227,1603,NA,"No Recurrence",1376
+50.3,"White","No","0","1","0","0",7,16,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,37,1995,NA,"No Recurrence",1958
+58,"White","No","0","1","1",NA,5,12,"Ductal",1,"mastectomy","None","None","None","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,71,1570,NA,"No Recurrence",1499
+38.7,"White","No","1","2","3","0",8,NA,"Ductal",1,"BCS","Both","Adjuvant Only","Adjuvant Only","Neoadjuvant Only","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","2","1","MX","Not complete","Not complete","0",175,1603,NA,"No Recurrence",1428
+54.6,"White","No","0","1","0","0",8,34,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,57,1793,NA,"No Recurrence",1736
+46,"White","No","0","2","0",NA,6,12,"Ductal",1,"mastectomy","None","None","Neoadjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2",NA,"MX","Not complete","Not complete","0",183,1007,NA,"Recurrence",824
+41.9,"White","No","0","2","1","0",5,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,15,2051,NA,"No Recurrence",2036
+73.3,"Other","No","3","2","1","0",NA,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","Yes","Complete","Complete","0","0","MX","Complete","Complete","1",222,664,NA,"No Recurrence",442
+52.7,"White","No","1","1","0","0",6,NA,"Other",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","Both","Yes","0 ovaries","No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",199,823,NA,"No Recurrence",624
+70.7,"Black","No","1","4","1","0",8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Not Complete","4","3","MX","Not complete","Not complete","0",190,1603,NA,"No Recurrence",1413
+67.8,"White","No","0","2","1","0",7,NA,"Other",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,88,1880,NA,"No Recurrence",1792
+51,"White","No","3","1","0","0",7,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Complete",NA,NA,"MX","Complete","Complete","1",110,2226,NA,"No Recurrence",2116
+47.4,"Black","No","3","2","0","0",9,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",229,1526,NA,"Recurrence",1297
+59.3,"Black","No","3","3","0","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","None","No",NA,"No","Yes","Not Complete","Complete","0","0","MX","Complete","Complete","1",169,188,220,"No Recurrence",19
+50.5,"White","No","0","1","0","0",6,21,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,32,1654,NA,"No Recurrence",1622
+27.1,"White","Yes","2","2",NA,"1",7,NA,"Ductal",0,NA,"None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,1065,NA,"No Recurrence",NA
+55,"White","No","3","2","1",NA,6,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",166,2922,NA,"No Recurrence",2756
+70.6,"White","Yes","0","2",NA,"1",9,NA,"Ductal",0,NA,"None","Neoadjuvant Only","None","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"No Recurrence",NA
+68.7,"White","No","0","2","0",NA,4,12,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,27,2187,NA,"No Recurrence",2160
+57.6,"White","No","0","2","1","0",6,12,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,37,479,NA,"No Recurrence",442
+51.5,"Black","No","2","2","0","0",7,NA,NA,1,"mastectomy","Adjuvant Only","None","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,25,1400,NA,"Recurrence",1375
+46.2,"White","No","0","2","0","0",6,NA,NA,1,"BCS","Both","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",106,701,NA,"No Recurrence",595
+46.2,"White","No","0","3","1",NA,5,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,13,1485,NA,"No Recurrence",1472
+35.7,"White","No","0","2","0","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",186,2052,NA,"No Recurrence",1866
+53.4,"White","No","0","2","0","0",5,17,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,1501,NA,"No Recurrence",1466
+40.2,"White","No","0","1","2",NA,5,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,40,1244,NA,"No Recurrence",1204
+46.1,"White","No","2","2","0","0",6,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,14,231,NA,"No Recurrence",217
+63.6,"White","No","0","1","0","0",8,20,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,66,1148,NA,"No Recurrence",1082
+52.5,"White","No","0","2","0","0",6,14,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,49,2423,NA,"No Recurrence",2374
+38.6,"White","No","3","2","0","0",6,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Complete","Not Complete",NA,NA,NA,"Near-complete","Near-complete","2",189,1702,NA,"No Recurrence",1513
+34.1,"White","No","3","2","1","0",9,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,488,NA,"No Recurrence",488
+53.3,"White","No","0","2","0","0",NA,24,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,57,2655,NA,"No Recurrence",2598
+67.5,"Black","No","0","1",NA,NA,9,NA,"Ductal",0,NA,NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,6,NA,"No Recurrence",NA
+52.8,"White","No","0","2","0","0",6,5,"Other",1,"mastectomy","None","None","Both","None","Yes","1 ovary","No","Yes",NA,"Not Complete","2","0","MX","Not complete","Not complete","0",167,798,NA,"No Recurrence",631
+29.3,"Other","No","0","2","1","0",9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","0","1","M0","Not complete","Near-complete","10",167,575,NA,"No Recurrence",408
+53.2,"White","No","0","1","0",NA,6,NA,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,15,2466,NA,"No Recurrence",2451
+60.6,"White","No","0","1","0","0",7,26,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,34,860,NA,"No Recurrence",826
+36.9,NA,"No","0","2","0","0",9,45,"Ductal",1,"BCS","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,41,719,NA,"No Recurrence",678
+36.5,"White","No","1","2","0","0",7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Near-complete","Near-complete","7",232,888,NA,"No Recurrence",656
+53,"White","No","0","1","0","0",6,4,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,85,993,NA,"No Recurrence",908
+42.7,"White","No","0","2","0","0",4,6,"Ductal",1,"mastectomy",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,68,NA,"No Recurrence",68
+67.1,"White","No","0","2","0",NA,9,NA,"Ductal",1,"mastectomy","None","Adjuvant Only","Both","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",121,773,NA,"No Recurrence",652
+60.4,"White","No","2","3","2","0",9,NA,"Ductal",1,"BCS","Neoadjuvant Only","None",NA,"Neoadjuvant Only","No",NA,"No","Yes","Complete","DCIS Only","5","0","MX","Near-complete","Near-complete","4",174,199,NA,"No Recurrence",25
+65.2,"Black","No","0","3","2","0",6,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","3","3","MX","Not complete","Not complete","0",185,1984,NA,"No Recurrence",1799
+47,"Black","No","0","2","0","0",7,14,NA,1,"BCS","None","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,29,1467,NA,"No Recurrence",1438
+60.1,"White","No","0","2","0","0",6,27,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,3012,NA,"No Recurrence",2992
+50,"White","No","1","1","1",NA,8,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,887,NA,"Recurrence",852
+47.4,"Black","No","1","1","0","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,54,1105,NA,"No Recurrence",1051
+33.9,"White","No","2","1","0","0",7,NA,NA,1,"mastectomy","Adjuvant Only","None","None","Adjuvant Only","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,1748,NA,"No Recurrence",NA
+56.6,"White","No","3","2","1","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",149,1088,NA,"No Recurrence",939
+50.1,"Black","No","0","1","0","0",4,10,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,30,2215,NA,"No Recurrence",2185
+69.1,"White","No","3","2","0","0",9,NA,NA,1,"mastectomy","Neoadjuvant Only","None","None","None","No",NA,"No","Yes","Not Complete","Complete",NA,"0","MX","Complete","Complete","1",170,1416,NA,"No Recurrence",1246
+44.8,"White","No","0","2","1",NA,6,10,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,25,1670,NA,"No Recurrence",1645
+45.8,"White","No","0","3","1","0",6,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","Yes","Complete","Not Complete","1","0","MX","Not complete","Not complete","0",179,1609,NA,"No Recurrence",1430
+54.3,"White","No","0","1","0","0",5,18,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,36,2951,NA,"No Recurrence",2915
+51.2,"White","No","1","2","1",NA,6,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","Yes","0 ovaries","Yes","Yes","Complete","Not Complete","2","0","MX","Not complete","Not complete","0",154,1082,NA,"No Recurrence",928
+71.7,"Black","No","0","1","1","0",7,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",144,1671,NA,"No Recurrence",1527
+29.9,"White","No","2","2","2","0",6,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","Both","No",NA,"No","Yes","Complete","Complete",NA,"0","MX","Complete","Complete","1",177,1406,NA,"No Recurrence",1229
+56.4,"White","No","3","2","0","0",5,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,74,804,NA,"No Recurrence",730
+65,"Black","No","3","2","1",NA,9,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Near-complete","Near-complete","2",132,1632,NA,"No Recurrence",1500
+59.8,"White","No","2","1","2","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,15,1841,NA,"No Recurrence",1826
+73.9,"Black","No","0","1","1","0",7,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,52,1587,NA,"No Recurrence",1535
+58.8,"White","No","0","1","0","0",4,14,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,17,2807,NA,"No Recurrence",2790
+47.2,"White","No","0","1","0","0",6,21,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,18,1861,NA,"No Recurrence",1843
+66.2,"White","No","0","2","0",NA,7,51,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1401,NA,"No Recurrence",1401
+60.2,"White","No","0","1","0","0",6,10,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,5,1837,NA,"No Recurrence",1832
+49.4,"White","No","0","2","0","0",6,7,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2",NA,"MX","Not complete","Not complete","0",159,2198,NA,"No Recurrence",2039
+36.9,"White","No","1","3","0","0",9,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Complete","Complete",NA,"0","MX","Complete","Complete","1",203,748,NA,"No Recurrence",545
+45.3,"White","No","1","3","1",NA,7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","Both","No",NA,"No","Yes","Complete","Complete","0","0","MX","Complete","Complete","1",176,895,NA,"No Recurrence",719
+32.4,"Other","No","3","2","0","0",7,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Complete","DCIS Only","5","0","MX","Near-complete","Near-complete","4",147,2074,NA,"No Recurrence",1927
+42.4,"White","No","0","2","1",NA,3,14,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,1316,NA,"No Recurrence",1274
+56.4,"White","No","1","2","0","0",7,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes",NA,"Not Complete","1","1","MX","Not complete","Not complete","0",182,1135,1760,"Recurrence",953
+46.6,"White","No","0","1","1","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","1 ovary","No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",163,1423,NA,"No Recurrence",1260
+64.1,"White","No","0","1","0","0",5,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,78,1699,NA,"No Recurrence",1621
+47.7,"Black","No","3","2",NA,NA,9,NA,"Ductal",0,NA,NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,40,NA,"No Recurrence",NA
+41.5,"Black","No","0","2","0","0",9,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",158,1584,NA,"No Recurrence",1426
+62.5,"White","No","0","1","0","0",6,8,"Ductal",1,"BCS","None","Neoadjuvant Only","Adjuvant Only","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,111,1161,NA,"No Recurrence",1050
+69.7,"White","No","0","3","1",NA,5,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,39,1150,NA,"No Recurrence",1111
+48.4,"White","No","0","1","0","0",5,15,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,49,2044,NA,"No Recurrence",1995
+55.6,"White","No","0","1","0","0",4,NA,NA,1,"mastectomy","None","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,59,1709,NA,"No Recurrence",1650
+40.1,"Black","No","0","1","0",NA,6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,44,711,NA,"No Recurrence",667
+51.7,"Black","No","3","1","3","0",8,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","3","MX","Not complete","Not complete","0",261,331,348,"Recurrence",70
+63.6,"Black","No","0",NA,"1","0",NA,NA,NA,1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,17,2023,NA,"No Recurrence",2006
+51.4,"White","No","0","2","0","0",6,19,"Other",1,"BCS",NA,"Adjuvant Only",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,28,106,NA,"No Recurrence",78
+52.8,"White","No","3","2","0",NA,8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Complete","Not Complete","1",NA,"MX","Near-complete","Near-complete","2",132,2300,NA,"No Recurrence",2168
+44.6,"White","No","1","1","0","0",8,NA,NA,1,"mastectomy","Adjuvant Only","None","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,46,1644,NA,"No Recurrence",1598
+36.6,"White","No","1","1","1","0",8,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","Yes","0 ovaries","Yes","Yes","Complete","Complete",NA,"0","MX","Complete","Complete","1",146,1344,NA,"No Recurrence",1198
+52.2,"White","No","0","3","0",NA,7,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,77,1547,NA,"No Recurrence",1470
+42.8,"White","No","0","2","0","0",8,42,NA,1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete",NA,NA,NA,"Not complete","Not complete","0",216,1430,NA,"No Recurrence",1214
+54.5,"White","No","0","1","1",NA,6,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Complete","Not Complete","1","1","MX","Near-complete","Near-complete","2",210,2302,NA,"No Recurrence",2092
+54.7,"White","No","0","1","1","0",5,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,27,1510,NA,"No Recurrence",1483
+68,"Black","No","3","2","0","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,29,3130,NA,"No Recurrence",3101
+58.3,"White","Yes","0","2",NA,"1",6,NA,NA,0,NA,"None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,1051,1071,"No Recurrence",NA
+64.2,"White","No","1","2","0",NA,7,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",241,1218,NA,"No Recurrence",977
+49.1,"White","No","0","1","1","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes",NA,"Complete",NA,NA,NA,"Complete","Complete","1",160,1462,NA,"No Recurrence",1302
+41.3,"White","No","1","1","0","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","Adjuvant Only","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,40,1631,NA,"No Recurrence",1591
+58.9,"White","No","2","3","0","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","Both","No",NA,"No","Yes","Not Complete","Complete","0",NA,"MX","Complete","Complete","1",204,1652,NA,"No Recurrence",1448
+44.9,"White","No","0","1","2","0",6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,824,NA,"No Recurrence",789
+45.4,"White","No","1","1","0","0",6,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,1413,NA,"No Recurrence",1365
+62.9,"White","No","0","1","0","0",5,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,150,1438,NA,"No Recurrence",1288
+42.1,"White","No","3","2","2",NA,8,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only",NA,NA,"Yes","2 ovaries","No","Yes","Not Complete","Not Complete","1","2","MX","Not complete","Not complete","0",155,517,NA,"No Recurrence",362
+34.8,"White","No","0","2","0","0",9,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,44,358,642,"Recurrence",314
+64.7,"Black","No","0","3","0","0",6,NA,NA,1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","3",NA,"MX","Not complete","Not complete","0",155,1540,NA,"No Recurrence",1385
+42.1,"Black","No","0","2","0",NA,9,NA,"Ductal",1,"BCS",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,56,NA,"No Recurrence",14
+73.7,"White","No","0","2","0","0",7,14,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,31,1446,NA,"No Recurrence",1415
+55.3,"Black","No","0","1","0",NA,6,29,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,78,1231,NA,"Recurrence",1153
+57.9,"Black","No","0","1","0","0",6,15,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1963,NA,"No Recurrence",1963
+49.5,"Other","No","0","2","0",NA,6,NA,"Ductal",1,"BCS","Adjuvant Only","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,48,NA,"No Recurrence",13
+37.7,"White","No","1","1","1",NA,6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Neoadjuvant Only","No",NA,"No","Yes",NA,"Not Complete","1","1","MX","Not complete","Near-complete","15",156,1386,NA,"No Recurrence",1230
+46.9,"Black","No","0","2","0","0",9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Complete","Complete","0","0","MX","Complete","Complete","1",148,1525,NA,"No Recurrence",1377
+45.5,"White","Yes","3","3","1","1",8,NA,"Ductal",0,NA,"None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"No Recurrence",NA
+50.5,"White","Yes","2","2","2","1",8,NA,"Ductal",0,NA,"None","Neoadjuvant Only","None","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"No Recurrence",NA
+44.3,"Black","No","3","1","2",NA,9,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",169,534,573,"Recurrence",365
+41,"Other","No","2","2","0","0",7,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,77,257,NA,"No Recurrence",180
+50.2,"White","No","0","2","0","0",5,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,398,NA,"No Recurrence",398
+32.3,"Black","No","0","3","0","0",9,NA,NA,1,"mastectomy","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","3","0","MX","Not complete","Not complete","0",87,1027,1277,"Recurrence",940
+44.7,"White","Yes","1","1","1","1",7,NA,"Ductal",0,NA,"None","Neoadjuvant Only","None","None","Yes","0 ovaries","Yes","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"No Recurrence",NA
+61.8,"White","No","0","1","0","0",6,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,26,2001,NA,"No Recurrence",1975
+49.1,"Black","No","3","1","0",NA,9,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,23,1765,NA,"No Recurrence",1742
+51.1,"Black","No","0",NA,"2",NA,6,NA,"Ductal",1,"BCS","Neoadjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",139,2250,NA,"No Recurrence",2111
+43.1,"White","No","0","2","0","0",5,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","None","Yes","1 ovary","No","Yes","Complete","Not Complete","1","0","MX","Not complete","Not complete","0",182,708,NA,"No Recurrence",526
+49.7,"White","No","0","2","0",NA,6,8,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,49,1110,NA,"No Recurrence",1061
+55.3,"White","No","0","2","1","0",6,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,82,687,NA,"No Recurrence",605
+56.4,"White","No","0","1","1","0",6,NA,NA,1,"BCS",NA,NA,NA,NA,"Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,12,71,NA,"No Recurrence",59
+65.8,"White","No","3","2","0","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,34,2217,NA,"No Recurrence",2183
+43.9,"White","No","0","2","0","0",5,12,"Ductal",1,"mastectomy",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,27,61,NA,"No Recurrence",34
+59.8,"Black","No","0","1","0","0",6,16,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,26,1783,NA,"No Recurrence",1757
+56.6,NA,"No","0","2","0","0",9,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,23,1849,NA,"No Recurrence",1826
+45.4,"White","No","0","2","3","0",7,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Complete","Not Complete","2","3","MX","Not complete","Not complete","0",142,935,NA,"Recurrence",793
+55.7,"White","No","1","2","0","0",7,NA,"Ductal",1,"BCS","Both","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",126,1666,NA,"No Recurrence",1540
+33.7,"White","No","3","2","3","0",8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Near-complete","Near-complete","2",169,1985,NA,"No Recurrence",1816
+60.2,"White","No","2","1","0","0",NA,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","Adjuvant Only","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,51,1996,NA,"No Recurrence",1945
+76.6,"White","No","0","2","0","0",9,37,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2",NA,"MX","Not complete","Not complete","0",120,2230,NA,"No Recurrence",2110
+53.2,"White","No","0","1","0","0",4,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,55,1945,NA,"No Recurrence",1890
+55.7,"Other","No","0","1","0","0",6,NA,"Ductal",1,"BCS",NA,"Adjuvant Only",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,91,1327,NA,"No Recurrence",1236
+63.2,"White","No","1","2","0","0",8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Complete",NA,NA,NA,"Complete","Complete","1",185,808,NA,"No Recurrence",623
+52.9,"White","No","0","1","0","0",6,16,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,9,449,NA,"No Recurrence",440
+48.7,"White","No","0","3","3","0",5,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","3","3","MX","Not complete","Not complete","0",146,1356,NA,"No Recurrence",1210
+42.9,"Black","No","0","2","1","0",9,NA,NA,0,NA,NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,713,NA,"No Recurrence",NA
+38.8,"White","No","3","1","1",NA,9,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,72,346,NA,"No Recurrence",274
+48.5,"White","No","0","1","0","0",8,26,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,916,NA,"No Recurrence",895
+47.3,"Black","No","1","2","2","0",8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Neoadjuvant Only","Yes","0 ovaries","No","Yes",NA,"Not Complete",NA,NA,NA,"Not complete","Not complete","0",337,841,NA,"Recurrence",504
+60.9,"White","No","0","2","3","0",5,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,12,1319,NA,"No Recurrence",1307
+61.2,"White","No","0","2","0","0",7,38,"Ductal",1,"BCS","None","Adjuvant Only","None","None","Yes","1 ovary","No","No",NA,NA,NA,NA,NA,NA,NA,NA,23,1890,NA,"No Recurrence",1867
+50.5,"White","No","0","3","0","0",7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes",NA,"Not Complete","3","0",NA,"Not complete","Not complete","0",186,791,NA,"No Recurrence",605
+76.1,"White","No","0","1","0","0",5,NA,"Ductal",1,"BCS","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,547,NA,"No Recurrence",512
+43,"Black","No","0","1","0","0",6,15,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,1106,NA,"No Recurrence",1086
+40.2,"Black","No","1","2","1",NA,6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,70,846,NA,"No Recurrence",776
+51.8,"White","No","0","1","1",NA,6,14,"Ductal",1,"mastectomy","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,62,1299,NA,"No Recurrence",1237
+58,NA,"Yes","0","3","1","1",7,NA,"Ductal",0,NA,"None","Neoadjuvant Only","None","None","Yes","2 ovaries","No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"No Recurrence",NA
+43,"White","No","0","2","2",NA,7,NA,"Other",1,"BCS","Both","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Complete","Not Complete","2","2","MX","Not complete","Not complete","0",149,2397,NA,"No Recurrence",2248
+66.5,"White","No","0","2","0","0",6,0,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,1278,NA,"No Recurrence",1236
+37.2,"White","No","1","3","1",NA,6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,39,1516,NA,"No Recurrence",1477
+80.4,"White","No","0","1","0","0",6,NA,"Ductal",1,"BCS","None","None","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,63,1103,NA,"Recurrence",1040
+43.7,"Other","No","2","3","1","0",6,NA,"Ductal",1,"mastectomy","Both","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Complete","0","0","MX","Complete","Complete","1",173,885,NA,"No Recurrence",712
+56.3,"White","No","1","1","0","0",NA,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,36,2646,NA,"No Recurrence",2610
+61.6,"Black","No","0","1","0","0",6,NA,"Ductal",1,"BCS","None","Neoadjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,51,1172,NA,"No Recurrence",1121
+46.9,"Black","No","0","1","0","0",9,NA,"Ductal",1,"mastectomy","Both","Adjuvant Only","Adjuvant Only","None","Yes","1 ovary","No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",199,1108,NA,"Recurrence",909
+58.8,"White","No","0","1","0",NA,5,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,1304,NA,"No Recurrence",1256
+43.8,"White","No","0","1","0","0",6,16,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,2198,NA,"No Recurrence",2178
+66.4,"Black","No","0","1","0","0",6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,49,594,NA,"No Recurrence",545
+68,"White","No","3","1","0","0",7,NA,"Ductal",1,"mastectomy","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,130,150,785,"No Recurrence",20
+43.6,"Black","No","3","1","0","0",8,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,46,782,NA,"No Recurrence",736
+53.8,"White","No","3","3","1","0",7,NA,NA,1,"mastectomy","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","2","1","MX","Not complete","Not complete","0",202,1942,NA,"No Recurrence",1740
+40.4,"White","No","0","1","0",NA,8,21,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,62,185,NA,"No Recurrence",123
+53.5,"Black","No","3","3","0","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,288,645,"Recurrence",268
+72.9,"White","No","1","1","0",NA,8,10,NA,1,"BCS","None","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,2006,NA,"No Recurrence",1986
+49.6,"White","No","0","1","1","0",5,14,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,53,3090,NA,"No Recurrence",3037
+44.1,"White","No","0","1","0","0",9,16,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,44,1548,NA,"No Recurrence",1504
+50.3,"Black","No","3","3","1","0",9,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","Yes","Not Complete","Complete",NA,NA,NA,"Complete","Complete","1",131,1575,NA,"No Recurrence",1444
+53.3,"White","No","3","2","0","0",8,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",189,1500,NA,"No Recurrence",1311
+61.1,"White","No","3","1","3","0",7,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","Adjuvant Only","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,34,431,1268,"Recurrence",397
+65.5,"White","No","3","1","0","0",8,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,33,1373,NA,"No Recurrence",1340
+57.8,"Black","No","3","1","1",NA,7,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","None","Yes","1 ovary","No","No",NA,NA,NA,NA,NA,NA,NA,NA,30,715,NA,"No Recurrence",685
+33.4,"White","No","1","1","0","0",6,NA,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,53,1229,NA,"No Recurrence",1176
+67.4,"White","No","0","2","0","0",7,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,34,1475,NA,"No Recurrence",1441
+57.5,"White","No","0","2","0","0",6,10,NA,1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,1539,NA,"No Recurrence",1518
+44.9,"White","No","3","2","1",NA,5,NA,"Other",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","2","1","MX","Not complete","Near-complete","14",204,317,336,"Recurrence",113
+50.8,"Black","No","0","2","0","0",9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1439,NA,"No Recurrence",1439
+46.5,"Black","No","0","2","0",NA,6,36,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,71,743,NA,"No Recurrence",672
+66.2,"White","No","0","2","1","0",6,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","Yes","Not Complete","Not Complete","1","2","MX","Not complete","Not complete","0",196,1576,NA,"No Recurrence",1380
+55,"Black","No","0","2","3","0",7,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,39,1701,NA,"No Recurrence",1662
+48.4,"White","No","0","2","1",NA,6,22,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,84,1381,NA,"No Recurrence",1297
+39.9,"White","No","0","1","0","0",7,29,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,736,NA,"No Recurrence",715
+37.5,"Other","No","0","2","1","0",5,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","1 ovary","No","No",NA,NA,NA,NA,NA,NA,NA,NA,22,1415,NA,"No Recurrence",1393
+45.8,"White","No","3","2","0","0",7,NA,"Ductal",1,"BCS","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","2",NA,"MX","Not complete","Not complete","0",131,1858,NA,"No Recurrence",1727
+43.3,"White","No","1","3","2","0",8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",189,2044,NA,"No Recurrence",1855
+47.6,"White","No","0","2","0","0",5,12,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,15,1787,NA,"No Recurrence",1772
+52.6,"Black","No","0","2","1",NA,7,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",143,1679,NA,"No Recurrence",1536
+35.6,"Other","No","0","1","0","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","1 ovary","No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",161,1500,NA,"Recurrence",1339
+49,"White","Yes","0","2",NA,"1",7,NA,"Other",0,NA,"None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,41,613,"No Recurrence",NA
+59.1,"White","No","1","2","1","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes",NA,"Not Complete","1","1","MX","Not complete","Near-complete","13",149,1661,NA,"No Recurrence",1512
+37.1,NA,"No","0","2","0","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes",NA,"Not Complete","2","2","MX","Not complete","Not complete","0",163,1519,NA,"No Recurrence",1356
+33.1,"White","No","0","2","1","0",9,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,1547,NA,"No Recurrence",1505
+64.1,"White","No","0","2","1","0",6,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,31,2009,NA,"No Recurrence",1978
+68.7,"White","No","0","1","1","0",7,24,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,46,1166,NA,"No Recurrence",1120
+45.5,"Other","No","1","4","0","0",6,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","Yes","0 ovaries","No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",148,1971,NA,"No Recurrence",1823
+69.2,"White","No","0","2","2","0",7,NA,"Ductal",1,"mastectomy",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,54,71,400,"No Recurrence",17
+36.3,"White","Yes","1","1","1","1",7,NA,"Ductal",1,"mastectomy","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,267,NA,NA,"No Recurrence",NA
+48.7,"White","No","0","1","1",NA,6,22,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,17,2069,NA,"No Recurrence",2052
+47.5,"Other","No","0","1","0",NA,6,25,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,41,718,NA,"No Recurrence",677
+37.3,"White","No","2","1","0","0",4,NA,NA,1,"BCS",NA,NA,NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,7,1352,NA,"No Recurrence",1345
+62.3,"Black","No","2",NA,"3","0",NA,NA,NA,0,NA,"Neoadjuvant Only","Neoadjuvant Only","None","Neoadjuvant Only","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,895,NA,"No Recurrence",NA
+58.7,"Black","No","0","1","0","0",5,NA,"Other",1,"mastectomy","None","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,54,1952,NA,"No Recurrence",1898
+42.4,"Other","No","1","1","0","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","Adjuvant Only","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,43,1848,NA,"No Recurrence",1805
+43.1,"White","No","1","1","0","0",8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","Neoadjuvant Only","No",NA,"No","Yes","Not Complete","Complete",NA,NA,"MX","Complete","Complete","1",158,1188,NA,"No Recurrence",1030
+48.5,"White","No","0","2","2","0",8,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,17,1842,NA,"No Recurrence",1825
+47.3,"Black","No","1","2","1","0",9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","Yes","2 ovaries","No","Yes","Complete","Complete",NA,NA,NA,"Complete","Complete","1",164,1337,NA,"No Recurrence",1173
+44.5,"Other","No","1","2","1",NA,NA,NA,"Ductal",1,"BCS","Both","None",NA,"Neoadjuvant Only","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,258,279,NA,"No Recurrence",21
+62.9,"White","No","0","1","0","0",9,28,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,34,1608,NA,"No Recurrence",1574
+57.8,"Black","No","3","2","1","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","None","No",NA,"No","Yes","Not Complete","Complete",NA,NA,NA,"Complete","Complete","1",179,205,NA,"No Recurrence",26
+76.5,"White","No","0","3","3",NA,7,NA,"Other",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,29,1754,1818,"No Recurrence",1725
+45.3,"White","No","1","3","1","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","DCIS Only","5","0","MX","Near-complete","Near-complete","4",205,2593,NA,"No Recurrence",2388
+71.1,"Black","No","0","1","0","0",8,NA,NA,1,"BCS","None","Adjuvant Only","None","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,1400,NA,"No Recurrence",NA
+31.4,"White","No","1","2","1",NA,8,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,40,1040,NA,"No Recurrence",1000
+58.5,"White","No","0","1","0","0",5,NA,"Ductal",0,NA,NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,32,NA,"No Recurrence",NA
+43.7,"Black","No","0","4","0",NA,5,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,13,464,NA,"No Recurrence",451
+42.2,"White","No","3","1","0","0",8,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",170,1743,NA,"No Recurrence",1573
+67.7,"White","Yes","3","3","2","1",8,NA,NA,1,"mastectomy","None","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,114,504,511,"No Recurrence",390
+49.7,"White","No","3","1","0",NA,9,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,1822,NA,"Recurrence",1801
+42.2,"White","No","0","2","1","0",9,NA,"Other",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",23,582,NA,"No Recurrence",559
+54.2,"Black","No","0","3","1","0",6,NA,NA,1,"mastectomy","Both","Adjuvant Only","Both","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete",NA,"1","MX","Not complete","Not complete","0",160,1875,NA,"No Recurrence",1715
+52.5,"White","No","0","1","0","0",7,8,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,51,875,NA,"No Recurrence",824
+46.8,"Black","No","3","2","0","0",7,NA,NA,1,"BCS","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",154,1453,NA,"No Recurrence",1299
+73.4,"White","No","0","1","0","0",8,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,2110,NA,"No Recurrence",2089
+47.7,"White","No","0","2","0","0",6,NA,"Ductal",1,"mastectomy","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,41,768,NA,"Recurrence",727
+48.8,"White","No","0","1","0","0",4,NA,"Other",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,20,1560,NA,"No Recurrence",1540
+63,"Black","No","3","2","1","0",6,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","Yes","0 ovaries","No","Yes","Not Complete","Not Complete","2","1","MX","Not complete","Not complete","0",261,1543,NA,"No Recurrence",1282
+48.2,"White","No","0","1","0","0",6,4,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,41,861,NA,"No Recurrence",820
+70.1,"Black","No","0","1","0","0",8,NA,"Ductal",1,"BCS","None","Adjuvant Only","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,32,2449,NA,"No Recurrence",2417
+49.9,"White","No","0","1","0","0",8,18,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1266,NA,"No Recurrence",1266
+81.5,"White","No","0","1","0","0",5,NA,"Ductal",1,"BCS","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,54,1522,NA,"No Recurrence",1468
+46,"White","No","0","3","1","0",6,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,64,1479,NA,"No Recurrence",1415
+50.4,"Black","No","0","2","0","0",7,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,30,1640,NA,"No Recurrence",1610
+43.8,"Black","No","3","2","2",NA,9,NA,"Ductal",1,"BCS","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","2","2","MX","Not complete","Not complete","0",112,548,801,"Recurrence",436
+51.5,"Black","No","3","2","0","0",8,NA,"Ductal",1,"BCS","Both","Adjuvant Only","None","None","Yes","1 ovary","No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",122,1876,NA,"No Recurrence",1754
+45.7,"Black","No","3","2","0","0",9,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,80,1148,NA,"No Recurrence",1068
+46.8,"Black","No","0","3","1","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Near-complete","Near-complete","18",190,1287,NA,"No Recurrence",1097
+50.4,"White","No","3","1","1","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,22,839,NA,"No Recurrence",817
+46.5,"White","No","0","1","1","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",127,2129,NA,"No Recurrence",2002
+47.5,"White","No","3","1","0","0",8,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,74,782,NA,"No Recurrence",708
+48.8,"White","No","0","1","0","0",4,16,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,824,NA,"No Recurrence",789
+40.4,"White","No","0","2","1","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",145,878,NA,"No Recurrence",733
+45,"White","No","0","2","0","0",4,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,12,1170,NA,"No Recurrence",1158
+46.5,"White","No","0","2","0","0",7,28,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,55,1316,NA,"No Recurrence",1261
+50.2,"White","No","3","3","1",NA,7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",163,570,NA,"Recurrence",407
+66.4,"White","No","0","1","0","0",7,13,NA,1,"mastectomy","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,30,1967,NA,"No Recurrence",1937
+62.4,"White","No","0","2","0",NA,8,19,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,33,2200,NA,"No Recurrence",2167
+62,"White","No","0","1","0","0",5,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1471,NA,"No Recurrence",1471
+75.9,"White","No","2","3","1","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,139,1447,NA,"No Recurrence",1308
+42,"Black","No","0","3","1","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",156,476,947,"Recurrence",320
+57.9,"White","No","0","1","0","0",5,24,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,75,3177,NA,"No Recurrence",3102
+49,"Black","No","1","2","2",NA,8,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,76,1841,NA,"No Recurrence",1765
+60.7,"White","No","0","1","1","0",8,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","Yes","Complete","Complete",NA,"0","MX","Complete","Complete","1",200,1383,NA,"No Recurrence",1183
+55.5,"White","No","1","1","0","0",5,NA,"Ductal",1,"BCS","Adjuvant Only","None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,36,104,NA,"No Recurrence",68
+52.8,"Other","No","0","2","0","0",8,NA,NA,1,"BCS","Both","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2",NA,"MX","Not complete","Not complete","0",146,1337,NA,"No Recurrence",1191
+60.2,"White","No","0","3","1","0",5,15,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes",NA,"Not Complete","3",NA,"MX","Not complete","Not complete","0",126,1231,NA,"No Recurrence",1105
+54.1,"White","No","0","2","1",NA,6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,49,1861,NA,"No Recurrence",1812
+59.7,"White","No","2","3","1","0",7,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","Both","No",NA,"No","Yes","Complete","Not Complete","1","1","MX","Near-complete","Near-complete","3",184,1131,NA,"No Recurrence",947
+64.4,"White","No","3","2","1","0",7,NA,"Ductal",1,"BCS","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","2","3","MX","Not complete","Not complete","0",185,618,639,"No Recurrence",433
+46.8,"White","No","1","1","0","0",6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,51,806,NA,"No Recurrence",755
+62,"White","No","0","1","2","0",6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,84,1225,NA,"No Recurrence",1141
+75.2,"White","No","0","2","0","0",6,14,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,24,1716,NA,"No Recurrence",1692
+61.9,"White","No","0","2","0","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,34,2146,NA,"No Recurrence",2112
+74.5,"White","No","0","1","0",NA,6,NA,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,98,1805,NA,"No Recurrence",1707
+54.3,"Black","No","0","1","2",NA,8,NA,"Ductal",1,"mastectomy","Both","Adjuvant Only","None","None","No",NA,"No","Yes",NA,"Not Complete","1","2","MX","Not complete","Near-complete","15",167,381,398,"Recurrence",214
+35.7,"White","No","3","1","0","0",9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,26,1364,NA,"No Recurrence",1338
+40.5,"Black","No","3","3","2",NA,8,NA,"Other",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,26,2325,NA,"No Recurrence",2299
+71.8,"White","No","0","1","0","0",8,NA,"Ductal",1,"BCS","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,53,1195,NA,"No Recurrence",1142
+63.3,"Black","No","0","2","1",NA,9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes",NA,"Complete",NA,NA,NA,"Complete","Complete","1",213,736,NA,"No Recurrence",523
+79.4,"Black","No","0","1","0","0",7,NA,"Other",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,57,2240,NA,"No Recurrence",2183
+79.8,"White","No","0","2","0","0",6,NA,NA,1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,1649,NA,"No Recurrence",1629
+70.1,"Black","No","0","1","1","0",6,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,39,1960,NA,"No Recurrence",1921
+45.7,"White","No","2","1","1",NA,8,NA,NA,1,"mastectomy","Neoadjuvant Only","None","None","Both","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",148,776,NA,"No Recurrence",628
+48.2,NA,"No","0","2",NA,NA,6,NA,"Ductal",0,NA,"None","None","Neoadjuvant Only","None","No",NA,"No","Yes","Not Complete",NA,NA,NA,NA,NA,NA,NA,NA,113,1381,"No Recurrence",NA
+42.5,"White","No","0","2","0","0",5,13,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",120,2249,NA,"No Recurrence",2129
+50.3,NA,"No","0","4","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,27,421,NA,"Recurrence",394
+43.9,"White","No","3","2","0","0",9,NA,NA,NA,NA,"Adjuvant Only",NA,"None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+57.3,"White","No","0","1","0","0",6,24,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,1917,NA,"No Recurrence",1875
+31.1,"Other","No","1","2","1","0",7,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,1638,NA,"No Recurrence",1590
+47.1,"White","No","1","2","2","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","Yes","0 ovaries","Yes","Yes","Complete","Complete",NA,NA,"MX","Complete","Complete","1",245,2694,NA,"No Recurrence",2449
+64.6,"White","No","3","1","0","0",NA,NA,"Ductal",1,"BCS","None","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,45,490,NA,"No Recurrence",445
+59.5,"White","No","0","2","0","0",9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,49,1529,NA,"No Recurrence",1480
+67.4,"White","No","0","1","0",NA,8,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,24,570,NA,"Recurrence",546
+66.4,"White","No","0","2","0","0",7,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,33,1733,NA,"No Recurrence",1700
+44.6,"White","No","0","2","0","0",6,29,NA,1,"BCS","Both","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",158,1720,NA,"No Recurrence",1562
+50.2,"White","No","3","1","0","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,184,826,NA,"No Recurrence",642
+41.1,"White","No","0","2","1","0",6,NA,NA,0,NA,"Neoadjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete",NA,NA,NA,NA,NA,NA,NA,NA,1419,NA,"No Recurrence",NA
+62.5,"White","No","0","1","0","0",5,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,123,1116,NA,"No Recurrence",993
+69.8,"White","No","0","1","0","0",5,20,"Other",1,"BCS",NA,"None",NA,NA,"Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,52,139,NA,"No Recurrence",87
+54.8,"White","No","0","2","0","0",9,76,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","Yes","Not Complete","Complete",NA,NA,NA,"Complete","Complete","1",134,1500,NA,"No Recurrence",1366
+54.9,"Black","No","0","1","0","0",7,14,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","1 ovary","No","No",NA,NA,NA,NA,NA,NA,NA,NA,54,1194,NA,"No Recurrence",1140
+43.4,"White","No","0","2","0",NA,6,17,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,25,1625,NA,"No Recurrence",1600
+57,"White","No","0","1","0","0",4,17,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,34,1549,NA,"No Recurrence",1515
+65.2,"White","No","0","2","0","0",7,21,"Ductal",1,"BCS","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,139,729,NA,"Recurrence",590
+47,"Black","No","0","1","0","0",7,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,19,1460,NA,"No Recurrence",1441
+43,"Black","Yes","2","2","3","1",7,NA,"Ductal",1,"mastectomy","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,244,676,NA,"No Recurrence",432
+68.3,"White","No","1","1","0","0",7,23,NA,1,"mastectomy","Both","None","Adjuvant Only","Both","No",NA,"No","Yes",NA,"Not Complete","2","0","MX","Not complete","Not complete","0",90,1701,NA,"No Recurrence",1611
+46.5,"Black","No","0","3","1","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","1 ovary","No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",178,1276,NA,"No Recurrence",1098
+72.6,"Black","No","0","1","0",NA,6,22,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,84,607,NA,"No Recurrence",523
+33.7,"White","No","1","2","3",NA,NA,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,28,1462,NA,"No Recurrence",1434
+71.8,"White","No","3","2","0","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,50,217,NA,"No Recurrence",167
+51.3,"Black","No","0","3","2",NA,8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Complete",NA,"0","MX","Complete","Complete","1",175,1478,NA,"No Recurrence",1303
+57,"White","No","0","1","0","0",4,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,63,1160,NA,"No Recurrence",1097
+36.2,"White","No","0","1","0","0",8,28,"Other",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,220,2146,NA,"No Recurrence",1926
+39.5,"White","No","1","2","1","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","Both","No",NA,"No","Yes",NA,"Not Complete","1","0","MX","Near-complete","Near-complete","6",205,287,NA,"No Recurrence",82
+60.5,"White","No","0","1","1",NA,5,NA,"Ductal",0,NA,NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,14,NA,"No Recurrence",NA
+60.2,"White","No","0","2","1","0",8,19,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,28,2017,NA,"No Recurrence",1989
+38.4,"White","No","0","2","1","0",7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","2","1","MX","Not complete","Not complete","0",157,3119,NA,"No Recurrence",2962
+53.2,"White","No","0","1","0","0",5,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,1506,NA,"No Recurrence",1485
+50.5,"White","No","0","1","0","0",7,28,NA,1,"BCS","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,10,1813,NA,"No Recurrence",1803
+49.2,"White","No","0","3","3",NA,7,NA,"Ductal",1,"mastectomy","Adjuvant Only","None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,42,NA,"No Recurrence",0
+55,"Black","No","3","2","1","0",8,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Near-complete","15",171,1445,NA,"No Recurrence",1274
+64.4,"White","No","0","1","0","0",6,1,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,23,1421,NA,"No Recurrence",1398
+58.9,"White","No","3","2","0","0",9,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,63,1082,NA,"No Recurrence",1019
+36.1,"Other","No","3","4","1",NA,NA,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","Yes","0 ovaries","No","Yes","Not Complete","DCIS Only",NA,"0","MX","Near-complete","Near-complete","4",208,1523,NA,"No Recurrence",1315
+64.7,"White","No","0","1","1","0",6,14,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,33,768,NA,"No Recurrence",735
+46.1,"Black","No","0","2","0","0",5,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,35,1756,NA,"No Recurrence",1721
+52.5,"White","No","2","1","0",NA,9,NA,"Ductal",1,"mastectomy",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,227,247,NA,"No Recurrence",20
+65.3,"White","No","0","2","1",NA,5,4,"Other",1,"mastectomy","None","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,34,795,NA,"No Recurrence",761
+39.6,"Black","No","1","2","0","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","Both","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Near-complete","Near-complete","7",193,461,NA,"No Recurrence",268
+52,"White","No","1","1","0","0",6,NA,NA,1,"mastectomy","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,1237,NA,"No Recurrence",1189
+53.4,NA,"No","0","2","1","0",4,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,38,1557,NA,"No Recurrence",1519
+43,"Black","No","3","1","1","0",9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,28,2269,NA,"No Recurrence",2241
+54.2,"White","No","0","1","0","0",5,20,"Other",1,"mastectomy","None","None","Both","None","Yes","0 ovaries","Yes","Yes",NA,"Not Complete","1","0","MX","Not complete","Not complete","0",34,1681,NA,"No Recurrence",1647
+58.9,"White","No","2","2","0","0",6,NA,NA,NA,NA,NA,NA,"None",NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+68.9,"White","No","0","1","0","0",6,8,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1156,NA,"No Recurrence",1156
+60.5,"White","No","3","1","1",NA,4,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,60,1893,NA,"No Recurrence",1833
+68.6,"White","No","0","2","0","0",6,21,NA,1,"BCS","None","Adjuvant Only","Both","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",134,1755,1805,"No Recurrence",1621
+46.1,"Black","No","3","2","0","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Complete","0","0","MX","Complete","Complete","1",218,1162,NA,"No Recurrence",944
+72.7,"White","No","0","2","0","0",4,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",203,1246,NA,"Recurrence",1043
+60.9,"White","No","0","1","0",NA,3,11,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,59,1140,NA,"No Recurrence",1081
+65.5,"White","No","0","1","0","0",6,3,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,39,907,NA,"No Recurrence",868
+41.2,"White","No","0","1","1","0",6,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,34,1851,NA,"No Recurrence",1817
+32.8,"Black","No","0","2","0",NA,5,NA,"Ductal",1,"BCS",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,8,8,NA,"No Recurrence",0
+43.2,"White","No","3","3","3","0",8,NA,"Ductal",1,"mastectomy","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","3","3","MX","Not complete","Not complete","0",146,322,524,"Recurrence",176
+57.4,"Black","No","0","2","2","0",8,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,539,689,"Recurrence",519
+40.7,"White","No","0","4","1","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","1","1","M1","Not complete","Not complete","0",180,599,NA,"Recurrence",419
+51.9,"Black","No","2","2",NA,"0",7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Neoadjuvant Only","None","Adjuvant Only","No",NA,"No","Yes","Not Complete","DCIS Only","5","0","MX","Near-complete","Near-complete","4",160,2815,NA,"No Recurrence",2655
+39.3,"White","No","0","1","1","0",7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","1","2","MX","Not complete","Not complete","0",217,3014,NA,"No Recurrence",2797
+46.8,"Black","No","3","2","0","0",9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,909,NA,"Recurrence",909
+62.4,"White","No","0","1","0","0",5,19,"Other",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,1094,NA,"No Recurrence",1052
+49.2,"White","No","0","2","0","0",7,19,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,13,1444,NA,"No Recurrence",1431
+50.5,"White","No","1","2","3","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,65,1382,NA,"No Recurrence",1317
+30.8,"White","Yes","0","2","3","1",7,NA,"Ductal",1,"mastectomy","None","Adjuvant Only","None","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,397,739,NA,"Recurrence",342
+58.4,"White","No","0","1","0",NA,6,16,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,69,2786,NA,"No Recurrence",2717
+52.2,"White","No","1","2",NA,"0",7,NA,NA,1,"BCS",NA,"Adjuvant Only",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,14,148,NA,"No Recurrence",134
+48.3,"Black","No","2","2","0","0",7,NA,"Ductal",1,"BCS","Neoadjuvant Only","None","None","Both","Yes","0 ovaries","No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",159,1960,NA,"No Recurrence",1801
+46,"White","No","0","1","0","0",6,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,29,1803,NA,"No Recurrence",1774
+51,"White","No","1","2","1","1",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Not Complete","2","1","MX","Not complete","Not complete","0",155,2207,NA,"No Recurrence",2052
+26.4,"White","No","3","1","0","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes",NA,"Complete",NA,NA,NA,"Complete","Complete","1",182,1174,NA,"No Recurrence",992
+54.3,"Other","No","0","1","1","0",6,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",247,785,1167,"Recurrence",538
+43.5,"Black","No","2","3","1","0",9,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","Adjuvant Only","Yes","0 ovaries","No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",177,2036,NA,"No Recurrence",1859
+52.5,"White","Yes","0","2",NA,"1",8,NA,"Ductal",0,NA,"None","Neoadjuvant Only","None","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"No Recurrence",NA
+61.4,"White","No","0","2","0","0",6,11,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,36,1910,NA,"No Recurrence",1874
+52.2,"White","No","2","1","0","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","Adjuvant Only","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,100,1378,NA,"Recurrence",1278
+41.5,"White","No","0","1","1","0",NA,24,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,46,1733,NA,"Recurrence",1687
+74.6,"White","No","0","2","0","0",9,32,"Ductal",1,"BCS","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,43,1137,NA,"No Recurrence",1094
+54.9,"Black","No","0","2",NA,"0",8,NA,"Ductal",0,NA,"Neoadjuvant Only","Neoadjuvant Only","None","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,554,NA,"Recurrence",NA
+45.1,"Black","No","0","2","0","0",6,NA,"Ductal",1,"BCS","Neoadjuvant Only","None",NA,NA,"No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",234,249,NA,"No Recurrence",15
+34.2,"Black","No","0","1","1","0",6,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Complete",NA,"0","MX","Complete","Complete","1",155,1489,NA,"No Recurrence",1334
+50.4,"White","No","0","1","0",NA,6,16,NA,1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,46,1897,NA,"No Recurrence",1851
+39,"Other","No","0","2","1","0",4,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,30,953,NA,"No Recurrence",923
+56.5,"White","No","1","1","0","0",6,36,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,81,252,NA,"No Recurrence",171
+60.3,"White","No","0","3","1","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","3","1","MX","Not complete","Not complete","0",150,1530,NA,"No Recurrence",1380
+46.4,"White","No","0","2","0","0",5,14,"Other",1,"BCS","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,1810,NA,"Recurrence",1768
+42,"Black","No","1","3","1",NA,6,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Not Complete","3","1","MX","Not complete","Not complete","0",180,1636,NA,"No Recurrence",1456
+63.7,"Black","No","0","1","1","0",4,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,29,2240,NA,"No Recurrence",2211
+48.1,"White","No","0","2","2","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,58,778,NA,"Recurrence",720
+66.3,"White","No","0","3","0",NA,5,7,"Other",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,66,701,NA,"No Recurrence",635
+47.3,"White","No","0","3","1",NA,7,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,1298,NA,"Recurrence",1256
+53.4,NA,"No","0","1","2","0",6,25,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,31,1408,NA,"No Recurrence",1377
+24,"Black","No","3","3","1","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","Both","Yes","1 ovary","No","Yes","Not Complete","Complete",NA,"0","MX","Complete","Complete","1",285,614,NA,"No Recurrence",329
+61.3,"White","No","0","1","0","0",5,1,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,52,1116,NA,"No Recurrence",1064
+61.2,"Black","No","2","2","1",NA,8,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,30,1291,NA,"No Recurrence",1261
+55.6,NA,"No","0","1","2","0",9,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,24,1169,NA,"No Recurrence",1145
+36.5,"White","No","1","2","1","0",8,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Complete","0","0","MX","Complete","Complete","1",208,1624,NA,"No Recurrence",1416
+50.5,"White","No","0","1","0","0",5,6,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,14,1513,NA,"No Recurrence",1499
+38.2,"White","No","0","2","0","0",7,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,57,113,NA,"No Recurrence",56
+55.3,"White","No","0","1","0","0",7,18,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,36,2732,NA,"No Recurrence",2696
+42,"White","No","0","1","1",NA,8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Near-complete","9",154,1189,NA,"No Recurrence",1035
+54.8,"White","No","2","2","0","0",7,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","Both","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Near-complete","8",173,1938,NA,"No Recurrence",1765
+56.9,"White","No","0","2","0","0",6,27,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,24,2270,NA,"No Recurrence",2246
+51.3,"Other","No","2","2","0","0",5,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","DCIS Only","5","0","MX","Near-complete","Near-complete","4",177,2382,NA,"Recurrence",2205
+58.7,"White","No","0","1","0",NA,3,6,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,54,672,NA,"No Recurrence",618
+55,"White","No","0","2","0","0",6,19,"Other",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,169,1989,NA,"No Recurrence",1820
+59.2,"White","No","0","2","0","0",6,18,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,31,1587,NA,"No Recurrence",1556
+55.2,"Black","No","1","2","1","0",9,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","5","1","MX","Not complete","Near-complete","11",245,1499,NA,"No Recurrence",1254
+67.7,"White","No","0","1","1","0",4,19,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,73,798,NA,"No Recurrence",725
+47.8,"Black","No","3","4","3",NA,9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","2","3","MX","Not complete","Not complete","0",127,287,543,"Recurrence",160
+51.6,"White","No","3","2","1",NA,9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","Yes","1 ovary","No","Yes","Complete","Complete",NA,NA,NA,"Complete","Complete","1",184,472,NA,"No Recurrence",288
+62.5,"Other","No","0","2","1","0",6,NA,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,59,1740,NA,"No Recurrence",1681
+45.7,"White","No","0","1","0","0",5,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1326,NA,"No Recurrence",1326
+37.7,"White","No","0","2","2",NA,7,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","2","2","MX","Not complete","Not complete","0",132,1612,NA,"No Recurrence",1480
+70.6,"Black","No","0","1","0","0",6,NA,NA,1,"BCS","None","Adjuvant Only","Both","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",126,1425,NA,"No Recurrence",1299
+39.4,"White","No","0","2","0","0",7,40,"Ductal",1,"BCS","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,33,1019,NA,"No Recurrence",986
+61.4,"White","No","2","2","0",NA,6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","Both","Yes","2 ovaries","No","Yes",NA,"Complete",NA,NA,NA,"Complete","Complete","1",168,797,NA,"No Recurrence",629
+47.6,"White","No","0","1","0","0",6,13,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,143,928,NA,"Recurrence",785
+67.2,"White","No","0","1","0","0",4,26,"Ductal",1,"BCS","None","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,43,1879,NA,"No Recurrence",1836
+69.3,"White","No","0","1","0",NA,6,22,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,28,1375,NA,"No Recurrence",1347
+73.9,"White","No","0","3","3","0",6,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1500,NA,"No Recurrence",1500
+36.7,"Other","No","0","3","1","0",7,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,139,1106,NA,"No Recurrence",967
+73.4,"White","No","0","1","0","0",6,17,"Other",1,"BCS","None","Adjuvant Only","Neoadjuvant Only","None","No",NA,"No","Yes",NA,"Not Complete","1","0","MX","Not complete","Not complete","0",68,331,NA,"No Recurrence",263
+44.5,"White","No","0","2","1","0",6,24,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,38,1005,NA,"No Recurrence",967
+52.7,"White","No","0","2","0","0",7,NA,NA,1,"BCS","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,36,1588,NA,"No Recurrence",1552
+32.5,"White","No","0","2","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,412,2028,NA,"Recurrence",1616
+58.8,"Black","No","0","1","0",NA,9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Complete","Not Complete","1","0","MX","Not complete","Not complete","0",160,1154,NA,"No Recurrence",994
+55.5,"White","No","0","1","0","0",4,27,"Ductal",1,"BCS","Adjuvant Only","Neoadjuvant Only","Adjuvant Only","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,79,1821,NA,"No Recurrence",1742
+64.1,"White","No","3","1","0",NA,9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,22,1857,NA,"No Recurrence",1835
+35.1,"White","No","0","2","0","0",9,49,"Ductal",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","None","No",NA,"No","Yes","Complete","Complete",NA,NA,"MX","Complete","Complete","1",113,2514,NA,"No Recurrence",2401
+68,"Other","No","0","1","0",NA,6,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,16,2325,NA,"No Recurrence",2309
+47.5,"White","No","0","2","3",NA,6,NA,"Ductal",1,"mastectomy","Adjuvant Only","None",NA,"None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,73,294,NA,"No Recurrence",221
+62.2,"White","No","3","2","0","0",8,NA,NA,1,"mastectomy","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1392,NA,"No Recurrence",1392
+45.2,"White","No","0","2","2","0",5,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only",NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,57,422,NA,"No Recurrence",365
+64.3,"White","No","0","1","0","0",7,23,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,27,1924,NA,"No Recurrence",1897
+61.3,"White","No","3","1","1","0",9,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,26,1444,NA,"No Recurrence",1418
+52.2,"White","No","0","3","0","0",5,44,NA,1,"mastectomy","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",138,1539,NA,"No Recurrence",1401
+34.9,"White","No","0","4","3","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",191,1016,NA,"No Recurrence",825
+58.6,"White","No","1","2","0",NA,8,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,34,1883,NA,"No Recurrence",1849
+54.5,"White","No","0","1","0",NA,6,NA,NA,1,"BCS","None","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,1875,NA,"No Recurrence",1854
+58.5,"White","No","2","2","1","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","Both","No",NA,"No","Yes","Not Complete","DCIS Only","5","0","MX","Near-complete","Near-complete","4",163,1590,NA,"No Recurrence",1427
+57.6,"White","No","0","1","0","0",5,16,NA,1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,1346,NA,"No Recurrence",1326
+38.5,"Black","No","2","2","0",NA,9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","Both","Yes","0 ovaries","Yes","Yes","Complete","Complete","0","0","M0","Complete","Complete","1",170,844,NA,"No Recurrence",674
+66.9,"White","No","0","1","0","0",6,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,17,1422,NA,"No Recurrence",1405
+47.8,"White","No","0","1","1","0",5,18,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,51,1064,NA,"No Recurrence",1013
+35.7,"White","No","1","2","1","0",9,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Both","Yes","0 ovaries","Yes","Yes",NA,"Not Complete",NA,NA,NA,"Not complete","Not complete","0",0,1359,NA,"No Recurrence",1359
+41.9,"Black","No","3","4","3",NA,7,NA,"Ductal",1,"mastectomy","Both","Adjuvant Only","None","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete",NA,"3","MX","Not complete","Not complete","0",139,189,215,"No Recurrence",50
+69.8,"Black","No","3","2","1",NA,8,NA,NA,1,"mastectomy",NA,"Adjuvant Only",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,196,56,NA,"No Recurrence",-140
+67.2,"White","No","0","2","0","0",6,25,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,957,NA,"No Recurrence",937
+47,"White","No","0","2","1","0",4,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,27,308,NA,"No Recurrence",281
+44,"White","No","3","1","0","0",9,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,66,365,NA,"No Recurrence",299
+56.6,NA,"No","0","1","0","0",6,13,"Ductal",1,"BCS","None","Adjuvant Only",NA,"None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,14,88,NA,"No Recurrence",74
+54.6,"White","No","0","2","3",NA,6,NA,"Other",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2","3","MX","Not complete","Not complete","0",175,1238,NA,"Recurrence",1063
+44.9,"White","No","0","1","0","0",7,NA,"Ductal",1,"mastectomy",NA,"None",NA,"None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,16,NA,"No Recurrence",NA
+39.3,"White","No","3","2","0","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","None","No",NA,"No","Yes","Complete","Complete","0","0","MX","Complete","Complete","1",190,777,NA,"No Recurrence",587
+52.2,"White","No","0","2","0","0",5,11,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,13,1805,NA,"No Recurrence",1792
+59.9,"White","No","0","1","2","0",7,28,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,68,1841,NA,"No Recurrence",1773
+48.6,"White","No","3","2","0","0",9,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1430,NA,"No Recurrence",1430
+46,"White","No","0","2","1",NA,8,20,"Ductal",1,"mastectomy","Both","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",110,2346,NA,"No Recurrence",2236
+47.9,"Black","No","0","1","2","0",8,NA,NA,1,"BCS","None","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,41,1811,NA,"Recurrence",1770
+64.4,"White","No","3","1","0","0",8,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,1555,NA,"No Recurrence",1535
+29,"White","No","3","3","1","0",8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Complete","Complete","0","0","MX","Complete","Complete","1",188,1603,NA,"No Recurrence",1415
+71.9,"White","No","0","1","0","0",4,28,"Ductal",1,"BCS","None","Neoadjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,50,1537,NA,"No Recurrence",1487
+65.3,"White","No","1","2","0","0",9,NA,"Other",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","Yes","1 ovary","No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",184,1399,NA,"No Recurrence",1215
+45.5,"White","No","0","2","0","0",5,6,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,13,2001,NA,"No Recurrence",1988
+55.5,"White","No","0","1","0","0",3,NA,"Ductal",1,"BCS",NA,"Adjuvant Only","Adjuvant Only",NA,"Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,0,511,NA,"No Recurrence",511
+40.1,"White","No","3","1","0",NA,7,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,65,3143,NA,"No Recurrence",3078
+65.5,"White","No","0","1","0","0",6,14,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,44,195,NA,"No Recurrence",151
+37.1,"White","No","1","1","1","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,36,1974,NA,"No Recurrence",1938
+41.9,"White","No","3","1","0","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,33,729,NA,"No Recurrence",696
+51.5,"White","No","0","2","0","0",6,11,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,52,2013,NA,"No Recurrence",1961
+53.4,NA,"No","2","2","1","0",7,NA,NA,NA,NA,NA,NA,NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,23,NA,"No Recurrence",NA
+58.5,"White","No","0","2","1","0",6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,1296,NA,"No Recurrence",1248
+54.8,"White","No","0","2","0","0",8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","None","No",NA,"No","Yes","Not Complete","Complete",NA,NA,"MX","Complete","Complete","1",175,873,NA,"No Recurrence",698
+53.6,"White","No","0","1","0","0",5,12,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,28,1058,NA,"No Recurrence",1030
+57.7,"White","No","0","2","0","0",6,9,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,19,2305,NA,"No Recurrence",2286
+67.5,"White","No","0","1","0","0",5,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,46,1544,NA,"No Recurrence",1498
+49.5,"Black","No","0","1","0","0",5,16,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,61,2983,NA,"No Recurrence",2922
+45.8,"Black","No","0","1","2","0",6,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","1","2","MX","Not complete","Not complete","0",170,1442,NA,"No Recurrence",1272
+59.7,"Black","No","0","2","1","0",9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Complete",NA,"0","MX","Complete","Complete","1",166,2243,NA,"No Recurrence",2077
+40.7,"Black","No","1","1","1","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Both","Both","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","0","1","MX","Near-complete","Near-complete","2",184,1400,NA,"No Recurrence",1216
+52.4,"Black","No","3","2","0",NA,6,30,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,76,1799,NA,"No Recurrence",1723
+56.8,"Other","No","0","2","0","0",8,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,26,1542,NA,"No Recurrence",1516
+63.2,"Black","No","0","1","0","0",5,NA,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,55,1859,NA,"No Recurrence",1804
+43.4,"White","No","0","2","3","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Complete","0","0","MX","Complete","Complete","1",176,1850,NA,"No Recurrence",1674
+50.8,"Black","No","0","1","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,53,2145,NA,"No Recurrence",2092
+49.9,"White","No","3","2","1","0",7,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","Yes","Complete","Not Complete",NA,"1","MX","Not complete","Near-complete","10",158,1131,NA,"No Recurrence",973
+51.7,"White","No","0","2","0","0",5,10,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,77,2196,NA,"No Recurrence",2119
+50.7,"White","No","0","1","0",NA,4,6,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,949,NA,"No Recurrence",928
+72.6,"White","No","0","4","2","0",8,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete",NA,"2","MX","Not complete","Near-complete","11",157,1230,NA,"Recurrence",1073
+59,"White","No","0","1","0","0",6,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,1824,NA,"No Recurrence",1803
+65,"White","No","2","1","0",NA,9,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,41,1680,NA,"No Recurrence",1639
+39.7,"White","No","3","2","0","0",9,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,867,1005,"Recurrence",NA
+61.9,"White","No","0","3","1","0",6,NA,"Ductal",1,"mastectomy","Both","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes",NA,"Not Complete",NA,NA,NA,"Not complete","Not complete","0",102,1523,NA,"No Recurrence",1421
+32.3,"White","No","0","1","0",NA,6,13,"Other",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,13,196,NA,"No Recurrence",183
+48,"White","No","3","1","3","0",7,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,28,3472,NA,"No Recurrence",3444
+58.5,"Black","No","0","1","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,2156,NA,"No Recurrence",2156
+45,"Other","No","2","2","1","0",7,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","Both","No",NA,"No","Yes","Not Complete","Complete",NA,NA,NA,"Complete","Complete","1",183,2026,NA,"No Recurrence",1843
+50.5,"Black","No","0","2","0","0",5,13,"Other",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,41,923,NA,"No Recurrence",882
+32.8,"White","No","0","3","1","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","3","1","MX","Not complete","Not complete","0",174,1374,NA,"No Recurrence",1200
+67.4,"White","No","0","1","0","0",6,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,16,827,NA,"No Recurrence",811
+46.6,"Black","No","0","1","1",NA,7,18,NA,1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,65,1598,NA,"No Recurrence",1533
+45.9,"Other","No","0","2","1","0",6,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2","1","MX","Not complete","Not complete","0",160,1412,NA,"No Recurrence",1252
+56.9,"White","No","0","2","1","0",5,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,37,3363,NA,"No Recurrence",3326
+58.3,"White","No","0","1","0","0",6,NA,NA,1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,1344,NA,"No Recurrence",1323
+58.4,"White","No","0","2","0","0",8,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,1920,NA,"No Recurrence",1872
+37,"White","No","0","2","1","0",7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",161,1142,NA,"No Recurrence",981
+62.6,"Black","No","3","3",NA,NA,9,NA,"Ductal",0,NA,"Neoadjuvant Only","None","None","None","Yes","0 ovaries","No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,532,1298,"No Recurrence",NA
+53.1,"Black","No","0","2","1",NA,9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,1532,NA,"Recurrence",1490
+54.9,"White","No","0","2","0","0",5,17,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,48,1037,NA,"No Recurrence",989
+51.4,"White","No","0","2","0","0",6,NA,"Ductal",0,NA,NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,0,NA,"No Recurrence",NA
+64.4,"White","No","1","4","1",NA,8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Neoadjuvant Only","No",NA,"No","Yes","Not Complete","Complete",NA,NA,NA,"Complete","Complete","1",185,2090,NA,"No Recurrence",1905
+48.3,NA,"No","0","1","0","0",4,9,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,74,213,NA,"No Recurrence",139
+44.8,"White","No","1","1","0","0",6,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",207,2494,NA,"No Recurrence",2287
+58.3,"Black","No","0","2","0","0",7,9,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,1674,NA,"No Recurrence",1654
+38.7,"Black","No","3","1","0","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Near-complete","Near-complete","2",183,1698,NA,"No Recurrence",1515
+48.9,"White","Yes","1","2","3","1",8,NA,NA,0,NA,"None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,880,NA,"Recurrence",NA
+30.2,"White","No","1","2","0","0",8,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Neoadjuvant Only","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","2",NA,"MX","Not complete","Not complete","0",227,616,NA,"Recurrence",389
+68.7,"Black","No","1","2","0","0",9,NA,"Ductal",1,"mastectomy","Both","None","Adjuvant Only","Both","No",NA,"No","Yes",NA,"Not Complete","2","1","MX","Not complete","Not complete","0",185,612,634,"Recurrence",427
+62.6,"White","No","0","1","0","0",5,20,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,23,1660,NA,"No Recurrence",1637
+46.3,"White","No","0","2","1",NA,6,17,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,778,NA,"No Recurrence",736
+64.1,"White","No","0","2","1",NA,6,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,116,669,1958,"Recurrence",553
+52.6,"White","No","0","2","1",NA,6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,50,1262,NA,"No Recurrence",1212
+60.7,"White","No","0","1","0",NA,6,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,28,1304,NA,"No Recurrence",1276
+37,"Other","No","1","1","1","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","Both","No",NA,"No","Yes","Complete","DCIS Only",NA,NA,NA,"Near-complete","Near-complete","4",232,3332,NA,"No Recurrence",3100
+44.5,"White","No","0","1","1","0",6,19,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,22,1098,NA,"No Recurrence",1076
+73.3,"White","No","0","1","0","0",4,NA,"Ductal",1,"BCS","None","Neoadjuvant Only","None","None","Yes","2 ovaries","No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,76,1515,NA,"No Recurrence",1439
+66.2,"White","No","0","1","0","0",6,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,23,1673,NA,"No Recurrence",1650
+63.8,"White","No","0","1","0","0",4,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,16,181,NA,"No Recurrence",165
+56.2,"Black","No","0","2","2","0",7,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,69,353,NA,"No Recurrence",284
+69.3,"White","No","2","2","0",NA,6,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","Both","No",NA,"No","Yes","Complete","Not Complete","1",NA,"MX","Near-complete","Near-complete","7",181,1851,NA,"No Recurrence",1670
+42.7,"White","No","2","2","1",NA,8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","Both","Yes","2 ovaries","No","Yes","Complete","Complete","0","0","MX","Complete","Complete","1",180,1801,NA,"No Recurrence",1621
+45.7,"White","No","0","2","1","0",7,15,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",125,1495,NA,"No Recurrence",1370
+65.9,"Black","No","0","1","1","0",6,19,"Other",1,"BCS","None","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,47,1033,NA,"No Recurrence",986
+51.6,"White","No","3","4","1","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Complete","Complete","0","0","MX","Complete","Complete","1",125,1167,NA,"No Recurrence",1042
+58.5,"White","Yes","0","1","1","1",7,NA,"Ductal",0,NA,"None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,265,539,"No Recurrence",NA
+49.7,"White","No","0","1","0","0",4,16,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,71,1894,NA,"No Recurrence",1823
+64.6,"White","No","3","1","0","0",7,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,8,1136,NA,"No Recurrence",1128
+48.5,"White","Yes","0","1","1","1",6,NA,"Ductal",1,"BCS","None","Adjuvant Only","None","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,53,1144,NA,"No Recurrence",1091
+68,"White","No","2","3","1",NA,5,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","Both","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",168,2217,NA,"No Recurrence",2049
+42.2,"White","No","3","2","0","0",9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",203,2992,NA,"No Recurrence",2789
+48.7,"Other","No","0","1","0","0",6,10,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,3219,NA,"No Recurrence",3184
+50.4,"White","No","0","1","0","0",6,18,NA,1,"BCS","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1464,NA,"No Recurrence",1464
+45.7,"Black","No","3","1","0","0",8,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,15,1427,NA,"No Recurrence",1412
+51,"White","No","3","1","0","0",6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,33,1513,NA,"No Recurrence",1480
+60.8,"White","No","0","1","1",NA,7,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",195,422,NA,"No Recurrence",227
+52.3,"White","No","3","1",NA,NA,7,NA,"Ductal",1,"BCS",NA,"Adjuvant Only",NA,NA,"Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,41,41,NA,"No Recurrence",0
+51.1,"White","No","0","1","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,23,2932,NA,"No Recurrence",2909
+63.7,"Black","No","0","2","0",NA,6,NA,"Ductal",1,"BCS","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,823,NA,"No Recurrence",788
+42.7,"White","No","2",NA,"1",NA,NA,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Complete","0","0","MX","Complete","Complete","1",207,1858,NA,"No Recurrence",1651
+40.2,"Black","No","1","2","2","0",7,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,89,712,NA,"Recurrence",623
+49.6,"White","No","1","2","1",NA,9,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,13,863,NA,"No Recurrence",850
+42.3,"White","No","0","1","0","0",6,15,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,87,629,NA,"No Recurrence",542
+54.4,"White","No","0","2","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,60,2332,NA,"No Recurrence",2272
+27.1,"White","No","3","2","0",NA,9,NA,"Ductal",1,"mastectomy","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,41,1799,NA,"No Recurrence",1758
+56.4,"White","No","0","2","1","0",5,19,"Ductal",1,"mastectomy","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,16,1108,NA,"No Recurrence",1092
+54.7,"White","No","0","2","0","0",9,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,25,1932,NA,"No Recurrence",1907
+50,"White","No","0","2","1","0",3,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2","1","MX","Not complete","Not complete","0",113,1549,NA,"No Recurrence",1436
+42.2,"Black","No","0","3","3",NA,6,NA,"Other",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,49,1514,NA,"No Recurrence",1465
+46.1,"White","No","0","1","0","0",7,15,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,58,1164,NA,"No Recurrence",1106
+47.2,"White","No","0","1","0","0",6,12,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,48,1267,NA,"No Recurrence",1219
+49.4,"White","No","0","1","0","0",3,NA,"Other",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,38,1156,NA,"No Recurrence",1118
+30.6,"White","No","0","3","2","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","3","2","MX","Not complete","Not complete","0",196,605,763,"Recurrence",409
+55.4,"White","No","3","1","2","0",8,NA,"Other",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,56,2257,NA,"No Recurrence",2201
+50.6,"White","No","0","3","1","0",6,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Complete","Not Complete","0","1","M1","Not complete","Near-complete","10",146,1375,NA,"No Recurrence",1229
+51.2,"Black","No","3","1","0","0",7,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,28,1692,NA,"No Recurrence",1664
+47.4,"Black","No","0","3","0","0",6,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1970,NA,"No Recurrence",1970
+47.7,"White","No","0","1","1",NA,7,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Near-complete","Near-complete","6",160,1446,NA,"No Recurrence",1286
+71.7,"White","No","0","2","0","0",7,30,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Both","None","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",259,1291,NA,"No Recurrence",1032
+27.9,"Black","No","0","2","2","0",8,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","2","MX","Not complete","Not complete","0",145,499,NA,"No Recurrence",354
+62.7,"White","No","0","3","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,38,1907,NA,"No Recurrence",1869
+51.6,"White","No","0","1","0","0",6,NA,NA,1,"mastectomy",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,31,1570,NA,"No Recurrence",1539
+56.2,"White","No","0","2","0","0",7,30,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Both","None","No",NA,"No","Yes","Not Complete","Not Complete","2",NA,"MX","Not complete","Not complete","0",124,2001,NA,"No Recurrence",1877
+45,"White","No","0","2","2",NA,4,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,37,1787,NA,"No Recurrence",1750
+41.1,"White","No","0","1","1","0",8,33,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,27,2254,NA,"No Recurrence",2227
+51.9,"White","No","0","1","0","0",4,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,25,2058,NA,"No Recurrence",2033
+60.8,"White","No","2","2","1",NA,7,NA,"Ductal",1,"mastectomy",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,60,69,NA,"No Recurrence",9
+43.9,"Black","No","0","2","0","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",278,845,NA,"No Recurrence",567
+39.3,"White","No","1","2","0",NA,5,NA,"Other",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,67,1481,NA,"No Recurrence",1414
+48.5,"Black","No","3","2","0","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",150,652,NA,"No Recurrence",502
+34.6,"White","No","1","1","0","0",6,NA,"Ductal",1,"mastectomy",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,70,NA,"No Recurrence",22
+68.9,"White","No","0","2","2","0",6,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","2","2","MX","Not complete","Not complete","0",143,1586,NA,"Recurrence",1443
+53.3,"White","No","1","2","1","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Complete","Not Complete",NA,"1","MX","Not complete","Near-complete","10",215,3121,NA,"No Recurrence",2906
+55.1,"White","No","0","2","0",NA,7,26,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,39,131,NA,"No Recurrence",92
+42.3,"Black","No","3","2","1","0",8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",158,1264,NA,"No Recurrence",1106
+64.8,"White","No","0","1","0","0",8,16,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,40,1070,NA,"No Recurrence",1030
+45.1,"Black","No","3","2","0","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","Yes","0 ovaries","Yes","Yes","Not Complete","Complete",NA,NA,NA,"Complete","Complete","1",168,1963,NA,"No Recurrence",1795
+34.1,"White","No","0","1","2","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Complete","Complete",NA,"0","MX","Complete","Complete","1",143,1980,NA,"No Recurrence",1837
+62.1,"Black","No","3","3","3","0",8,NA,NA,0,NA,"Neoadjuvant Only","Neoadjuvant Only","None","None","No",NA,"No","Yes","Not Complete",NA,NA,NA,NA,NA,NA,NA,NA,122,184,"Recurrence",NA
+62.9,"White","No","0","1","0","0",NA,15,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,15,2280,NA,"No Recurrence",2265
+51.3,"White","No","0","2","1","0",7,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2","1","MX","Not complete","Not complete","0",167,455,862,"Recurrence",288
+59.5,"Black","No","0","2","0",NA,6,18,"Other",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,876,NA,"No Recurrence",876
+79.5,"White","Yes","1","4","3","1",6,NA,"Ductal",1,"mastectomy","None","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,148,1307,1339,"No Recurrence",1159
+73.1,"White","No","0","1","0","0",7,33,"Ductal",1,"BCS","Adjuvant Only","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,179,NA,"No Recurrence",179
+57.5,"White","No","1","2","1","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,16,1916,NA,"No Recurrence",1900
+56,"Black","No","0","1","1","0",7,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",190,1683,NA,"No Recurrence",1493
+50.2,"White","No","0","1","0","0",6,5,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,11,1875,NA,"No Recurrence",1864
+48.7,NA,"No","0","2","2","0",8,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,40,1544,NA,"No Recurrence",1504
+68.5,"White","No","0","1","1","0",5,14,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Both","None","No",NA,"No","Yes",NA,"Not Complete","1","1","MX","Not complete","Not complete","0",69,938,NA,"No Recurrence",869
+46.9,"Black","No","0","1","0","0",6,16,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,24,840,NA,"No Recurrence",816
+40.4,"White","No","0","1","0","0",6,11,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,1084,NA,"No Recurrence",1049
+46.8,"White","No","0","1","0","0",5,11,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,62,468,NA,"No Recurrence",406
+49,"Black","No","0","2","0","0",6,16,"Other",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,84,1110,NA,"No Recurrence",1026
+63.3,"White","No","3","1","0","0",6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,67,498,564,"Recurrence",431
+38.2,"White","No","2","1","0","0",7,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","Adjuvant Only","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,40,1496,NA,"No Recurrence",1456
+37.8,"Black","No","0","2","0","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","Yes","Not Complete","Complete",NA,NA,"MX","Complete","Complete","1",133,1884,NA,"No Recurrence",1751
+52,"White","No","0","1","1",NA,8,24,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,62,880,NA,"No Recurrence",818
+59.9,"Black","No","3","2","0","0",6,NA,NA,NA,NA,NA,NA,NA,NA,"Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,50,NA,"No Recurrence",NA
+61.3,"White","No","3","1","3","0",7,NA,NA,1,"mastectomy","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","3","MX","Not complete","Not complete","0",150,1421,NA,"No Recurrence",1271
+59.9,"White","No","0","1",NA,NA,6,NA,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,28,1576,NA,"No Recurrence",1548
+50.4,"Other","No","0","1","1","0",NA,NA,"Ductal",1,"BCS","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,2074,NA,"No Recurrence",2039
+54.7,"White","No","0","1","0","0",7,11,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,56,1829,NA,"No Recurrence",1773
+61.7,"White","No","0","1","0","0",6,10,NA,1,"BCS","Neoadjuvant Only","None","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",135,1752,NA,"No Recurrence",1617
+55,"Black","No","3","1","1","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","Yes",NA,"Not Complete","1",NA,"MX","Not complete","Not complete","0",170,1836,NA,"No Recurrence",1666
+64.1,"White","No","1","2","0",NA,9,NA,"Ductal",1,"BCS","Both","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes",NA,"Not Complete","1",NA,"MX","Not complete","Not complete","0",249,1636,NA,"No Recurrence",1387
+44.6,"White","No","0","1","1","0",5,17,NA,1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,52,NA,692,"No Recurrence",NA
+47.8,"White","No","0","1","1","0",6,17,"Other",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,51,1199,NA,"No Recurrence",1148
+25.9,"White","No","3","2","0","0",8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","None","No",NA,"No","Yes","Not Complete","Complete","0",NA,"MX","Complete","Complete","1",202,1226,NA,"No Recurrence",1024
+49.6,"White","No","0",NA,NA,NA,7,NA,NA,NA,NA,NA,NA,NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,22,NA,"No Recurrence",NA
+67.7,"White","No","0","1","0","0",6,13,"Other",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,32,983,NA,"No Recurrence",951
+61.9,"Other","No","0","2","0","0",5,3,NA,1,"BCS","None","None","Both","None","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",149,1494,NA,"No Recurrence",1345
+45.8,"White","No","0","1","1","0",6,7,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,30,421,NA,"No Recurrence",391
+41.1,"White","No","0","2","3","0",6,NA,NA,1,"BCS","Both","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","2","3","MX","Not complete","Not complete","0",153,1498,NA,"No Recurrence",1345
+66.6,"White","No","0","2","3","0",4,NA,NA,1,"BCS","Both","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2","3","MX","Not complete","Not complete","0",114,1410,NA,"No Recurrence",1296
+43,"White","No","2","2","0",NA,7,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","Both","No",NA,"No","Yes",NA,"Complete",NA,NA,NA,"Complete","Complete","1",175,582,586,"No Recurrence",407
+53.4,"White","No","0","2","0","0",5,11,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1319,NA,"No Recurrence",1319
+55.4,"White","No","0","1","0","0",6,18,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,11,2405,NA,"No Recurrence",2394
+76.8,"White","No","0","2","0",NA,6,22,"Other",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,76,439,NA,"Recurrence",363
+65.6,"White","No","3","1","0","0",7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","None","Yes","0 ovaries","No","Yes",NA,"Complete",NA,NA,NA,"Complete","Complete","1",169,422,NA,"No Recurrence",253
+48.9,"White","No","0","2","0","0",6,19,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,31,1661,NA,"Recurrence",1630
+61.9,"Black","No","1","2","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,85,1324,NA,"Recurrence",1239
+56.3,"Black","No","3","1","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,66,1459,NA,"No Recurrence",1393
+25,"White","No","3","2","1","0",8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","DCIS Only","5","0","MX","Near-complete","Near-complete","4",226,1841,NA,"No Recurrence",1615
+37.8,"Black","No","3","2","0","0",9,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,119,2031,NA,"No Recurrence",1912
+66.4,"White","No","3","1","0","0",9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",130,853,NA,"No Recurrence",723
+29.9,"White","No","1","1","0","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","Yes",NA,"Not Complete","1","0","MX","Not complete","Near-complete","16",176,282,NA,"No Recurrence",106
+50.2,"White","No","1","1","0","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,56,3465,NA,"No Recurrence",3409
+53.4,"White","No","0","1","0",NA,6,16,"Other",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,38,2916,NA,"No Recurrence",2878
+39.8,"White","No","1","2","0","0",6,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","Both","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",159,1371,NA,"No Recurrence",1212
+66.8,"Black","No","3","2","1",NA,8,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,39,2810,NA,"No Recurrence",2771
+50.2,"Black","No","3","1","1",NA,7,NA,"Ductal",0,NA,NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,91,286,"No Recurrence",NA
+80.4,"White","No","0","1","0",NA,6,NA,"Ductal",1,"mastectomy",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,49,49,NA,"No Recurrence",0
+72.4,"Black","No","0","1","2","0",7,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Complete","Not Complete","1","2","MX","Not complete","Not complete","0",227,1823,NA,"No Recurrence",1596
+47.1,"White","No","0",NA,"1","0",7,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,1698,NA,"No Recurrence",1656
+61.2,"White","No","3","2","0","0",9,NA,NA,1,"BCS","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",117,1488,NA,"No Recurrence",1371
+46,"White","No","0","1","0",NA,6,NA,NA,1,"BCS","None","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,0,1457,NA,"No Recurrence",1457
+46.3,"White","Yes","2","2",NA,"1",8,NA,NA,0,NA,"None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,971,971,"No Recurrence",NA
+57.2,"Black","No","0","3","1","0",9,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,50,455,697,"Recurrence",405
+74.9,"White","No","0","2","0",NA,4,16,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,1777,NA,"No Recurrence",1757
+48.8,"White","No","0","2","1","0",6,8,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",245,2336,NA,"No Recurrence",2091
+46.6,"White","No","0","1","0","0",4,15,NA,1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,26,1524,NA,"No Recurrence",1498
+40,"Black","No","2","2","0","0",9,NA,"Ductal",1,"mastectomy","Both","None","None","Both","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",153,976,NA,"No Recurrence",823
+63.6,"White","No","0","2","0","0",6,NA,"Other",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,165,587,NA,"Recurrence",422
+41.6,"Other","No","1","1","1","0",NA,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","DCIS Only",NA,"0","MX","Near-complete","Near-complete","4",253,2940,NA,"No Recurrence",2687
+49.2,"Black","No","0","2","1","0",7,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,154,1483,NA,"No Recurrence",1329
+47.4,NA,"No","2","2","0","0",8,NA,"Ductal",1,"mastectomy",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,93,NA,"No Recurrence",51
+60.9,"White","No","0","2","1","0",7,NA,"Other",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",198,1094,NA,"No Recurrence",896
+50.4,"White","No","0","2","0","0",9,50,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Complete","Not Complete","2","0","MX","Near-complete","Near-complete","2",224,2205,NA,"No Recurrence",1981
+45.3,"Black","No","0","1","0","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","None","No",NA,"No","Yes",NA,"Not Complete","1",NA,"MX","Not complete","Not complete","0",197,566,NA,"No Recurrence",369
+59.8,"White","No","2","2","1","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","Both","No",NA,"No","Yes","Not Complete","Not Complete",NA,"0","MX","Near-complete","Near-complete","2",160,1211,NA,"No Recurrence",1051
+44,"Black","No","3","4","1",NA,9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",145,1305,NA,"No Recurrence",1160
+36.3,"White","No","0","2","1","0",5,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,34,1724,NA,"No Recurrence",1690
+56.5,"White","No","0","1","0","0",NA,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,38,1847,NA,"No Recurrence",1809
+47.3,"White","No","0","3","1","0",5,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Complete","Not Complete",NA,"0","MX","Not complete","Not complete","0",200,1168,NA,"No Recurrence",968
+40.8,"Black","No","1","1","0","0",5,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,51,1401,NA,"No Recurrence",1350
+54.6,"White","No","1","3","1","0",6,NA,"Other",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Neoadjuvant Only","No",NA,"No","Yes","Complete","LCIS Only",NA,NA,NA,"Near-complete","Near-complete","5",183,1790,NA,"No Recurrence",1607
+44,"White","No","0","3","2","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","3","2","MX","Not complete","Not complete","0",186,1408,NA,"No Recurrence",1222
+31.7,"White","Yes","0","3","2","1",9,NA,"Ductal",1,"mastectomy","None","Adjuvant Only","None","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,43,NA,NA,"No Recurrence",NA
+62.2,"White","No","0","1","0","0",5,8,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,54,1225,NA,"No Recurrence",1171
+57.1,"White","No","0","3","0",NA,5,NA,"Other",1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",252,1132,NA,"No Recurrence",880
+50.1,"Black","No","1","1","0","0",6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","Adjuvant Only","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,64,874,NA,"No Recurrence",810
+46.3,"Black","No","0","1","0","0",6,NA,NA,1,"BCS",NA,"Adjuvant Only",NA,"None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,44,406,NA,"No Recurrence",362
+73,"White","No","0","2","0","0",6,13,"Other",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,70,891,NA,"No Recurrence",821
+54.6,"Other","No","0","1","0","0",6,9,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,15,1130,NA,"No Recurrence",1115
+49.9,"Black","No","0","1","0","0",3,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,1545,NA,"No Recurrence",1497
+47.4,"White","No","0","2","1",NA,6,18,"Other",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,488,NA,"No Recurrence",440
+62.3,NA,"No","0","4",NA,"0",7,NA,"Ductal",0,NA,"None","Neoadjuvant Only",NA,"None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,94,NA,"No Recurrence",NA
+69.7,"White","No","0","2","0","0",6,8,NA,1,"BCS","None","Adjuvant Only","Both","None","Yes","0 ovaries","No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",163,1478,NA,"No Recurrence",1315
+61.2,"Black","No","0","3","0","0",7,39,NA,1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,84,1859,NA,"No Recurrence",1775
+68.1,"White","No","1","1","0","0",3,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,43,1718,NA,"No Recurrence",1675
+51.6,"Other","No","0","3","3","0",5,NA,"Other",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,1966,NA,"Recurrence",1931
+52.2,"White","No","0","1","0","0",5,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,22,1992,NA,"No Recurrence",1970
+21.7,"White","No","3","2","1","0",8,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only",NA,NA,"Yes","2 ovaries","No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,204,NA,"No Recurrence",NA
+43.9,"White","No","0","1","0","0",6,13,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,71,912,NA,"No Recurrence",841
+77.4,"White","No","0","1","0",NA,6,18,"Ductal",1,"BCS","None","Neoadjuvant Only","Adjuvant Only","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,62,1162,NA,"No Recurrence",1100
+67.5,"White","No","0","1","0","0",6,9,"Ductal",1,"BCS","None","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,25,1638,NA,"No Recurrence",1613
+51.4,"White","No","0","2","0",NA,6,13,"Ductal",1,"BCS","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,711,NA,"No Recurrence",669
+61.2,"White","No","0","1","0","0",9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,2233,NA,"No Recurrence",2213
+64.7,"Other","No","0","1","0","0",5,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,50,1085,NA,"No Recurrence",1035
+47,"Black","No","1","2","0",NA,8,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",160,1582,NA,"Recurrence",1422
+36.9,"Other","No","0","3","3",NA,7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","3","3","MX","Not complete","Not complete","0",160,1072,NA,"No Recurrence",912
+59.8,"Black","No","1","1","0","0",8,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,54,1096,1580,"Recurrence",1042
+62.8,"White","No","0","1","0","0",7,14,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,29,1596,NA,"No Recurrence",1567
+59.9,"White","No","0","1","0","0",4,20,NA,1,"mastectomy","None","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,39,1754,NA,"No Recurrence",1715
+58.7,"White","No","1","1","0","0",7,NA,"Other",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,78,1854,NA,"No Recurrence",1776
+60,"White","No","3","2","0","0",7,NA,NA,1,"mastectomy","Neoadjuvant Only","None","None","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",245,1926,NA,"No Recurrence",1681
+72.7,"Black","No","0","2","0",NA,9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",154,1069,NA,"No Recurrence",915
+49,"Black","No","0","2","1","0",5,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes",NA,"Not Complete","2","1","MX","Not complete","Not complete","0",188,1101,1356,"No Recurrence",913
+60.8,"White","No","3","1","0","0",9,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,9,1452,NA,"No Recurrence",1443
+67.6,"White","No","0","2","0","0",7,38,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,44,1729,NA,"No Recurrence",1685
+74.7,"White","No","0","1","0","0",6,NA,"Ductal",1,"BCS","None","Neoadjuvant Only","Adjuvant Only","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,47,75,91,"No Recurrence",28
+41.4,"Black","Yes","3","2","1","1",9,NA,"Ductal",0,NA,"None","Neoadjuvant Only","None","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,231,251,"No Recurrence",NA
+50,"White","No","0","1","0",NA,6,18,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,22,2201,NA,"No Recurrence",2179
+71.3,"White","No","0","4","0","0",6,25,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,1560,NA,"No Recurrence",1539
+63.6,"White","No","3","2","0","0",7,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,33,393,NA,"No Recurrence",360
+59.1,"White","No","0","1","1","0",6,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,32,2203,NA,"No Recurrence",2171
+70.8,"White","No","0","3","3","0",6,NA,"Other",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,16,1478,NA,"No Recurrence",1462
+33.9,"Black","No","1","2","1","0",6,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Neoadjuvant Only","Yes","2 ovaries","No","Yes",NA,"Complete",NA,"0",NA,"Complete","Complete","1",295,537,NA,"No Recurrence",242
+60,"White","No","0","1","0","0",3,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,1420,NA,"No Recurrence",NA
+43.8,"White","No","0","2","0","0",6,16,"Ductal",1,"mastectomy","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,6,747,NA,"Recurrence",741
+82.8,"White","No","0","3","1",NA,6,12,"Ductal",1,"mastectomy","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,62,1610,NA,"No Recurrence",1548
+57.8,"White","No","0","2","3","0",7,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,32,1603,NA,"No Recurrence",1571
+60,"White","No","0","1","0","0",6,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,23,1585,NA,"No Recurrence",1562
+48.4,"White","No","0","1","0","0",4,17,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,1116,NA,"No Recurrence",1096
+49.8,"White","No","0","3","1","0",8,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,72,1736,NA,"No Recurrence",1664
+61.5,"White","No","0","2",NA,NA,6,NA,NA,NA,NA,NA,NA,NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,25,NA,"No Recurrence",NA
+49.8,"White","No","0","1","1","0",8,NA,NA,1,"BCS","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,60,1656,NA,"No Recurrence",1596
+32.4,"White","No","0","1","1",NA,9,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,39,914,NA,"Recurrence",875
+54.5,"Black","No","0","2","1","0",9,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",416,1480,NA,"No Recurrence",1064
+65.5,"Black","No","0","2","1","0",7,30,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,30,1114,NA,"No Recurrence",1084
+54.1,"Black","No","2","2","1","0",9,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,76,1850,NA,"No Recurrence",1774
+59.6,"White","Yes","0","3","1","1",6,NA,NA,0,NA,"None","None","None","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,323,327,"No Recurrence",NA
+54.6,"White","No","0","1","0","0",7,18,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,19,2037,NA,"No Recurrence",2018
+51.4,"White","No","0","2","1",NA,7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes",NA,"Not Complete","1","0",NA,"Not complete","Near-complete","17",249,1099,NA,"No Recurrence",850
+51.2,"White","No","0","1","1","0",6,NA,NA,1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,19,1995,NA,"No Recurrence",1976
+58,"White","No","0","2","0",NA,6,8,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,86,1952,NA,"No Recurrence",1866
+58.2,"Black","No","3","2","0","0",7,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","Yes",NA,"Complete",NA,"0","MX","Complete","Complete","1",191,1361,NA,"No Recurrence",1170
+54.9,"White","No","3","1","0","0",7,NA,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,41,1953,NA,"No Recurrence",1912
+69.2,"White","No","0","1","0","0",5,NA,NA,1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,1435,NA,"No Recurrence",1414
+42.3,"Black","No","3","1","0","0",9,NA,"Ductal",1,"BCS","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",172,1957,NA,"No Recurrence",1785
+60.5,"White","No","2","1","0","0",8,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete",NA,NA,"MX","Not complete","Not complete","0",127,785,831,"Recurrence",658
+56.9,"White","No","0","1","0","0",6,17,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,44,1472,NA,"No Recurrence",1428
+51.6,"White","No","0","2","2",NA,4,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,76,1198,NA,"No Recurrence",1122
+54.1,"White","No","0","1","0","0",NA,NA,"Ductal",1,"BCS","None","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,63,787,NA,"No Recurrence",724
+34.9,"Other","No","3","2","2","0",7,NA,NA,1,"BCS","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete",NA,"3","MX","Not complete","Not complete","0",139,201,572,"Recurrence",62
+54.7,"White","No","2","1","0","0",8,NA,NA,1,"mastectomy","Adjuvant Only","None","None","Adjuvant Only","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,90,792,NA,"No Recurrence",702
+70.2,NA,"No","0","4","1","0",8,NA,"Ductal",1,"mastectomy",NA,"None","Adjuvant Only",NA,"Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,23,NA,"No Recurrence",NA
+71.3,"White","No","0","2","1",NA,7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only",NA,"None","No",NA,"No","Yes","Not Complete","Not Complete","2","1","MX","Not complete","Not complete","0",107,188,NA,"No Recurrence",81
+57.4,"White","No","0","2","3",NA,5,NA,"Other",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,294,NA,"No Recurrence",246
+64.1,"White","No","3","1","0",NA,8,NA,NA,1,"BCS","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,23,1554,NA,"No Recurrence",1531
+45.2,"White","No","0","2","0",NA,6,14,"Other",1,"BCS","Adjuvant Only","Adjuvant Only",NA,"None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,56,860,NA,"No Recurrence",804
+54.1,"White","No","3","2","0",NA,9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,38,2090,NA,"No Recurrence",2052
+58,"White","No","0","1","0","0",7,15,"Other",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,50,790,NA,"No Recurrence",740
+50.5,"Black","No","0","1","0","0",5,11,"Other",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,23,1556,NA,"No Recurrence",1533
+60.3,"Other","No","0","1","0",NA,6,24,NA,1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,21,1480,NA,"No Recurrence",1459
+53.2,"Black","No","3","2","1","0",7,NA,NA,1,"BCS",NA,"Adjuvant Only",NA,NA,"Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,33,670,NA,"No Recurrence",637
+42.2,"White","No","3","1","2","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"Yes","Yes","Not Complete","Complete",NA,NA,NA,"Complete","Complete","1",144,1931,NA,"No Recurrence",1787
+47.2,"White","No","2","1","0","0",7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","Both","Yes","2 ovaries","No","Yes","Complete","Complete",NA,NA,NA,"Complete","Complete","1",168,805,NA,"No Recurrence",637
+42.1,"Black","No","0","3","2","0",8,NA,"Ductal",1,"mastectomy","Both","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","3","2","M0","Not complete","Not complete","0",188,1605,NA,"No Recurrence",1417
+60.3,"White","No","0","1","0","0",5,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,62,353,NA,"No Recurrence",291
+52.7,"Black","No","3","3","1","0",9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","Yes","2 ovaries","No","Yes","Complete","Not Complete","1","0","MX","Near-complete","Near-complete","2",159,1008,NA,"No Recurrence",849
+53.5,"Black","No","3","2","0","0",8,45,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,47,1771,NA,"No Recurrence",1724
+52.3,"White","No","3","2","0","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Complete","0","0","MX","Complete","Complete","1",107,805,NA,"No Recurrence",698
+55.3,"White","No","0","1","0",NA,4,17,"Ductal",1,"BCS","None","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,44,2797,NA,"No Recurrence",2753
+53.4,"White","No","1","1","0","0",9,NA,"Ductal",0,NA,NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,14,NA,"No Recurrence",NA
+46,"Other","No","0","1","0","0",6,26,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,51,772,NA,"No Recurrence",721
+57.2,"White","No","1","1","1","0",6,NA,NA,1,"mastectomy","Adjuvant Only","None","Adjuvant Only","Adjuvant Only","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,91,1408,NA,"No Recurrence",1317
+67.4,"White","No","0","1","0","0",7,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,63,1742,NA,"No Recurrence",1679
+71.8,"White","No","0","3","1","0",6,8,"Other",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,11,936,NA,"No Recurrence",925
+41.4,"White","No","0","1","0","0",3,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,25,1803,NA,"No Recurrence",1778
+43.1,"Black","No","3","1","0","0",4,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,43,1101,NA,"No Recurrence",1058
+45.5,"Black","No","0","2","0","0",7,14,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","2","1","MX","Not complete","Not complete","0",144,1633,NA,"No Recurrence",1489
+52.6,"Black","No","3","1","0",NA,8,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",205,1904,NA,"No Recurrence",1699
+25.7,"White","No","0","2","0","0",9,NA,"Ductal",0,NA,NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,25,NA,"No Recurrence",NA
+48.1,"White","No","3","1","1","0",7,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",135,2044,NA,"No Recurrence",1909
+37.9,"Black","No","3","2","0","0",8,NA,"Ductal",1,"BCS","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,25,971,NA,"No Recurrence",946
+61.9,"Black","No","0","4","2","0",7,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,164,1180,NA,"No Recurrence",1016
+45.9,"White","No","0","1","0","0",NA,NA,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,1621,NA,"No Recurrence",1573
+48.7,"White","No","0","2","0","0",7,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,32,1869,NA,"No Recurrence",1837
+47.9,"Black","No","2","1","1","0",8,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","Both","No",NA,"No","Yes","Not Complete","Complete",NA,"0","MX","Complete","Complete","1",160,1450,NA,"No Recurrence",1290
+62.2,"White","No","0","1","0","0",5,NA,NA,NA,NA,NA,NA,NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,34,NA,"No Recurrence",NA
+39.7,"White","No","0","2","0","0",6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",158,1513,NA,"No Recurrence",1355
+62.5,"White","No","0","1","0","0",6,11,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,26,1806,NA,"No Recurrence",1780
+51.2,"White","No","0","2","0","0",7,19,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,56,880,NA,"No Recurrence",824
+51.4,"White","No","0","1","0","0",5,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,27,1763,NA,"No Recurrence",1736
+55.8,"White","No","0","2","0",NA,4,26,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,29,348,NA,"No Recurrence",319
+38.3,"Black","No","0","1","1","0",9,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only",NA,NA,"Yes","2 ovaries","No","Yes","Not Complete",NA,NA,NA,NA,NA,NA,NA,NA,817,1074,"Recurrence",NA
+49.5,"Other","No","0","1","1","0",7,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes",NA,"Not Complete","1","1","MX","Not complete","Not complete","0",9,1453,NA,"No Recurrence",1444
+42.7,"Other","No","3","1","0","0",8,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,69,2336,NA,"No Recurrence",2267
+44.2,"White","No","3","1","0",NA,7,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,27,1493,NA,"No Recurrence",1466
+40.1,"Black","No","0","1","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,41,2379,NA,"No Recurrence",2338
+51.4,"Black","No","0","3","2",NA,8,NA,"Ductal",1,"mastectomy","Both","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","Yes","Not Complete","Not Complete","3","2","MX","Not complete","Not complete","0",140,1955,NA,"No Recurrence",1815
+68.9,"White","No","3","2","0","0",9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,94,858,NA,"Recurrence",764
+46.9,"White","No","3","2","0",NA,8,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,19,228,NA,"No Recurrence",209
+59.8,"White","No","1","1","1","0",7,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","Yes","2 ovaries","No","Yes","Not Complete","Complete",NA,NA,NA,"Complete","Complete","1",203,1407,NA,"No Recurrence",1204
+40.3,"White","No","3","1","0","0",9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,30,2177,NA,"No Recurrence",2147
+63.2,"White","No","0","3",NA,NA,5,NA,"Other",0,NA,NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,18,NA,"No Recurrence",NA
+60.8,"White","No","0","2","0","0",6,12,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,102,1413,NA,"No Recurrence",1311
+50.5,"Black","No","0","1","1","0",5,11,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Both","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",140,1527,NA,"No Recurrence",1387
+29.9,"White","No","3","2","1","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","Yes","0 ovaries","Yes","Yes",NA,"Complete",NA,NA,NA,"Complete","Complete","1",129,1446,NA,"No Recurrence",1317
+70.4,"White","No","0","2","0","0",5,14,"Other",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,22,1490,NA,"No Recurrence",1468
+49,"White","No","0","2","0",NA,9,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,54,901,NA,"No Recurrence",847
+55.2,"White","No","2","3","2","0",9,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","None","Adjuvant Only","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,47,500,1049,"Recurrence",453
+79.9,"White","No","0","1","0","0",6,NA,"Ductal",1,"BCS","None","Adjuvant Only","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,90,128,NA,"No Recurrence",38
+39.4,"White","No","1","2","1",NA,7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","Yes","0 ovaries","Yes","Yes",NA,NA,NA,NA,NA,NA,NA,NA,28,1117,NA,"No Recurrence",1089
+51.6,"White","No","0","2","0",NA,6,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,14,1791,NA,"No Recurrence",1777
+61.6,"White","No","0","2","1","0",9,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,32,1902,NA,"No Recurrence",1870
+57.9,"White","No","0","2","0","0",5,12,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,1900,NA,"No Recurrence",1880
+52.2,"White","No","1","1","1",NA,7,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,1527,NA,"No Recurrence",1492
+48.1,"White","No","0","2","0","0",5,19,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,29,1951,NA,"No Recurrence",1922
+57.9,"White","No","0","1","0",NA,6,19,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,33,714,NA,"No Recurrence",681
+68.7,"White","No","0","1","0","0",6,6,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,24,1905,NA,"No Recurrence",1881
+38.5,"White","No","3","2","0",NA,8,NA,"Ductal",1,"BCS","Neoadjuvant Only","None","None","None","No",NA,"No","Yes","Not Complete","Complete",NA,"0","MX","Complete","Complete","1",153,992,NA,"No Recurrence",839
+38.1,"Black","No","0","3","1",NA,6,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","3","3","MX","Not complete","Not complete","0",153,865,NA,"No Recurrence",712
+57.7,"White","No","3","2","0","0",9,NA,NA,1,"mastectomy","Neoadjuvant Only","None","None","None","No",NA,"No","Yes",NA,"Not Complete","2","0","MX","Not complete","Not complete","0",223,433,571,"Recurrence",210
+66.7,"White","No","3","1","1","0",6,NA,"Ductal",1,"BCS","Both","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",145,2287,NA,"No Recurrence",2142
+53.5,"White","No","1","2","1","0",8,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Complete","Complete","0","0","MX","Complete","Complete","1",216,1406,NA,"No Recurrence",1190
+50,"Other","No","2","2","0","0",9,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,236,1414,NA,"No Recurrence",1178
+52.2,"White","No","0","2","1","0",6,27,NA,1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","None","No",NA,"No","Yes","Complete","Not Complete","1","1","MX","Not complete","Not complete","0",197,1249,NA,"No Recurrence",1052
+40.3,"White","No","0","1","0","0",4,21,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,15,847,NA,"No Recurrence",832
+55.1,"White","Yes","2","2","1","1",8,NA,NA,1,"BCS","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,31,1767,NA,"Recurrence",1736
+37.2,"White","No","3","2","0","0",7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Complete","Not Complete","1","0",NA,"Not complete","Not complete","0",141,467,NA,"No Recurrence",326
+53.3,"Black","No","0","1","0",NA,6,NA,NA,1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,32,1999,NA,"No Recurrence",1967
+63.7,"White","No","0","1","0","0",5,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,0,430,NA,"No Recurrence",430
+53,"White","No","0","1","0","0",4,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,39,2042,NA,"No Recurrence",2003
+72.7,"White","No","0","2","0","0",6,14,"Other",1,"mastectomy","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,23,1084,NA,"No Recurrence",1061
+58.2,"White","No","0","1","0","0",4,NA,"Ductal",1,"BCS",NA,"Neoadjuvant Only",NA,"None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,41,820,NA,"No Recurrence",779
+58.5,"White","No","0","1","0",NA,3,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,56,3059,NA,"No Recurrence",3003
+52.3,"White","No","0","1","1","0",8,34,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,27,741,NA,"No Recurrence",714
+29.8,"White","No","1","2","0","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","Yes","0 ovaries","Yes","Yes","Complete","Not Complete","1","0","MX","Not complete","Not complete","0",174,2640,NA,"No Recurrence",2466
+54.2,"White","No","0","1","0","0",6,NA,"Other",1,"mastectomy","None","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,40,1442,NA,"No Recurrence",1402
+40.6,"White","No","0","1","0","0",9,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,23,1879,NA,"No Recurrence",1856
+25.2,"White","No","3","2","0","0",9,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",213,436,NA,"Recurrence",223
+65,"White","No","0","3","0","0",7,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Both","None","No",NA,"No","Yes",NA,"Not Complete","3","0","MX","Not complete","Not complete","0",64,2008,NA,"No Recurrence",1944
+43.4,"White","No","0","1","0",NA,6,17,"Other",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,58,833,NA,"No Recurrence",775
+58.8,"White","No","3","1","0",NA,9,NA,NA,1,"BCS","Adjuvant Only","None","None","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,42,196,NA,"Recurrence",154
+64.8,"White","No","0","1","0","0",6,20,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,56,1692,NA,"No Recurrence",1636
+43.1,NA,"No","0","1","0","0",7,21,"Ductal",1,"BCS","None","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,22,1700,NA,"No Recurrence",1678
+49.2,"White","No","0","1","0","0",6,21,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,929,NA,"No Recurrence",909
+62.7,"Black","No","0","3","3","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Both","None","No",NA,"No","Yes","Not Complete","Not Complete","3","3","MX","Not complete","Not complete","0",162,2465,NA,"Recurrence",2303
+76,"White","No","0","1","0","0",7,NA,"Ductal",1,"BCS","None","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,30,2178,NA,"No Recurrence",2148
+56.2,"White","No","0","1","0","0",6,17,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,71,1116,NA,"No Recurrence",1045
+48,"White","No","0","2","0","0",6,32,NA,1,"BCS","Both","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",133,1514,NA,"No Recurrence",1381
+49.8,"White","Yes","0","3",NA,"1",5,NA,"Ductal",0,NA,"None","Neoadjuvant Only","None","None","No",NA,"No","Yes",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"No Recurrence",NA
+57.9,"Black","No","0","1","0","0",6,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,25,1125,NA,"No Recurrence",1100
+56.9,"White","No","0","2","3",NA,8,NA,"Ductal",1,"BCS","Adjuvant Only","None","None","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,10,121,587,"No Recurrence",111
+42.1,"White","No","0","2","0","0",7,15,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,26,1502,NA,"No Recurrence",1476
+46.5,"White","No","0","2","1","0",5,25,NA,1,"mastectomy","Neoadjuvant Only","None","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","1","MX","Not complete","Not complete","0",206,1746,NA,"No Recurrence",1540
+44.8,"White","Yes","0","2","1","1",7,NA,"Ductal",1,"mastectomy","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,279,305,NA,"No Recurrence",26
+55.8,"White","No","1","1","1","0",6,NA,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,1813,NA,"No Recurrence",1793
+27.8,"White","No","0","2","1","0",7,24,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,1020,NA,"No Recurrence",999
+52.2,"White","No","0","1","0","0",7,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Complete","Not Complete","1","0","MX","Not complete","Not complete","0",157,305,648,"Recurrence",148
+49.4,"White","No","0","1","0","0",3,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,64,1325,NA,"No Recurrence",1261
+68.7,"White","No","3","1","0","0",7,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,14,1534,NA,"No Recurrence",1520
+47.1,"White","No","0","1","0","0",3,NA,NA,1,"BCS","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,6,1323,NA,"No Recurrence",1317
+56.8,"Black","No","2","3","1",NA,9,NA,"Ductal",0,NA,"Neoadjuvant Only","None","None","Both","No",NA,"No","Yes","Not Complete",NA,NA,NA,NA,NA,NA,NA,NA,863,NA,"No Recurrence",NA
+32.1,"White","No","0","4","3",NA,9,NA,"Ductal",1,"mastectomy","Both","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","3","MX","Not complete","Not complete","0",132,174,NA,"Recurrence",42
+66.8,"White","No","0","2","1",NA,6,NA,"Ductal",1,"mastectomy",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,54,28,NA,"No Recurrence",-26
+56.9,"White","Yes","0","2",NA,"1",6,NA,"Other",0,NA,"None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1116,"No Recurrence",NA
+55.9,NA,"No","0","1","2",NA,7,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","Both","None","No",NA,"No","Yes","Not Complete","Not Complete","1","2","MX","Not complete","Not complete","0",176,1612,NA,"No Recurrence",1436
+53.4,"White","No","0","1","0","0",3,NA,"Other",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,41,2213,NA,"No Recurrence",2172
+72.2,"Black","No","3","1","2","0",8,NA,NA,1,"mastectomy","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","2","MX","Not complete","Not complete","0",201,648,683,"No Recurrence",447
+76,"White","No","0","2","0","0",3,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,45,1857,NA,"No Recurrence",1812
+50.4,"White","No","0","1","1","0",5,NA,NA,1,"mastectomy","Adjuvant Only","Adjuvant Only","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,43,1719,NA,"No Recurrence",1676
+48.6,"Black","No","3","2","1","0",9,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Complete","Complete",NA,NA,"MX","Complete","Complete","1",183,1486,NA,"No Recurrence",1303
+45.4,"White","No","1","3","3","0",8,NA,NA,1,"mastectomy","Both","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Complete",NA,NA,NA,"Complete","Complete","1",228,2033,NA,"No Recurrence",1805
+55.5,"White","No","3","3","0","0",7,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","None","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",167,1918,NA,"No Recurrence",1751
+34.1,"White","No","1","2","1","0",7,NA,"Other",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Both","No",NA,"No","Yes","Not Complete","Not Complete","1",NA,"MX","Not complete","Not complete","0",146,1956,NA,"No Recurrence",1810
+70.8,"White","No","3","2","2","0",6,NA,"Ductal",1,"BCS","Both","Adjuvant Only","None","None","Yes","1 ovary","No","Yes","Not Complete","Not Complete","1","2","MX","Not complete","Not complete","0",201,866,NA,"No Recurrence",665
+77.7,"White","No","0","1","0","0",5,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,38,1705,1705,"No Recurrence",1667
+37.1,"White","No","0","2","0","0",9,71,NA,1,"BCS","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,25,1530,NA,"No Recurrence",1505
+64.7,"White","No","0","1","0","0",7,31,"Ductal",1,"BCS","Adjuvant Only","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,24,1420,NA,"No Recurrence",1396
+52.4,"Other","No","0","2","0","0",6,11,"Ductal",1,"mastectomy","None","None","Adjuvant Only","None","Yes","2 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,53,763,NA,"No Recurrence",710
+42.6,"White","No","1","2","0","0",3,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","Yes","0 ovaries","Yes","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",199,1500,NA,"No Recurrence",1301
+71.9,"White","No","0","1","0","0",6,NA,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,20,1951,NA,"No Recurrence",1931
+55.7,"Black","No","3","1","0","0",9,NA,NA,1,"mastectomy","Adjuvant Only","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,29,1822,NA,"No Recurrence",1793
+58.9,"White","No","2","1","0","0",6,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,22,1788,NA,"No Recurrence",1766
+65.4,"White","No","0","1","0","0",6,NA,"Other",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,26,1992,NA,"No Recurrence",1966
+38.6,NA,"Yes","0","2","3","1",5,NA,"Ductal",1,"mastectomy","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,NA,665,"No Recurrence",NA
+76.8,"White","No","0","1","0",NA,4,NA,"Ductal",1,"BCS","None","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,27,842,NA,"No Recurrence",815
+51.7,"Black","No","0","1","1","0",7,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,29,1984,NA,"No Recurrence",1955
+44.1,"White","No","0","3","0","0",6,NA,NA,1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",201,930,1656,"Recurrence",729
+68.5,"White","No","0","2","0","0",6,14,"Other",1,"BCS","None","Adjuvant Only","Both","None","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",172,1586,NA,"No Recurrence",1414
+73.7,"White","No","0","2","0","0",6,10,"Other",1,"BCS","None","Adjuvant Only","Both","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",214,1413,NA,"No Recurrence",1199
+58.5,"White","No","0","1","1","0",5,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,13,376,NA,"No Recurrence",363
+52,"Black","No","2","1","0",NA,6,NA,NA,1,"BCS","Adjuvant Only","None","None","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,27,1791,NA,"No Recurrence",1764
+41.3,NA,"No","0","1","0","0",NA,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,64,2054,NA,"No Recurrence",1990
+39.8,"White","No","0","2","0","0",6,11,NA,1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,45,1775,NA,"No Recurrence",1730
+45.8,"Black","No","3","1",NA,NA,7,NA,"Other",1,"BCS",NA,"None",NA,NA,"No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,33,NA,NA,"No Recurrence",NA
+50.5,NA,"No","2","2","1","0",7,NA,"Ductal",1,"mastectomy","Neoadjuvant Only","None","None","Both","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","2","1","MX","Not complete","Not complete","0",209,295,NA,"No Recurrence",86
+53.7,NA,"No","3","1","0",NA,8,NA,"Ductal",1,"mastectomy","None","None","None","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,39,1867,NA,"No Recurrence",1828
+75.2,"White","No","0","2","0","0",7,18,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,36,1450,NA,"No Recurrence",1414
+49.4,"White","No","0","2","0","0",6,13,"Other",1,"mastectomy","None","None","Adjuvant Only","None","Yes","0 ovaries","Yes","No",NA,NA,NA,NA,NA,NA,NA,NA,36,395,NA,"No Recurrence",359
+42.6,"White","No","0","2","1","0",8,NA,NA,1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,NA,1624,NA,"No Recurrence",NA
+89.4,"White","No","0","1","1","0",5,NA,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,48,1480,NA,"No Recurrence",1432
+55.7,"White","No","0","1","0","0",6,23,NA,1,"BCS","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,21,1475,NA,"No Recurrence",1454
+50.8,"White","No","3","2","0","0",9,NA,"Ductal",1,"mastectomy","Both","None","None","None","No",NA,"No","Yes","Not Complete","Not Complete","2","0","MX","Not complete","Not complete","0",146,2030,NA,"No Recurrence",1884
+54.8,"White","No","0","2","1","0",8,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","Yes","Not Complete","Complete","0","0","MX","Complete","Complete","1",160,2247,NA,"No Recurrence",2087
+64,NA,"No","0","1","0","0",9,NA,"Ductal",1,"BCS","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","Yes","Not Complete","Not Complete","1","0","MX","Not complete","Not complete","0",161,994,NA,"Recurrence",833
+41.5,"Black","No","3","2","1",NA,7,NA,"Other",1,"mastectomy","Neoadjuvant Only","Adjuvant Only","Adjuvant Only","None","Yes","2 ovaries","No","Yes",NA,"Not Complete","2","0","MX","Not complete","Not complete","0",157,609,NA,"Recurrence",452
+66.2,"Black","No","0","2","2","0",7,NA,"Ductal",1,"BCS","Adjuvant Only","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,14,1881,NA,"No Recurrence",1867
+75.8,"White","No","0","1","0","0",7,22,"Ductal",1,"mastectomy","Adjuvant Only","None","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,39,1432,NA,"No Recurrence",1393
+62.4,"White","No","0","1","0","0",6,9,"Other",1,"mastectomy","None","Adjuvant Only","Adjuvant Only","None","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,70,1084,NA,"No Recurrence",1014
+40.8,"Black","No","0","2","1",NA,6,NA,"Ductal",1,"mastectomy","Adjuvant Only","Adjuvant Only","Adjuvant Only","Adjuvant Only","No",NA,"No","No",NA,NA,NA,NA,NA,NA,NA,NA,60,988,NA,"No Recurrence",928
+57.4,"White","No","0","2","0","0",3,6,"Ductal",1,"BCS","None","Adjuvant Only","Adjuvant Only","None","Yes","0 ovaries","No","No",NA,NA,NA,NA,NA,NA,NA,NA,35,1009,NA,"No Recurrence",974
