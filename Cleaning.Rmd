@@ -1,6 +1,6 @@
 ---
 title: "New start"
-author: "张诗懿"
+author: "Shiyi Zhang"
 date: "`r Sys.Date()`"
 output: html_document
 ---
@@ -8,14 +8,10 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-library(readr)
-library(naniar)
-library(survival)
-library(visdat)
 ```
 
 
-```{r}
+```{r Variable Selection}
 data <- read.csv("https://raw.githubusercontent.com/BDSI-CDS-2025/tcia/refs/heads/main/data/clinicalData_clean.csv")
 
 ## Not Include MRI Technical Information.
@@ -55,15 +51,32 @@ data <- data %>%
     )
   )
 
+# Death
+data <- data %>%
+  mutate(
+    Days.to.death..from.the.date.of.diagnosis. = as.numeric(na_if(Days.to.death..from.the.date.of.diagnosis., "NP"))
+  )
+
 # patient ID
 data <- data[,-1] 
 
-# Race and Metastatic at Presentation (selected)
-data<- data %>%
-  mutate(Race.and.Ethnicity = as.factor(case_when(Race.and.Ethnicity == 1 ~ "White", 
+# Age (selected)
+data$Date.of.Birth..Days. <- round(-data$Date.of.Birth..Days. / 365.25, 1) 
+
+# Race (selected)
+data <- data %>% mutate(
+  Race.and.Ethnicity = as.factor(case_when(Race.and.Ethnicity == 1 ~ "White", 
                                                   Race.and.Ethnicity == 2 ~ "Black",
-                                                  Race.and.Ethnicity %in% c(3, 4, 5, 6, 7) ~ "Other")),
-         Metastatic.at.Presentation..Outside.of.Lymph.Nodes. = case_when(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 0 ~ "No", Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 1 ~ "Yes"))
+                                                  Race.and.Ethnicity %in% c(3, 4, 5, 6, 7) ~ "Other"))
+  )
+
+# Metastatic at Presentation (Selected)
+# Important but Sparse: Subgroup
+data <- data %>% mutate(
+  Metastatic.at.Presentation..Outside.of.Lymph.Nodes. = 
+    case_when(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 0 ~ "No",
+              Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 1 ~ "Yes")
+  )
 
 # Molecular Type and Tumor Staging (selected)
 data <- data %>% mutate(
@@ -79,9 +92,8 @@ data <- data %>% mutate(
                      ordered = TRUE),
   Nottingham.total.score = as.numeric(TumorGradeT) + as.numeric(TumorGradeN) + as.numeric(TumorGradeM))
 
-# 72% missing in Oncotype DX (selected)
-# Stratify the Oncotype or Imputation
-# oncotype_data <- data %>% filter(!is.na(Oncotype.score))
+# Oncotype DX (selected)
+# 72% missing:Stratify the Oncotype or Imputation
 
 # Collapsed Histologic Type (selected)
 data$Histologic.type.collapse <- fct_collapse(
@@ -107,10 +119,12 @@ data <- data %>%
 # Surgery (selected)
 data <- data %>%
   mutate(
-    # Surgery = as.factor(Surgery),
     Definitive.Surgery.Type = as.factor(na_if(Definitive.Surgery.Type, "NP")),
+    Definitive.Surgery.Type = as.factor(
+      case_when(Definitive.Surgery.Type == 0 ~ "BCS",
+              Definitive.Surgery.Type == 1 ~ "mastectomy")
+  ),
     Days.to.Surgery..from.the.date.of.diagnosis. = as.numeric(Days.to.Surgery..from.the.date.of.diagnosis.),
-    
     Days.to.Surgery = ifelse(
       Days.to.Surgery..from.the.date.of.diagnosis. < 0, 
       NA,  
@@ -121,8 +135,8 @@ data <- data %>%
       dignose.to.recurrence - Days.to.Surgery,
       NA_real_
     )
-  ) %>%
-  filter(!is.na(surgery.to.recurrence))
+  ) 
+# %>% filter(!is.na(surgery.to.recurrence))
 
 # Mammography Characteristics and US features (Optional: Detailed Analysis on Subgroup)
 
@@ -183,6 +197,15 @@ data <- data %>%
 
 # Neoadjuvant Therapy or not (selected)
 data <- data %>%
+  mutate(
+    Received.Neoadjuvant.Therapy.or.Not = if_else(
+      Chemotherapy %in% c("Neoadjuvant Only", "Both") |
+      Radiationtherapy %in% c("Neoadjuvant Only", "Both") |
+      Endocrinetherapy %in% c("Neoadjuvant Only", "Both") |
+      Antiher2therapy %in% c("Neoadjuvant Only", "Both"),
+      1, 2
+    )
+  ) %>%
   mutate(Received.Neoadjuvant.Therapy.or.Not = factor(case_when(
     Received.Neoadjuvant.Therapy.or.Not == 1 ~ "Yes",
     Received.Neoadjuvant.Therapy.or.Not == 2 ~ "No",
@@ -266,12 +289,13 @@ data <- data %>%
     )
   )
 
-names(data)
+# names(data)
 ```
 
 
-```{r}
+```{r Rename}
 cleaned_data <- data %>% select(
+  "Date.of.Birth..Days.",
   "Race.and.Ethnicity",
   "Metastatic.at.Presentation..Outside.of.Lymph.Nodes.",
   "Mol.Subtype",
@@ -281,6 +305,7 @@ cleaned_data <- data %>% select(
   "Nottingham.total.score",
   "Oncotype.score",
   "Histologic.type.collapse",
+  "Surgery",
   "Definitive.Surgery.Type",
   "Chemotherapy",
   "Radiationtherapy",
@@ -299,10 +324,13 @@ cleaned_data <- data %>% select(
   "Overall.Near.complete.Response...Looser.Definition",
   "Near.complete.Response..Graded.Measure.",
   "Days.to.Surgery",
+  "dignose.to.recurrence",
+  "Days.to.death..from.the.date.of.diagnosis.",
   "Recurrence.event.s.",
   "surgery.to.recurrence",
 ) %>% 
   rename(
+    Age = Date.of.Birth..Days.,
     Race = Race.and.Ethnicity,
     Metastatic = Metastatic.at.Presentation..Outside.of.Lymph.Nodes.,
     Mole_type = Mol.Subtype,
@@ -312,6 +340,7 @@ cleaned_data <- data %>% select(
     Nottingham_score = Nottingham.total.score,
     Oncotype_score = Oncotype.score,
     Histology = Histologic.type.collapse,
+    Surgery = Surgery,
     Surgery_type = Definitive.Surgery.Type,
     Chemo = Chemotherapy,
     Radiation = Radiationtherapy,
@@ -330,11 +359,11 @@ cleaned_data <- data %>% select(
     Near_response_loose = Overall.Near.complete.Response...Looser.Definition,
     Near_response_grade = Near.complete.Response..Graded.Measure.,
     Time_to_surgery = Days.to.Surgery,
+    Dignose_to_recurrence = dignose.to.recurrence,
+    Days_to_death = Days.to.death..from.the.date.of.diagnosis.,
     Recurrence = Recurrence.event.s.,
     Time_to_event = surgery.to.recurrence
   )
-
-
 
 ```
 
