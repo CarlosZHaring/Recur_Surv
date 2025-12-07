@@ -1,0 +1,886 @@
+---
+title: "Interpretable Models"
+author: "Shiyi Zhang"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(naniar)
+library(ggplot2)
+library(survival)
+library(survminer)
+library(timeROC)
+library(gridExtra)
+library(grid)
+library(gt)
+library(purrr)
+```
+
+```{r Time Dependent ROC}
+plot_time_dependent_roc <- function(cox_model, newdata, time_var, event_var,
+                                    times = c(365, 1095, 1825),
+                                    time_labels = c("1 year", "3 years", "5 years"),
+                                    palette = c("#E87A90", "#2EA9DF", "#91B493")) {
+  # Risk Scores
+  lp <- predict(cox_model, newdata = newdata, type = "lp")
+  
+  # Construct timeROC Object
+  roc_multi <- timeROC(
+    T = newdata[[time_var]],
+    delta = newdata[[event_var]],
+    marker = lp,
+    cause = 1,
+    times = times,
+    iid = TRUE
+  )
+  
+  # Label of AUC
+  auc_values <- round(roc_multi$AUC, 3)
+  time_labels_auc <- paste0(time_labels, " (AUC = ", auc_values, ")")
+  
+  # Prepare Dataframe
+  roc_df <- data.frame(
+    fpr = c(roc_multi$FP[,1], roc_multi$FP[,2], roc_multi$FP[,3]),
+    tpr = c(roc_multi$TP[,1], roc_multi$TP[,2], roc_multi$TP[,3]),
+    time = factor(rep(time_labels_auc, each = nrow(roc_multi$FP)), levels = time_labels_auc)
+  )
+  
+  # Plotting
+  p <- ggplot(roc_df, aes(x = fpr, y = tpr, color = time)) +
+    geom_line(size = 1.2) +
+    geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "#787D7B") +
+    scale_color_manual(values = palette, name = "Time Horizon") +
+    labs(
+      title = "Time-dependent ROC Curve with AUC",
+      x = "False Positive Rate (1 - Specificity)",
+      y = "True Positive Rate (Sensitivity)"
+    ) +
+    theme_minimal(base_size = 14) +
+    theme(
+      plot.title = element_text(size = 22, face = "bold"), 
+      axis.title.x = element_text(size = 18),             
+      axis.title.y = element_text(size = 18),             
+      axis.text = element_text(size = 14),
+      legend.title = element_text(size = 16, face = "bold"), 
+      legend.text = element_text(size = 14)               
+      )
+  
+  return(p)
+}
+```
+
+
+```{r Oncotype Score}
+cleaned_data <- read.csv("cleaned_data.csv")
+
+## Clinical Considerations about Oncotype Score 
+cleaned_data <- cleaned_data %>%
+  mutate(Oncotype_missing = ifelse(is.na(Oncotype_score), "Missing", "Observed"))
+
+## Contingency Table (Chi-Square Test) for Tumor Staging and Molecular Type
+
+# Early Stage
+fisher.test(table(cleaned_data$Oncotype_missing,cleaned_data$T_stage))
+
+ggplot(cleaned_data, aes(x = T_stage, fill = Oncotype_missing)) +
+  geom_bar(position = "fill") +
+  labs(y = "Proportion", title = "Proportion of Oncotype Score Missingness by T Stage") +
+  scale_fill_manual(values = c("Observed" = "#005CAF", "Missing" = "#B68E55")) +
+  theme_minimal()
+
+fisher.test(table(cleaned_data$Oncotype_missing,cleaned_data$N_stage))
+
+ggplot(cleaned_data, aes(x = N_stage, fill = Oncotype_missing)) +
+  geom_bar(position = "fill") +
+  labs(y = "Proportion", title = "Proportion of Oncotype Score Missingness by N Stage") +
+  scale_fill_manual(values = c("Observed" = "#66C2A5", "Missing" = "#FC8D62")) +
+  theme_minimal()
+
+# Luminal-like Type
+fisher.test(table(cleaned_data$Oncotype_missing,cleaned_data$Mole_type))
+
+ggplot(cleaned_data, aes(x = Mole_type, fill = Oncotype_missing)) +
+  geom_bar(position = "fill") +
+  labs(
+    x = "Molecular Type",
+    y = "Proportion",
+    title = "Proportion of Missingness by Molecular Type"
+  ) +
+  scale_fill_manual(
+    name = "Oncotype Score", 
+    values = c("Observed" = "#86C166", "Missing" = "#EB7A77")
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 20, face = "bold"),   
+    axis.title.x = element_text(size = 18),                
+    axis.title.y = element_text(size = 18),                
+    axis.text = element_text(size = 16),
+    legend.title = element_text(size = 20, face = "bold"), 
+    legend.text = element_text(size = 18)                 
+  )
+
+## Subset of Patients with Oncotype Score
+Onco <- cleaned_data %>% filter(
+  !is.na(Oncotype_score),
+  Mole_type == 0
+) %>% select(
+  -Metastatic,
+  -Surgery
+) %>% mutate(
+  Recurrence = ifelse(Recurrence == "Recurrence", 1, 0))
+
+vis_miss(Onco, cluster = T, sort_miss = T)
+
+# Distribution with Recurrence
+wilcox.test(Oncotype_score ~ Recurrence, data = Onco)
+
+Onco %>%
+  group_by(Recurrence) %>%
+  summarise(
+    n = n(),
+    mean = mean(Oncotype_score, na.rm = TRUE),
+    median = median(Oncotype_score, na.rm = TRUE),
+    sd = sd(Oncotype_score, na.rm = TRUE),
+    min = min(Oncotype_score, na.rm = TRUE),
+    max = max(Oncotype_score, na.rm = TRUE)
+  )
+
+ggplot(Onco, aes(x = Recurrence, y = Oncotype_score, fill = Recurrence)) +
+  geom_boxplot() +
+  scale_fill_manual(
+    values = c("No Recurrence" = "#58B2DC",
+               "Recurrence" = "#F596AA")
+    ) + 
+      labs(
+        x = "Recurrence Status",
+        y = "Oncotype Score",
+        title = "Oncotype Score Distribution by Recurrence"
+        ) +
+      theme_minimal()
+
+# Cox Regression 
+Onco_cox <- coxph(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ 
+                    Oncotype_score + I(Oncotype_score^2) + 
+                    strata(Race) + Surgery_type, data = Onco)
+summary(Onco_cox)
+cox.zph(Onco_cox)
+plot(cox.zph(Onco_cox))
+
+plot_time_dependent_roc(
+  cox_model = Onco_cox,
+  newdata = Onco,
+  time_var = "Time_to_event",
+  event_var = "Recurrence"
+)
+
+# Logistic Regression
+Onco_log <- glm(Recurrence ~ Oncotype_score + Chemo, family = "binomial", data = Onco)
+summary(Onco_log)
+
+
+# cleaned_data %>% filter(
+#   Neoadjuvant == "Yes"
+# ) %>% 
+#   group_by(Mole_type, Chemo) %>%
+#   summarise(
+#     n = n(),
+#     n_missing = sum(Oncotype_missing == "Missing"),
+#     missing_rate = mean(Oncotype_missing == "Missing"),
+#     .groups = "drop"
+#   )
+
+
+# Indicator for Chemotherapy
+ggplot(Onco, aes(x = Chemo, y = Oncotype_score, fill = Chemo)) +
+  geom_violin(trim = FALSE, alpha = 0.8) +  
+  geom_boxplot(width = 0.1, alpha = 0.5, outlier.shape = NA) + 
+  scale_fill_manual(
+    values = c("Both" = "#268785",
+               "Adjuvant Only" = "#622954",
+               "Neoadjuvant Only" = "#1E88A8",
+               "None" = "#F7D94C",
+               "NA" = "#656765")
+    ) + 
+      labs(
+        x = "Type of Chemotherapy",
+        y = "Oncotype Score",
+        title = "Oncotype Score Distribution by Chemotherapy"
+        ) +
+      theme_minimal() +
+  theme(
+    plot.title = element_text(size = 24, face = "bold"),   
+    axis.title.x = element_text(size = 20),                
+    axis.title.y = element_text(size = 20),                
+    axis.text = element_text(size = 22),
+    legend.title = element_text(size = 22, face = "bold"), 
+    legend.text = element_text(size = 20)                 
+  )
+
+kruskal.test(Oncotype_score ~ Chemo, data = Onco)
+
+```
+
+
+```{r Summary Table of Cox Regression}
+create_cox_gt_table <- function(cox_model, selected_vars = NULL,
+                                title = "Cox Regression Summary Table",
+                                subtitle_all = "Rows with different significant level",
+                                subtitle_subset = "Rows with different significant level (partial results shown)",
+                                p_cut = c(0.001, 0.01, 0.05, 0.1)) {
+  # ---- 1. 提取 summary ----
+  cox_sum <- summary(cox_model)
+  
+  # 行名（模型矩阵中的参数名）
+  term_names <- rownames(cox_sum$coefficients)
+  
+  # 基础表
+  tbl <- data.frame(
+    term   = term_names,
+    Coef   = cox_sum$coefficients[, "coef"],
+    HR     = cox_sum$coefficients[, "exp(coef)"],
+    Lower  = cox_sum$conf.int[, "lower .95"],
+    Upper  = cox_sum$conf.int[, "upper .95"],
+    P_value= cox_sum$coefficients[, "Pr(>|z|)"],
+    stringsAsFactors = FALSE
+  )
+  
+  # ---- 2. 模型中的 factor 原始 levels ----
+  # cox_model$xlevels 是一个命名 list：每个因子变量对应一个字符向量的 levels
+  xlv <- cox_model$xlevels  # may be empty if无factor
+  var_names <- names(xlv)
+  
+  # ---- 3. 为每个 term 猜测对应原始变量名 & level ----
+  # 如果模型里没有因子（xlv为空），这一段也能正常运行（都会标记 numeric）
+  
+  parse_term <- function(term) {
+    # 找所有变量名中是 term 前缀的
+    candidates <- var_names[startsWith(term, var_names)]
+    if (length(candidates) == 0) {
+      # 没匹配上 → 可能是 numeric 或 transformed term（如 poly）
+      return(list(var = term, level = NA_character_, is_factor = FALSE))
+    } else {
+      # 如果多个匹配（如 Race 与 RaceCat），取最长匹配避免误拆
+      var <- candidates[which.max(nchar(candidates))]
+      suffix <- trimws(sub(var, "", term, fixed = TRUE))
+      return(list(var = var,
+                  level = suffix,
+                  is_factor = TRUE))
+    }
+  }
+  
+  parsed <- map(term_names, parse_term)
+  tbl$Var_raw   <- map_chr(parsed, "var")
+  tbl$Level_raw <- map_chr(parsed, "level")
+  tbl$is_factor <- map_lgl(parsed, "is_factor")
+  
+  # ---- 4. 构造 Reference 和 Level 显示文字 ----
+  # 对 factor：参考组 = levels[[1]]（模型基准）
+  # 对 numeric：Reference = 'Continuous'
+  tbl <- tbl %>%
+    mutate(
+      Reference = case_when(
+        is_factor ~ map_chr(Var_raw, ~ if (.x %in% names(xlv)) xlv[[.x]][1] else NA_character_),
+        TRUE      ~ "Continuous"
+      ),
+      # Level 展示（对 factor 行显示被比较的 level；对 numeric 留空）
+      Level = case_when(
+        is_factor ~ Level_raw,
+        TRUE      ~ ""
+      )
+    )
+  
+  # ---- 5. 人类可读：组合显示（Var = Level）----
+  # 当 Level_raw 是空字符串（某些复杂模型）就不加等号
+  tbl <- tbl %>%
+    mutate(
+      Variable = case_when(
+        is_factor & nzchar(Level_raw) ~ paste0(Var_raw, " = ", Level_raw),
+        TRUE ~ Var_raw
+      ),
+      Reference = case_when(
+        is_factor ~ paste0(Var_raw, " = ", Reference),
+        TRUE      ~ Reference
+      )
+    )
+  
+  # ---- 6. 筛选用户需要的变量（selected_vars 可写 Var_raw 或 term） ----
+  if (!is.null(selected_vars)) {
+    # 支持用户传 term 名称 或 原始变量名
+    tbl <- tbl %>%
+      filter(term %in% selected_vars | Var_raw %in% selected_vars)
+  }
+  
+  # ---- 7. 格式化数字 & CI 列 ----
+  tbl <- tbl %>%
+    mutate(
+      Coef = round(Coef, 3),
+      HR   = round(HR, 3),
+      Lower= round(Lower, 3),
+      Upper= round(Upper, 3),
+      P_value = round(P_value, 3),
+      CI = sprintf("(%0.3f, %0.3f)", Lower, Upper)
+    ) %>%
+    select(Variable, Reference, HR, CI, P_value, Coef, term, Var_raw, Level_raw)
+  
+  # ---- 8. Significance Code ----
+  # cut: <0.001, <0.01, <0.05, <0.1
+  tbl <- tbl %>%
+    mutate(
+      Signif = case_when(
+        P_value < p_cut[1] ~ "***",
+        P_value < p_cut[2] ~ "**",
+        P_value < p_cut[3] ~ "*",
+        P_value < p_cut[4] ~ ".",
+        TRUE ~ ""
+      ),
+      SigBin = case_when(
+        P_value < p_cut[1] ~ 1,
+        P_value < p_cut[2] ~ 2,
+        P_value < p_cut[3] ~ 3,
+        P_value < p_cut[4] ~ 4,
+        TRUE ~ 5
+      )
+    )
+  
+  # ---- 9. 构建 gt 表 ----
+  gt_table <- tbl %>%
+    gt() %>%
+    tab_header(
+      title = title,
+      subtitle = ifelse(is.null(selected_vars), subtitle_all, subtitle_subset)
+    ) %>%
+    cols_label(
+      Variable  = "Variable",
+      Reference = "Reference",
+      HR        = "Hazard Ratio",
+      CI        = "95% CI",
+      P_value   = "P-value",
+      Coef      = "Coef",
+      Signif    = "Sig"
+    ) %>%
+    # 把调试列隐藏（term / Var_raw / Level_raw / SigBin）
+    cols_hide(columns = c(term, Var_raw, Level_raw, SigBin)) %>%
+    # 根据显著性着色（SigBin）
+    tab_style(
+      style = list(cell_fill(color = "#FFB6C1"), cell_text(weight = "bold")),
+      locations = cells_body(rows = Signif == "***")
+    ) %>%
+    tab_style(
+      style = list(cell_fill(color = "#FFD2DC"), cell_text(weight = "bold")),
+      locations = cells_body(rows = Signif == "**")
+    ) %>%
+    tab_style(
+      style = list(cell_fill(color = "#FFE4EB"), cell_text(weight = "bold")),
+      locations = cells_body(rows = Signif == "*")
+    ) %>%
+    tab_style(
+      style = cell_fill(color = "#FFF0F5"),
+      locations = cells_body(rows = Signif == ".")
+    ) %>%
+    tab_style(
+      style = cell_text(weight = "bold"),
+      locations = cells_body(rows = P_value < 0.1)
+      ) %>% 
+    # 列标题对齐
+    tab_style(
+      style = cell_text(align = "center"),
+      locations = cells_column_labels(columns = c(HR, CI, P_value, Coef, Signif))
+    ) %>%
+    # 列内容对齐
+    cols_align(align = "left",  columns = c(Variable, Reference)) %>%
+    cols_align(align = "center", columns = c(HR, CI, P_value, Coef, Signif)) %>% 
+    # 隐藏Signif列
+    cols_hide(columns = c(Coef,Signif))
+  
+  return(gt_table)
+}
+```
+
+
+```{r Neoadjuvant Therapy and Adjuvant Therapy}
+## Difference of Survival Time about Neoadjuvant
+table(cleaned_data$Neoadjuvant, cleaned_data$Recurrence)
+chisq.test(table(cleaned_data$Neoadjuvant, cleaned_data$Recurrence))
+
+# cleaned_data$Time_to_event <- (cleaned_data$Time_to_event) / 365
+Neo_kep <- survfit(Surv(Time_to_event/365, Recurrence) ~ Neoadjuvant,
+                   data = cleaned_data %>% mutate(Recurrence = ifelse(Recurrence == "Recurrence", 1, 0)))
+
+ggsurvplot(
+    Neo_kep,
+    data = cleaned_data %>% mutate(Recurrence = ifelse(Recurrence == "Recurrence", 1, 0)),
+    pval = TRUE,
+    font.main = c(21, "bold", "black"),       
+    font.x = c(18, "plain", "black"),         
+    font.y = c(18, "plain", "black"),         
+    font.tickslab = c(18, "plain", "black"),  
+    font.legend = c(18, "plain", "black"),
+    xlab = "Time (Years)",
+    title = "Kaplan-Meier Curve for Neoadjuvant Therapy",
+    xlim = c(0, 10),
+    break.time.by = 1
+) 
+
+# ggsurvplot(survfit(Surv(Time_to_event, Recurrence) ~ 1, data = Neo), data = Neo,
+#            risk.table = TRUE,
+#            title = "Overall Survival Curve",
+#            xlab = "Time to Event (days)")
+
+## Subgroup of Patients with Neoadjuvant therapy
+Neo <- cleaned_data %>% filter(
+  Neoadjuvant == "Yes",
+  Surgery == 1
+) %>% select(
+  -Metastatic,
+  -Days_to_death,
+  -Oncotype_score
+) %>% mutate(
+  Nottingham_grade = case_when(
+    Nottingham_score <= 5 ~ "Grade 1",
+    Nottingham_score <= 7 ~ "Grade 2",
+    Nottingham_score <= 9 ~ "Grade 3",
+    TRUE ~ NA_character_
+  ),
+  Nottingham_grade = factor(Nottingham_grade, levels = c("Grade 1", "Grade 2", "Grade 3")),
+  Recurrence = ifelse(Recurrence == "Recurrence", 1, 0),
+  T_stage = factor(T_stage, ordered = F),
+  N_stage = factor(N_stage, ordered = F)
+)
+
+vis_miss(Neo, cluster = T, sort_miss = T)
+
+# General Therapy
+table(Neo$Chemo, Neo$Recurrence)
+table(Neo$Radiation, Neo$Recurrence)
+
+# Specific Therapy
+table(Neo$Antiher2, Neo$Recurrence)
+table(Neo$Endocrine, Neo$Recurrence)
+
+Neo <- Neo %>%
+  mutate(
+    Chemo = case_when(
+      Chemo %in% c("Adjuvant Only", "Both") ~ "Adjuvant",
+      Chemo %in% c("Neoadjuvant Only", "None") ~ "No Adjuvant",
+      TRUE ~ NA_character_
+    ),
+    Radiation = case_when(
+      Radiation %in% c("Adjuvant Only", "Both") ~ "Adjuvant",
+      Radiation %in% c("Neoadjuvant Only", "None") ~ "No Adjuvant",
+      TRUE ~ NA_character_
+    ),
+    Antiher2 = case_when(
+      Antiher2 %in% c("Adjuvant Only", "Both") ~ "Adjuvant",
+      Antiher2 %in% c("Neoadjuvant Only", "None") ~ "No Adjuvant",
+      TRUE ~ NA_character_
+    ),
+    Endocrine = case_when(
+      Endocrine %in% c("Adjuvant Only", "Both") ~ "Adjuvant",
+      Endocrine %in% c("Neoadjuvant Only", "None") ~ "No Adjuvant",
+      TRUE ~ NA_character_
+    )
+  )
+
+# Perfect Prediction for Pathologic Response
+table(Neo$Pathologic_response, Neo$Recurrence)
+# Neo <- Neo %>% filter(Pathologic_response != "Complete")
+
+table(Neo$Clinical_response, Neo$Recurrence)
+table(Neo$Near_response_strict, Neo$Recurrence)
+table(Neo$Near_response_loose, Neo$Recurrence)
+
+table(Neo$Patho_N_stage, Neo$Recurrence)
+table(Neo$Patho_T_stage, Neo$Recurrence)
+  
+# survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Nottingham_grade, data = Neo)
+
+# Cox Regression for Treatment Adjusted with Characteristics at Diagnose and Response
+Neo_cox <- coxph(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ 
+                   Race + T_stage + N_stage + Nottingham_score + 
+                   Surgery_type + Time_to_surgery + 
+                   Chemo + Radiation + 
+                   Clinical_response, data = Neo)
+
+# Contents of the Table
+table_data <- data.frame(
+  Module = c("Demographic", 
+             "Characteristics at Diagnosis", 
+             "Treatment", 
+             "Response After Neoadjuvant"),
+  Variables = c(
+    "Race",
+    "T stage, N stage, Nottingham score",
+    "Surgery type, Time to surgery, Chemo, Radiation",
+    "Clinical response"
+  ),
+  stringsAsFactors = FALSE
+)
+
+# Colors of the Chunk
+fill_colors <- c("#B2CFE5", "#F9DBBD", "#C2EABD", "#F6B3B3")
+
+# Creating the Objects
+colored_table <- tableGrob(table_data, rows = NULL,
+  theme = ttheme_default(
+    core = list(
+      bg_params = list(fill = fill_colors, col = NA),
+      fg_params = list(fontsize = 16)
+    ),
+    colhead = list(
+      bg_params = list(fill = "grey90", col = NA),
+      fg_params = list(fontsize = 18, fontface = "bold")
+    )
+  )
+)
+
+# Plotting
+grid.newpage()
+grid.draw(colored_table)
+
+summary(Neo_cox)
+cox.zph(Neo_cox)
+plot(cox.zph(Neo_cox))
+
+plot_time_dependent_roc(
+  cox_model = Neo_cox,
+  newdata = Neo,
+  time_var = "Time_to_event",
+  event_var = "Recurrence"
+)
+
+ggforest(Neo_cox, 
+         data = Neo,
+         fontsize = 1.2)
+
+selected_vars <- c("T_stage2", "T_stage3", "T_stage4",
+                   "N_stage1", "N_stage2", "N_stage3",
+                   "ChemoNo Adjuvant", "RadiationNo Adjuvant",
+                   "Clinical_responseComplete")
+
+create_cox_gt_table(Neo_cox, selected_vars = selected_vars)
+
+
+## Subgroup of Patients with Adjuvant therapy
+Nonneo <- cleaned_data %>% filter(
+  Neoadjuvant == "No",
+  Surgery == 1) %>% select(
+    -Surgery,
+    -Neoadjuvant,
+    -Clinical_response,
+    -Pathologic_response,
+    -Patho_T_stage,
+    -Patho_N_stage,
+    -Patho_M_stage,
+    -Near_response_strict,
+    -Near_response_loose,
+    -Near_response_grade,
+    -Days_to_death
+    ) %>% mutate(
+      Chemo = factor(Chemo, levels = c("Adjuvant Only", "None")),
+      Radiation = factor(Radiation, levels = c("Adjuvant Only", "None")),
+      Antiher2 = factor(Antiher2, levels = c("Adjuvant Only", "None")),
+      Endocrine = factor(Endocrine, levels = c("Adjuvant Only", "None")),
+      T_stage = factor(T_stage, ordered = F),
+      N_stage = factor(N_stage, ordered = F),
+      Recurrence = ifelse(Recurrence == "Recurrence", 1, 0)
+    )
+
+vis_miss(Nonneo, cluster = T, sort_miss = T)
+
+# Antiher2 is not Helpful
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Chemo, data = Nonneo)
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Radiation, data = Nonneo)
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Antiher2, data = Nonneo)
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Endocrine, data = Nonneo)
+
+table(Nonneo$T_stage, Nonneo$Recurrence)
+table(Nonneo$N_stage, Nonneo$Recurrence)
+
+# Cox Regression
+Nonneo_cox <- coxph(Surv(time = Time_to_event, event = Recurrence) ~ 
+                      strata(Race) + strata(Mole_type) +
+                      Nottingham_score + 
+                      Surgery_type + Time_to_surgery +
+                      Chemo + Radiation + Antiher2 + Endocrine, data = Nonneo)
+summary(Nonneo_cox)
+cox.zph(Nonneo_cox)
+plot(cox.zph(Nonneo_cox))
+
+plot_time_dependent_roc(
+  cox_model = Nonneo_cox,
+  newdata = Nonneo,
+  time_var = "Time_to_event",
+  event_var = "Recurrence"
+)
+
+create_cox_gt_table(Nonneo_cox)
+```
+
+
+```{r Molecular Type and Therapy}
+# cleaned_data$Mole_type
+table(cleaned_data$Mole_type, cleaned_data$Antiher2)
+table(cleaned_data$Mole_type, cleaned_data$Endocrine)
+
+## Subgroup by Molecular Type and adjusted for Neoadjuvant Therapy
+# Luminal Like
+Luminal_Like <- cleaned_data %>% filter(
+  Neoadjuvant == "No",
+  Mole_type == 0,
+  Surgery == 1,
+  T_stage != 4 
+) %>% mutate(
+  Recurrence = ifelse(Recurrence == "Recurrence", 1, 0),
+  Chemo = factor(Chemo, levels = c("Adjuvant Only", "None")),
+  Radiation = factor(Radiation, levels = c("Adjuvant Only", "None")),
+  Antiher2 = factor(Antiher2, levels = c("Adjuvant Only", "None")),
+  Endocrine = factor(Endocrine, levels = c("Adjuvant Only", "None")),
+  T_stage = factor(T_stage, ordered = F),
+  N_stage = factor(N_stage, ordered = F)
+  )
+
+# Endocrine Therapy Works
+Luminal_kep <- survfit(Surv(Time_to_event, Recurrence) ~ Endocrine, data = Luminal_Like)
+ggsurvplot(Luminal_kep,
+           data = Luminal_Like,
+           pval = T)
+
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Chemo, data = Luminal_Like)
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Radiation, data = Luminal_Like)
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ T_stage, data = Luminal_Like)
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ N_stage, data = Luminal_Like)
+
+# Cox Regression
+Luminal_cox <- coxph(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ 
+                   strata(Race) + Surgery_type + Time_to_surgery + 
+                   Nottingham_score + N_stage + T_stage + 
+                   Chemo + Radiation + Endocrine, data = Luminal_Like)
+
+summary(Luminal_cox)
+cox.zph(Luminal_cox)
+plot(cox.zph(Luminal_cox))
+
+plot_time_dependent_roc(
+  cox_model = Luminal_cox,
+  newdata = Luminal_Like,
+  time_var = "Time_to_event",
+  event_var = "Recurrence"
+)
+
+# selected_vars <- c("Surgery_type", "Time_to_surgery", "Nottingham_score",
+#                                    "N_stage", "T_stage", "Endocrine")
+create_cox_gt_table(Luminal_cox)
+
+# Ovarian Status Known
+Luminal_Ovarian <- Luminal_Like %>% filter(Ovarian_status == "Yes")
+
+# Oophorectomy Not Significant
+Ovarian_kep <- survfit(Surv(Time_to_event, Recurrence) ~ Oophorectomy, data = Luminal_Ovarian)
+ggsurvplot(Ovarian_kep,
+           data = Luminal_Ovarian,
+           pval = T)
+
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Chemo, data = Luminal_Ovarian)
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Endocrine, data = Luminal_Ovarian)
+
+# # Maybe Incredible 
+# Ovarian_cox <- coxph(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ 
+#                    Surgery_type + Time_to_surgery + 
+#                    T_stage + N_stage + 
+#                    Endocrine + Oophorectomy, data = Luminal_Ovarian)
+# 
+# summary(Ovarian_cox)
+# cox.zph(Ovarian_cox)
+# plot(cox.zph(Ovarian_cox))
+# 
+# plot_time_dependent_roc(
+#   cox_model = Ovarian_cox,
+#   newdata = Luminal_Ovarian,
+#   time_var = "Time_to_event",
+#   event_var = "Recurrence"
+# )
+
+
+# ER/PR+ HER2+
+ERPRpos_HER2pos <- cleaned_data %>% filter(
+  Mole_type == 1,
+  Surgery == 1
+) %>% mutate(
+  Recurrence = ifelse(Recurrence == "Recurrence", 1, 0),
+  Endocrine = case_when(
+    Endocrine %in% c("Adjuvant Only", "Both") ~ "Adjuvant",
+    Endocrine %in% c("Neoadjuvant Only", "None") ~ "No Adjuvant",
+    TRUE ~ NA_character_
+    ),
+  Antiher2 = case_when(
+    Antiher2 %in% c("Adjuvant Only", "Both") ~ "Adjuvant",
+    Antiher2 %in% c("Neoadjuvant Only", "None") ~ "No Adjuvant",
+    TRUE ~ NA_character_
+    )
+  )
+
+table(ERPRpos_HER2pos$Endocrine,ERPRpos_HER2pos$Recurrence)
+table(ERPRpos_HER2pos$Antiher2,ERPRpos_HER2pos$Recurrence)
+
+# Both are not Significant
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Endocrine, data = ERPRpos_HER2pos)
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Antiher2, data = ERPRpos_HER2pos)
+
+
+# HER2 Enriched
+HER2_Enriched <- cleaned_data %>% filter(
+  Mole_type == 2,
+  Surgery == 1
+) %>% mutate(
+  Recurrence = ifelse(Recurrence == "Recurrence", 1, 0),
+  Antiher2 = case_when(
+    Antiher2 %in% c("Adjuvant Only", "Both") ~ "Adjuvant",
+    Antiher2 %in% c("Neoadjuvant Only", "None") ~ "No Adjuvant",
+    TRUE ~ NA_character_
+    ),
+  T_stage = factor(T_stage, ordered = F),
+  N_stage = factor(N_stage, ordered = F)
+  )
+
+table(HER2_Enriched$Antiher2,HER2_Enriched$Recurrence)
+
+# Antiher2 Therapy Works
+Antiher2_kep <- survfit(Surv(Time_to_event, Recurrence) ~ Antiher2, data = HER2_Enriched)
+ggsurvplot(Antiher2_kep,
+           data = HER2_Enriched,
+           pval = T)
+
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Chemo, data = HER2_Enriched)
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Radiation, data = HER2_Enriched)
+
+vis_miss(HER2_Enriched, cluster = T, sort_miss = T)
+
+# # Not Stable at all
+# Antiher2_cox <- coxph(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ 
+#                    Race + Surgery_type + Time_to_surgery + 
+#                    T_stage + N_stage + Nottingham_score + 
+#                    Antiher2, data = HER2_Enriched)
+# 
+# summary(Antiher2_cox)
+# cox.zph(Antiher2_cox)
+# plot(cox.zph(Antiher2_cox))
+# 
+# plot_time_dependent_roc(
+#   cox_model = Antiher2_cox,
+#   newdata = HER2_Enriched,
+#   time_var = "Time_to_event",
+#   event_var = "Recurrence"
+# )
+
+
+Triple_Negative <- cleaned_data %>% filter(
+  Mole_type == 3,
+  Surgery ==1
+)%>% mutate(
+  Recurrence = ifelse(Recurrence == "Recurrence", 1, 0),
+  Chemo = case_when(
+    Chemo %in% c("Adjuvant Only", "Both") ~ "Adjuvant",
+    Chemo %in% c("Neoadjuvant Only", "None") ~ "No Adjuvant",
+    TRUE ~ NA_character_
+    ),
+  Radiation = case_when(
+    Radiation %in% c("Adjuvant Only", "Both") ~ "Adjuvant",
+    Radiation %in% c("Neoadjuvant Only", "None") ~ "No Adjuvant",
+    TRUE ~ NA_character_
+    )
+  )
+
+table(Triple_Negative$Chemo,Triple_Negative$Recurrence)
+table(Triple_Negative$Radiation,Triple_Negative$Recurrence)
+
+# Both are not Significant
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Chemo, data = Triple_Negative)
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Radiation, data = Triple_Negative)
+
+# Not Apply to Triple Negative
+table(Triple_Negative$Endocrine,Triple_Negative$Recurrence)
+table(Triple_Negative$Antiher2,Triple_Negative$Recurrence)
+```
+
+
+```{r Ovarian Status Known}
+## Subgroup of Patients whose Ovarian Status are Known
+Ova <- cleaned_data %>% filter(
+  Ovarian_status == "Yes"
+) %>% mutate(
+  Recurrence = ifelse(Recurrence == "Recurrence", 1, 0),
+  Endocrine = case_when(
+    Endocrine %in% c("Adjuvant Only", "Both") ~ "Adjuvant",
+    Endocrine %in% c("Neoadjuvant Only", "None") ~ "No Adjuvant",
+    TRUE ~ NA_character_
+    ),
+  Ovary_count = factor(Ovary_count, ordered = F)
+  )
+
+## Clinical Considerations about Oophorectomy
+# Oophorectomy is Dependent with Molecular Type and Age
+fisher.test(table(Ova$Oophorectomy,Ova$Mole_type))
+
+ggplot(Ova, aes(x = Oophorectomy, y = Age, fill = Oophorectomy)) +
+  geom_violin(trim = FALSE, alpha = 0.8) +  
+  geom_boxplot(width = 0.1, alpha = 0.5, outlier.shape = NA) + 
+  scale_fill_manual(
+    values = c("Yes" = "#58B2DC",
+               "No" = "#F596AA")
+    ) + 
+      labs(
+        x = "Oophorectomy or Not",
+        y = "Age",
+        title = "Age Distribution by Oophorectomy"
+        ) +
+      theme_minimal() +
+  theme(
+    plot.title = element_text(size = 20, face = "bold"),   
+    axis.title.x = element_text(size = 18),                
+    axis.title.y = element_text(size = 18),                
+    axis.text = element_text(size = 16),
+    legend.title = element_text(size = 20, face = "bold"), 
+    legend.text = element_text(size = 18)                 
+  )
+
+wilcox.test(Age ~ Oophorectomy, data = Ova)
+
+# Adjusted for Age Group
+Ova <- Ova %>%
+  mutate(
+    Age_group = cut(Age,
+                    breaks = c(0, 45, 55, 100),
+                    labels = c("Young", "Middle-aged", "Older")),
+    T_stage = factor(T_stage, ordered = F),
+    N_stage = factor(N_stage, ordered = F)
+  ) %>% select(
+    Age, Age_group, everything()
+  )
+
+table(Ova$Age_group,Ova$Recurrence)
+table((Ova %>% filter(Age_group != "Older"))$T_stage, (Ova %>% filter(Age_group != "Older"))$Recurrence)
+table((Ova %>% filter(Age_group != "Older"))$N_stage, (Ova %>% filter(Age_group != "Older"))$Recurrence)
+
+# Both are Not Significant
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Endocrine, 
+         data = Ova %>% filter(Age_group == "Middle-aged"))
+
+survdiff(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~ Oophorectomy, 
+         data = Ova %>% filter(Age_group == "Middle-aged"))
+
+# Cox Regression with Detailed Age Variable
+Ova_cox <- coxph(Surv(time = as.numeric(Time_to_event), event = Recurrence) ~
+                   Age + strata(Mole_type) + T_stage + N_stage + 
+                   Endocrine + strata(Ovary_count) + Oophorectomy, 
+                 data = Ova %>% filter(Age_group != "Older"))
+
+summary(Ova_cox)
+cox.zph(Ova_cox)
+
+```
