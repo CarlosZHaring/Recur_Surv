@@ -12,7 +12,7 @@ library(tidyverse)
 
 
 ```{r Variable Selection}
-data <- read.csv("https://raw.githubusercontent.com/BDSI-CDS-2025/tcia/refs/heads/main/data/clinicalData_clean.csv")
+data <- read.csv("clinicalData_clean.csv")
 
 ## Not Include MRI Technical Information.
 
