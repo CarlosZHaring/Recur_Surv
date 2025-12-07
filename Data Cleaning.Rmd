@@ -12,7 +12,7 @@ library(tidyverse)
 
 
 ```{r Variable Selection}
-data <- read.csv("clinicalData_clean.csv")
+data <- read.csv("Original_Dataset.csv")
 
 ## Not Include MRI Technical Information.
 
