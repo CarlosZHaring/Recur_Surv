@@ -1,6 +1,6 @@
 This repository contains the reproducible workflow and analysis files from our project on modeling breast cancer recurrence, conducted by Carlos Haring and Shiyi Zhang during the University of Michigan Big Data Summer Institute (BDSI).
 
-Using the Duke Breast Cancer clinical dataset [1], we analyzed clinically meaningful subgroups of patients with two complementary goals:
+Using the Duke breast cancer clinical dataset [1], we analyzed clinically meaningful subgroups of patients with two complementary goals:
 
 1.	Interpretable model (Shiyi Zhang):
 To characterize which clinical, pathological, and treatment-related factors were associated with breast cancer recurrence. This included subgroup‐specific Cox proportional hazards models, Kaplan–Meier survival analysis, and time‐dependent ROC assessment to identify variables with prognostic significance and to understand their effects across different molecular subtypes and treatment pathways.
