@@ -3,7 +3,7 @@ This repository contains the reproducible workflow and analysis files from our p
 Using a breast cancer dataset from Duke [1], we analyzed clinically meaningful subgroups of patients with two complementary goals:
 
 1.	Interpretable model (Shiyi Zhang):
-To characterize which clinical, pathological, and treatment-related factors were associated with breast cancer recurrence. This included Kaplan–Meier survival analysis, subgroup‐specific Cox proportional hazards models, and time‐dependent ROC assessment to identify variables with prognostic significance and to understand their effects across different molecular subtypes and treatment pathways.
+To characterize which demographic, pathological, and treatment-related factors were associated with breast cancer recurrence. This included Kaplan–Meier survival analysis, subgroup‐specific Cox proportional hazards models, and time‐dependent ROC assessment to identify variables with prognostic significance and to understand their effects across different molecular subtypes and treatment pathways.
 
 2.	Predictive modeling (Carlos Haring):
 
