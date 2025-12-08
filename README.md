@@ -1,6 +1,14 @@
-# Recur_Surv
-This is Carlos Haring and Shiyi Zhang's work on the our analysis of recurrence in breast cancer patients, our cancer data science project for Michigan's Big Data Summer institute. Data is from the Duke breast cancer MRI dataset.[1] We looked at clinically meaningful subgroups to do two things: analyze clinicial features associated with breast cancer recurrance and create a model to predict the risk of recurrance over time. This project contains the cleaned dataset we used, our final project poster, and our code. 
+This repository contains the reproducible workflow and analysis files from our project on modeling breast cancer recurrence, conducted by Carlos Haring and Shiyi Zhang during the University of Michigan Big Data Summer Institute (BDSI).
 
+Using the Duke Breast Cancer MRI dataset [1], we analyzed clinically meaningful subgroups of patients with two complementary goals:
+
+1.	Interpretable model (Shiyi Zhang):
+To characterize which clinical, pathological, and treatment-related factors were associated with breast cancer recurrence. This included subgroup‐specific Cox proportional hazards models, Kaplan–Meier survival analysis, and time‐dependent ROC assessment to identify variables with prognostic significance and to understand their effects across different molecular subtypes and treatment pathways.
+
+2.	Predictive modeling (Carlos Haring):
+
+
+The repository includes the original data, the cleaned analytic dataset, preprocessing scripts, interpretable and predictive modeling code, our final project poster, and additional visualizations not included in the poster.
 
 
 
