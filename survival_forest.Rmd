@@ -1,0 +1,2156 @@
+---
+title: "New start"
+author: "Carlos"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(naniar)
+library(survival)
+library(visdat)
+library(haven)
+library(mice)
+library(mitools)
+library(purrr)
+library(summarytools)
+library(gtsummary)
+library(randomForestSRC)
+library(timeROC)
+library(caret)
+library(fastDummies)
+library(xgboost)
+# if (!require("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+# 
+# BiocManager::install("survcomp")
+library(survcomp)
+```
+
+## Data cleaning 
+
+```{r}
+data <- read.csv("https://github.com/CarlosZHaring/Recur_Surv/blob/a135a2d47d04819bdf3e05304508bbf34e14f004/cleaned_data.csv")
+
+## Not Include MRI Technical Information.
+
+# First Recurrence 
+data <- data %>%
+  mutate(
+    Days.to.local.recurrence = as.numeric(na_if(Days.to.local.recurrence..from.the.date.of.diagnosis., "NP")),
+    Days.to.distant.recurrence = as.numeric(na_if(Days.to.distant.recurrence.from.the.date.of.diagnosis., "NP"))) %>%
+  mutate(
+    Recurrence.event.s. = case_when(
+      Recurrence.event.s. == 1 ~ "Recurrence",
+      Recurrence.event.s. == 0 & 
+        (!is.na(Days.to.local.recurrence) | 
+         !is.na(Days.to.distant.recurrence)) ~ "Recurrence",
+      Recurrence.event.s. == 0 ~ "No Recurrence",
+      TRUE ~ NA_character_
+    ),
+    Recurrence.event.s. = factor(Recurrence.event.s., levels = c("No Recurrence", "Recurrence"))
+    ) %>%
+  mutate(
+    Days.to.last.recurrence.free = case_when(
+      Recurrence.event.s. == "No Recurrence" ~ as.numeric(na_if(Days.to.last.local.recurrence.free.assessment..from.the.date.of.diagnosis., "NP")),
+      TRUE ~ NA_real_
+      )
+    ) %>%
+  mutate(
+    dignose.to.recurrence = case_when(
+      !is.na(Days.to.local.recurrence) & !is.na(Days.to.distant.recurrence) ~
+        pmin(Days.to.local.recurrence, Days.to.distant.recurrence, na.rm = TRUE),
+      
+      !is.na(Days.to.local.recurrence) ~ Days.to.local.recurrence,
+      
+      !is.na(Days.to.distant.recurrence) ~ Days.to.distant.recurrence,
+      
+      TRUE ~ Days.to.last.recurrence.free  
+    )
+  )
+
+
+
+
+# patient ID
+data <- data[,-1] 
+
+data <- data %>%
+  mutate(
+    mole_type_three = case_when(
+     (PR == 1 | ER == 1) & HER2 == 0 ~ "PR+ or ER+",
+      HER2 == 1 ~ "HER2+",
+      HER2 == 0 & PR == 0 & ER == 0 ~ "Triple Negative"
+    ),
+    mole_type_three = factor(mole_type_three)
+  )
+
+
+
+# Race and Metastatic at Presentation (selected)
+data<- data %>%
+  mutate(Race.and.Ethnicity = as.factor(case_when(Race.and.Ethnicity == 1 ~ "White", 
+                                                  Race.and.Ethnicity == 2 ~ "Black",
+                                                  Race.and.Ethnicity %in% c(3, 4, 5, 6, 7) ~ "Other")),
+         Metastatic.at.Presentation..Outside.of.Lymph.Nodes. = case_when(Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 0 ~ "No", Metastatic.at.Presentation..Outside.of.Lymph.Nodes. == 1 ~ "Yes"))
+
+# Molecular Type and Tumor Staging (selected)
+data <- data %>% mutate(
+  Mol.Subtype = as.factor(Mol.Subtype),
+  Staging.Tumor.Size....T. = factor(Staging.Tumor.Size....T.,
+                     levels = c(1, 2, 3, 4),
+                     ordered = TRUE),
+  Staging.Nodes...Nx.replaced.by..1..N. = factor(na_if(Staging.Nodes...Nx.replaced.by..1..N., -1),
+                     levels = c(0, 1, 2, 3),
+                     ordered = TRUE),
+  Staging.Metastasis...Mx..replaced.by..1..M. = factor(na_if(Staging.Metastasis...Mx..replaced.by..1..M., -1),
+                     levels = c(0, 1),
+                     ordered = TRUE),
+  Nottingham.total.score = as.numeric(TumorGradeT) + as.numeric(TumorGradeN) + as.numeric(TumorGradeM))
+
+# 72% missing in Oncotype DX (selected)
+# Stratify the Oncotype or Imputation
+# oncotype_data <- data %>% filter(!is.na(Oncotype.score))
+
+# Collapsed Histologic Type (selected)
+data$Histologic.type.collapse <- fct_collapse(
+  factor(data$Histologic.type),
+  Ductal = c("1"),
+  Other = c("0","2", "3", "4", "5", "6", "7", "8", "9", "10")
+)
+
+# Bilateral Information (Optional: Detailed Analysis on Subgroup)
+data <- data %>% 
+  mutate(Bilateral.Information = as.factor(na_if(Bilateral.Information, "NC")))
+
+# MRI Findings (Not Selected Temporarily)
+data <- data %>%
+  mutate(
+    Multicentric.Multifocal = factor(Multicentric.Multifocal, levels = c(0, 1), labels = c("No", "Yes")),
+    Contralateral.Breast.Involvement = factor(Contralateral.Breast.Involvement, levels = c(0, 1), labels = c("No", "Yes")),
+    Lymphadenopathy.or.Suspicious.Nodes = factor(Lymphadenopathy.or.Suspicious.Nodes, levels = c(0, 1), labels = c("No", "Yes")),
+    Skin.Nipple.Invovlement = factor(Skin.Nipple.Invovlement, levels = c(0, 1), labels = c("No", "Yes")),
+    Pec.Chest.Involvement = factor(Pec.Chest.Involvement, levels = c(0, 1), labels = c("No", "Yes"))
+  )
+
+# Surgery (selected)
+data <- data %>%
+  mutate(
+    # Surgery = as.factor(Surgery),
+    Definitive.Surgery.Type = as.factor(na_if(Definitive.Surgery.Type, "NP")),
+    Days.to.Surgery..from.the.date.of.diagnosis. = as.numeric(Days.to.Surgery..from.the.date.of.diagnosis.),
+    
+    Days.to.Surgery = ifelse(
+      Days.to.Surgery..from.the.date.of.diagnosis. < 0, 
+      NA,  
+      Days.to.Surgery..from.the.date.of.diagnosis.
+    ),
+    surgery.to.recurrence = ifelse(
+      !is.na(Days.to.Surgery) & !is.na(dignose.to.recurrence),
+      dignose.to.recurrence - Days.to.Surgery,
+      NA_real_
+    )
+  ) 
+# %>% filter(!is.na(surgery.to.recurrence))
+
+# Mammography Characteristics and US features (Optional: Detailed Analysis on Subgroup)
+
+# Therapy Type (selected)
+data <- data %>%
+  mutate(
+    Chemotherapy = case_when(
+      Neoadjuvant.Chemotherapy == 1 & Adjuvant.Chemotherapy == 1 ~ "Both",
+      Neoadjuvant.Chemotherapy == 1 & (Adjuvant.Chemotherapy == 0 | is.na(Adjuvant.Chemotherapy)) ~ "Neoadjuvant Only",
+      Adjuvant.Chemotherapy == 1 & (Neoadjuvant.Chemotherapy == 0 | is.na(Neoadjuvant.Chemotherapy)) ~ "Adjuvant Only",
+      Neoadjuvant.Chemotherapy == 0 & Adjuvant.Chemotherapy == 0 ~ "None",
+      TRUE ~ NA_character_
+    ) %>% as.factor(),
+
+    Radiationtherapy = case_when(
+      Neoadjuvant.Radiation.Therapy == 1 & Adjuvant.Radiation.Therapy == 1 ~ "Both",
+      Neoadjuvant.Radiation.Therapy == 1 & (Adjuvant.Radiation.Therapy == 0 | is.na(Adjuvant.Radiation.Therapy)) ~ "Neoadjuvant Only",
+      Adjuvant.Radiation.Therapy == 1 & (Neoadjuvant.Radiation.Therapy == 0 | is.na(Neoadjuvant.Radiation.Therapy)) ~ "Adjuvant Only",
+      Neoadjuvant.Radiation.Therapy == 0 & Adjuvant.Radiation.Therapy == 0 ~ "None",
+      TRUE ~ NA_character_
+    ) %>% as.factor(),
+
+    Endocrinetherapy = case_when(
+      Neoadjuvant.Endocrine.Therapy.Medications == 1 & Adjuvant.Endocrine.Therapy.Medications == 1 ~ "Both",
+      Neoadjuvant.Endocrine.Therapy.Medications == 1 & (Adjuvant.Endocrine.Therapy.Medications == 0 | is.na(Adjuvant.Endocrine.Therapy.Medications)) ~ "Neoadjuvant Only",
+      Adjuvant.Endocrine.Therapy.Medications == 1 & (Neoadjuvant.Endocrine.Therapy.Medications == 0 | is.na(Neoadjuvant.Endocrine.Therapy.Medications)) ~ "Adjuvant Only",
+      Neoadjuvant.Endocrine.Therapy.Medications == 0 & Adjuvant.Endocrine.Therapy.Medications == 0 ~ "None",
+      TRUE ~ NA_character_
+    ) %>% as.factor(),
+    
+    Antiher2therapy = case_when(
+      Neoadjuvant.Anti.Her2.Neu.Therapy == 1 & Adjuvant.Anti.Her2.Neu.Therapy == 1 ~ "Both",
+      Neoadjuvant.Anti.Her2.Neu.Therapy == 1 & (Adjuvant.Anti.Her2.Neu.Therapy == 0 | is.na(Adjuvant.Anti.Her2.Neu.Therapy)) ~ "Neoadjuvant Only",
+      Adjuvant.Anti.Her2.Neu.Therapy == 1 & (Neoadjuvant.Anti.Her2.Neu.Therapy == 0 | is.na(Neoadjuvant.Anti.Her2.Neu.Therapy)) ~ "Adjuvant Only",
+      Neoadjuvant.Anti.Her2.Neu.Therapy == 0 & Adjuvant.Anti.Her2.Neu.Therapy == 0 ~ "None",
+      TRUE ~ NA_character_
+    ) %>% as.factor()
+    
+  # Antiher2therapy_b = case_when(Neoadjuvant.Anti.Her2.Neu.Therapy == 1 &  Adjuvant.Anti.Her2.Neu.Therapy == 1 ~ "Her2 Therapy",
+  #   Neoadjuvant.Anti.Her2.Neu.Therapy == 1 ~ "Her2 Therapy", 
+  #   Adjuvant.Anti.Her2.Neu.Therapy == 1 ~ "Her2 Therapy", 
+  #   Neoadjuvant.Anti.Her2.Neu.Therapy == 0 ~ "No Her2 Therapy", 
+  #   Adjuvant.Anti.Her2.Neu.Therapy == 0 ~ "No Her2 Therapy",
+  #   TRUE ~ NA_character_
+  # ) %>% as.factor(),
+  # 
+  # Endocrinetherapy_b = case_when(Neoadjuvant.Endocrine.Therapy.Medications == 1 & Adjuvant.Endocrine.Therapy.Medications == 1 ~ "Endocrine Therapy", 
+  #   Neoadjuvant.Endocrine.Therapy.Medications == 1 ~ "Endocrine Therapy", 
+  #   Adjuvant.Endocrine.Therapy.Medications == 1 ~ "Endocrine Therapy", 
+  #   Neoadjuvant.Endocrine.Therapy.Medications == 0 ~ " No Endocrine Therapy", 
+  #   Adjuvant.Endocrine.Therapy.Medications == 0 ~ "No Endocrine Therapy",
+  #   TRUE ~ NA_character_
+  #   ) %>% as.factor(),
+  # 
+  # Chemotherapy_b = case_when(Adjuvant.Chemotherapy == 1 & Neoadjuvant.Chemotherapy == 1 ~ "Chemotherapy",
+  #   Adjuvant.Chemotherapy == 1 ~ "Chemotherapy", 
+  #   Neoadjuvant.Chemotherapy == 1 ~ "Chemotherapy", 
+  #   Adjuvant.Chemotherapy == 0 ~ "No Chemotherapy", 
+  #   Neoadjuvant.Chemotherapy == 0~ "No Chemotherapy",
+  #   TRUE ~ NA_character_
+  #   ) %>% as.factor(),
+  # 
+  # Radiationtherapy_b = case_when(Adjuvant.Chemotherapy == 1 & Neoadjuvant.Chemotherapy == 1 ~ "Chemotherapy",
+  #   Adjuvant.Radiation.Therapy == 1 ~ "Radiation Therapy", 
+  #   Neoadjuvant.Endocrine.Therapy.Medications == 1 ~ "Radiation Therapy", 
+  #   Adjuvant.Radiation.Therapy == 0 ~ "No Radiation Therapy", 
+  #   Neoadjuvant.Endocrine.Therapy.Medications == 0 ~"No Radiation Therapy",
+  #   TRUE ~ NA_character_
+  #   ) %>% as.factor(),
+  )
+  
+  
+
+
+
+# Ovarian: Related to Endocrine Therapy (selected)
+data <- data %>%
+  mutate(
+    Known.Ovarian.Status = factor(Known.Ovarian.Status,
+                                   levels = c(0, 1),
+                                   labels = c("No", "Yes")),
+    
+    Number.of.Ovaries.In.Situ.. = na_if(Number.of.Ovaries.In.Situ.., "NP"),
+    Number.of.Ovaries.In.Situ.. = factor(as.numeric(Number.of.Ovaries.In.Situ..),
+                                         levels = c(0, 1, 2),
+                                         labels = c("0 ovaries", "1 ovary", "2 ovaries"),
+                                         ordered = TRUE),
+    
+    Therapeutic.or.Prophylactic.Oophorectomy.as.part.of.Endocrine.Therapy =
+      factor(Therapeutic.or.Prophylactic.Oophorectomy.as.part.of.Endocrine.Therapy,
+             levels = c(0, 1),
+             labels = c("No", "Yes"))
+  )
+
+# Neoadjuvant Therapy or not (selected)
+data <- data %>%
+  mutate(
+    Received.Neoadjuvant.Therapy.or.Not = if_else(
+      Chemotherapy %in% c("Neoadjuvant Only", "Both") |
+      Radiationtherapy %in% c("Neoadjuvant Only", "Both") |
+      Endocrinetherapy %in% c("Neoadjuvant Only", "Both") |
+      Antiher2therapy %in% c("Neoadjuvant Only", "Both"),
+      1, 2
+    )
+  ) %>%
+  mutate(Received.Neoadjuvant.Therapy.or.Not = factor(case_when(
+    Received.Neoadjuvant.Therapy.or.Not == 1 ~ "Yes",
+    Received.Neoadjuvant.Therapy.or.Not == 2 ~ "No",
+    TRUE ~ NA_character_
+  )))
+
+
+## All the Variable Below Must be Analysis Using Subgroup (all below selected)
+
+# Tumor Response
+data <- data %>%
+  mutate(Clinical.Response..Evaluated.Through.Imaging = case_when(
+    Clinical.Response..Evaluated.Through.Imaging == 1 ~ "Complete",
+    Clinical.Response..Evaluated.Through.Imaging == 2 ~ "Not Complete",
+    Clinical.Response..Evaluated.Through.Imaging == 3 ~ NA_character_,  
+    TRUE ~ NA_character_
+  ),
+  Clinical.Response..Evaluated.Through.Imaging = factor(Clinical.Response..Evaluated.Through.Imaging, levels = c("Not Complete", "Complete"))) %>%
+  mutate(Pathologic.Response.to.Neoadjuvant.Therapy = case_when(
+    Pathologic.Response.to.Neoadjuvant.Therapy == 1 ~ "Complete",
+    Pathologic.Response.to.Neoadjuvant.Therapy == 2 ~ "Not Complete",
+    Pathologic.Response.to.Neoadjuvant.Therapy == 3 ~ "DCIS Only",
+    Pathologic.Response.to.Neoadjuvant.Therapy == 4 ~ "LCIS Only",
+    Pathologic.Response.to.Neoadjuvant.Therapy == 5 ~ NA_character_,
+    TRUE ~ NA_character_
+  ),
+  Pathologic.Response.to.Neoadjuvant.Therapy = factor(Pathologic.Response.to.Neoadjuvant.Therapy,
+                               levels = c("Not Complete", "DCIS Only", "LCIS Only", "Complete")))
+
+# Pathologic Stage 
+data <- data %>%
+  mutate(
+    Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy = na_if(Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy, -1),
+    Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy = na_if(Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy, -1)
+  ) %>%
+  mutate(
+    Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy = factor(Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy, levels = c(0, 1, 2, 3, 4, 5), ordered = TRUE),
+    Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy = factor(Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy, levels = c(0, 1, 2, 3), ordered = TRUE)
+  ) %>%
+  mutate(
+    Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy = case_when(
+      Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy == -1 ~ "MX",
+      Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy == 0 ~ "M0",
+      Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy == 1 ~ "M1",
+      TRUE ~ NA_character_
+    ),
+    Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy = factor(Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy,
+                                   levels = c("M0", "M1", "MX"),
+                                   ordered = FALSE)
+  )
+
+# Near Complete Response
+data <- data %>%
+  mutate(
+    Overall.Near.complete.Response...Stricter.Definition = case_when(
+      Overall.Near.complete.Response...Stricter.Definition == 3 ~ NA_real_,
+      TRUE ~ Overall.Near.complete.Response...Stricter.Definition
+    ),
+    Overall.Near.complete.Response...Looser.Definition = case_when(
+      Overall.Near.complete.Response...Looser.Definition == 3 ~ NA_real_,
+      TRUE ~ Overall.Near.complete.Response...Looser.Definition
+    ),
+    Near.complete.Response..Graded.Measure. = case_when(
+      Near.complete.Response..Graded.Measure. == 19 ~ NA_real_,
+      TRUE ~ Near.complete.Response..Graded.Measure.
+    ),
+    
+    Overall.Near.complete.Response...Stricter.Definition = factor(
+      Overall.Near.complete.Response...Stricter.Definition,
+      levels = c(0, 1, 2),
+      labels = c("Not complete", "Complete", "Near-complete")
+    ),
+    
+    Overall.Near.complete.Response...Looser.Definition = factor(
+      Overall.Near.complete.Response...Looser.Definition,
+      levels = c(0, 1, 2),
+      labels = c("Not complete", "Complete", "Near-complete")
+    ),
+    
+    Near.complete.Response..Graded.Measure. = factor(
+      Near.complete.Response..Graded.Measure.
+    ),
+    Metastatic.at.Presentation..Outside.of.Lymph.Nodes. = factor(
+    Metastatic.at.Presentation..Outside.of.Lymph.Nodes.)
+  )
+
+names(data)
+```
+
+
+```{r}
+cleaned_data <- data %>% select(
+  "Race.and.Ethnicity",
+  "Metastatic.at.Presentation..Outside.of.Lymph.Nodes.",
+  "Mol.Subtype",
+  "Staging.Tumor.Size....T.",
+  "Staging.Nodes...Nx.replaced.by..1..N.",
+  "Staging.Metastasis...Mx..replaced.by..1..M.",
+  "Nottingham.total.score",
+  "Oncotype.score",
+  "Histologic.type.collapse",
+  "Surgery",
+  "Definitive.Surgery.Type",
+  "Chemotherapy",
+  "Radiationtherapy",
+  "Endocrinetherapy",
+  "Antiher2therapy",
+  #"Chemotherapy_b",
+  #"Radiationtherapy_b",
+  #"Endocrinetherapy_b",
+  #"Antiher2therapy_b",
+  "Known.Ovarian.Status",
+  "Number.of.Ovaries.In.Situ..",
+  "Therapeutic.or.Prophylactic.Oophorectomy.as.part.of.Endocrine.Therapy",
+  "Received.Neoadjuvant.Therapy.or.Not",
+  "Clinical.Response..Evaluated.Through.Imaging",
+  "Pathologic.Response.to.Neoadjuvant.Therapy",
+  "Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy",
+  "Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy",
+  "Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy",
+  "Overall.Near.complete.Response...Stricter.Definition",
+  "Overall.Near.complete.Response...Looser.Definition",
+  "Near.complete.Response..Graded.Measure.",
+  "Days.to.Surgery",
+  "dignose.to.recurrence",
+  "Recurrence.event.s.",
+  "surgery.to.recurrence",
+  "Age.at.mammo..days.",
+  "mole_type_three"
+  
+) %>% 
+  rename(
+    Race = Race.and.Ethnicity,
+    Metastatic = Metastatic.at.Presentation..Outside.of.Lymph.Nodes.,
+    Mole_type = Mol.Subtype,
+    T_stage = Staging.Tumor.Size....T.,
+    N_stage = Staging.Nodes...Nx.replaced.by..1..N.,
+    M_stage = Staging.Metastasis...Mx..replaced.by..1..M.,
+    Nottingham_score = Nottingham.total.score,
+    Oncotype_score = Oncotype.score,
+    Histology = Histologic.type.collapse,
+    Surgery = Surgery,
+    Surgery_type = Definitive.Surgery.Type,
+    Chemo = Chemotherapy,
+    Radiation = Radiationtherapy,
+    Endocrine = Endocrinetherapy,
+    Antiher2 = Antiher2therapy,
+    Ovarian_status = Known.Ovarian.Status,
+    Ovary_count = Number.of.Ovaries.In.Situ..,
+    Oophorectomy = Therapeutic.or.Prophylactic.Oophorectomy.as.part.of.Endocrine.Therapy,
+    Neoadjuvant = Received.Neoadjuvant.Therapy.or.Not,
+    Clinical_response = Clinical.Response..Evaluated.Through.Imaging,
+    Pathologic_response = Pathologic.Response.to.Neoadjuvant.Therapy,
+    Patho_T_stage = Pathologic.response.to.Neoadjuvant.therapy..Pathologic.stage..T..following.neoadjuvant.therapy,
+    Patho_N_stage = Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..N..following.neoadjuvant.therapy,
+    Patho_M_stage = Pathologic.response.to.Neoadjuvant.therapy...Pathologic.stage..M..following.neoadjuvant.therapy,
+    Near_response_strict = Overall.Near.complete.Response...Stricter.Definition,
+    Near_response_loose = Overall.Near.complete.Response...Looser.Definition,
+    Near_response_grade = Near.complete.Response..Graded.Measure.,
+    Time_to_surgery = Days.to.Surgery,
+    Dignose_to_recurrence = dignose.to.recurrence,
+    Recurrence = Recurrence.event.s.,
+    Time_to_event = surgery.to.recurrence,
+    Age_at_mammo = Age.at.mammo..days.,
+    mole_type_three = mole_type_three
+  )
+```
+
+# more cleaning and filtering 
+## visualize neoadjuvent data
+
+```{r}
+data <- read.csv("https://github.com/CarlosZHaring/Recur_Surv/blob/a135a2d47d04819bdf3e05304508bbf34e14f004/cleaned_data.csv")
+clean<- cleaned_data %>%
+  filter(Surgery == 1) %>%
+  filter(!is.na(Surgery)) %>%
+  filter(!is.na(Neoadjuvant)) %>%
+  filter(`Neoadjuvant` == "Yes") %>%
+  filter(!is.na(Time_to_event))
+
+  clean %>%
+    group_by(Recurrence) %>%
+    count()
+
+clean$Neoadjuvant
+
+library(naniar)
+library(ggplot2)
+
+p <- vis_miss(clean, sort_miss = TRUE) +
+  labs(title = "Missingness among those of neoadjuvant therapy") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16),
+    plot.margin = margin(t = 10, r = 40, b = 10, l = 10)  # add space on the right
+  )
+
+ggsave("missingness_plot.png", plot = p, width = 10, height = 6, units = "in", dpi = 300)
+p
+```
+
+
+## mutation of data
+```{r}
+
+clean <- clean %>%
+  mutate(Patho_N_binary = case_when(
+    Patho_N_stage %in% c("0", "1") ~ "No/small lymph involvment",
+    Patho_N_stage %in% c("2", "3") ~ "medium/heavy lymph involvment",
+    TRUE ~ NA_character_
+  )) %>%
+  
+  mutate(Patho_N_binary = factor(Patho_N_binary)) %>%
+  
+  mutate(Patho_T_binary = case_when(
+    Patho_T_stage %in% c("1", "2", "3", "4") ~ "Present",
+    Patho_T_stage %in% c("0", "5") ~ "Absent_or_Pre-invasive",
+    TRUE ~ NA_character_
+  )) %>%
+  
+  mutate(Patho_T_binary = factor(Patho_T_binary)) %>%
+  
+  mutate(Patho_M_Binary = case_when(
+    Patho_M_stage %in% c("MX", "M0") ~ "No Metastasis",
+    Patho_M_stage %in% c("M1") ~ "Metastasis",
+    TRUE ~ NA_character_
+  )) %>%
+  
+  mutate(Patho_M_Binary = factor(Patho_M_Binary)) %>%
+  mutate(Nottingham_score_binary = case_when(
+    Nottingham_score %in% c("3", "4", "5", "6", "7") ~ "Low score",
+    Nottingham_score %in% c("8", "9") ~ "High Score",
+    TRUE ~ NA_character_
+  )) %>%
+  
+  mutate(Nottingham_score_binary = factor(Nottingham_score_binary)) %>%
+  
+  mutate(Race_binary = case_when(
+    Race %in% "White" ~ "White",
+    TRUE ~ "Other",
+    TRUE ~ NA_character_
+  )) %>%
+  
+  mutate(Race_binary = factor(Race_binary)) %>%
+  
+  mutate(T_stage_binary = case_when(
+    T_stage %in% c("1", "2") ~ "Small",
+    T_stage %in% c("3", "4") ~ "Large",
+    TRUE ~ NA_character_
+  )) %>%
+  
+  mutate(T_stage_binary = factor(T_stage_binary)) %>%
+  
+  mutate(Antiher2_treatment = case_when(
+    Antiher2 == "None" ~ "No Treatment",
+    Antiher2 %in% c("Adjuvant Only", "Both", "Neoadjuvant Only") ~ "Treatment",
+    TRUE ~ NA_character_
+  )) %>%
+  
+  mutate(Antiher2_treatment = factor(Antiher2_treatment)) %>%
+  
+  mutate(Mole_type_tri = case_when(
+    Mole_type %in% c("1", "2") ~ "HER+",
+    Mole_type == "0" ~ "Luminal-like",
+    Mole_type == "3" ~ "Triple Negative",
+    TRUE ~ NA_character_
+  )) %>%
+  
+  mutate(Mole_type_tri = factor(Mole_type_tri)) %>%
+  
+  mutate(Chemo_adjuvent = case_when(
+    Chemo %in% c("Adjuvant Only", "Both") ~ "Adjuvent Treatment",
+    Chemo %in% c("Neoadjuvant Only" ,"None") ~ "No Adjuvent Treatment",
+    TRUE ~ NA_character_)) %>%
+  
+  mutate(Chemo_adjuvent =factor(Chemo_adjuvent)) %>%
+  
+  mutate(Near_response_strict_binary = case_when(
+    Near_response_strict %in% c("Not complete", "Near-complete") ~ "Not Complete",
+    Near_response_strict == "Complete" ~ "Complete",
+    TRUE ~ NA_character_
+  )) %>%
+  
+  mutate(Near_response_strict_binary = factor(Near_response_strict_binary)) %>%
+  
+  mutate(Radiation_adjuvent = case_when(
+    Radiation == "Adjuvant Only" ~ "Adjuvent Treatment",
+   Radiation  %in% c("Neoadjuvant", "None") ~ "No Adjuvent Treatment")) %>%
+  
+  mutate(Radiation_adjuvent =factor(Radiation_adjuvent))
+
+```
+
+
+
+## filter
+
+```{r}
+clean <- clean %>% #histology was removed since it was not converging 
+  select(c(Histology,
+    Patho_N_stage, Patho_T_stage, Patho_M_stage, Nottingham_score, Endocrine, Race, Pathologic_response, Near_response_strict, Near_response_loose, Near_response_grade, T_stage, Antiher2, N_stage, Metastatic, Mole_type, Surgery_type, Chemo, Radiation, Ovarian_status, Oophorectomy, Neoadjuvant, Time_to_surgery, Dignose_to_recurrence, Recurrence, Time_to_event, Surgery, Radiation_adjuvent, Chemo_adjuvent, Mole_type_tri, Antiher2_treatment, T_stage_binary, Race_binary, Nottingham_score_binary, Patho_M_Binary, Patho_T_binary, Patho_N_binary, Near_response_strict_binary, Clinical_response, Age_at_mammo, mole_type_three))
+
+vis_miss(clean, sort_miss = TRUE)
+
+# Convert problematic ordered factors to regular factors or numeric
+clean <- clean %>%
+  mutate(
+    # Convert ordered factors to regular factors to avoid polr issues
+    T_stage = as.factor(as.character(T_stage)),
+    N_stage = as.factor(as.character(N_stage)),
+    Patho_T_stage = as.factor(as.character(Patho_T_stage)),
+    Patho_N_stage = as.factor(as.character(Patho_N_stage)),
+    Ovarian_status = as.factor(as.character(Ovarian_status))
+  ) %>%
+  # Drop unused factor levels
+  mutate(across(where(is.factor), ~fct_drop(.))) %>%
+  mutate(Recurrence = recode(Recurrence, "No Recurrence" = 0, "Recurrence" = 1)) %>%
+  mutate(Recurrence = as.numeric(Recurrence))
+
+clean$Recurrence
+
+```
+
+
+
+# Model Trails (do not run these chunks all at once, run each chunk individaully to see model outputs)
+
+## original variable models
+
+### first model
+```{r}
+set.seed(123)
+folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+cindex_vals <- numeric(length(folds))
+vimp_list <- vector("list", length(folds))
+for (i in seq_along(folds)) {
+  train_data <- clean[folds[[1]], ]
+  test_data  <- clean[-folds[[1]], ]
+  
+  mod <- rfsrc(
+    Surv(time = Time_to_event, event = Recurrence) ~ 
+      Race + Mole_type + Nottingham_score + Surgery + Surgery_type + 
+      Chemo + Antiher2 + Endocrine + Oophorectomy + Ovarian_status + 
+      Neoadjuvant + Pathologic_response + Patho_N_stage + 
+      Patho_T_stage + Patho_M_stage,
+    data = train_data,
+    ntree = 1000,
+    na.action = "na.impute"
+  )
+ vimp_vals <- vimp(mod)$importance
+  vimp_list[[i]] <- vimp_vals
+  # ave prediction result
+pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+  # Extract risk scores
+  risk_scores <- pred$predicted
+  nrow(test_data)
+length(risk_scores)
+  # Create survival object for test data
+  surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+
+  # Compute concordance index
+  cindex_vals[i] <- survConcordance(surv_obj ~ risk_scores)$concordance
+}
+# Average C-index across folds
+mean_cindex <- mean(cindex_vals)
+print(mean_cindex)
+vimp_df <- do.call(cbind, vimp_list)
+vimp_summary <- data.frame(
+  Variable = rownames(vimp_df),
+  Mean = rowMeans(vimp_df, na.rm = TRUE),
+  SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+)
+
+vimp_summary %>%
+  arrange(Mean)
+```
+
+### second model
+```{r}
+set.seed(123)
+folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+cindex_vals <- numeric(length(folds))
+vimp_list <- vector("list", length(folds))
+for (i in seq_along(folds)) {
+  train_data <- clean[folds[[1]], ]
+  test_data  <- clean[-folds[[1]], ]
+  
+  mod <- rfsrc(
+    Surv(time = Time_to_event, event = Recurrence) ~ 
+      Mole_type + Nottingham_score + Surgery_type + 
+      Chemo + Antiher2 + Endocrine + Oophorectomy + 
+       Pathologic_response + Patho_N_stage + 
+      Patho_T_stage,
+    data = train_data,
+    ntree = 1000,
+    na.action = "na.impute",
+    
+  )
+ vimp_vals <- vimp(mod)$importance
+  vimp_list[[i]] <- vimp_vals
+  # ave prediction result
+pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+  # Extract risk scores
+  risk_scores <- pred$predicted
+  nrow(test_data)
+length(risk_scores)
+  # Create survival object for test data
+  surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+
+  # Compute concordance index
+  cindex_vals[i] <- survConcordance(surv_obj ~ risk_scores)$concordance
+}
+# Average C-index across folds
+mean_cindex <- mean(cindex_vals)
+print(mean_cindex)
+vimp_df <- do.call(cbind, vimp_list)
+vimp_summary <- data.frame(
+  Variable = rownames(vimp_df),
+  Mean = rowMeans(vimp_df, na.rm = TRUE),
+  SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+)
+
+vimp_summary %>%
+  arrange(Mean)
+```
+
+### third model
+```{r}
+set.seed(123)
+folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+cindex_vals <- numeric(length(folds))
+vimp_list <- vector("list", length(folds))
+for (i in seq_along(folds)) {
+  train_data <- clean[folds[[1]], ]
+  test_data  <- clean[-folds[[1]], ]
+  
+  mod <- rfsrc(
+    Surv(time = Time_to_event, event = Recurrence) ~ 
+      Mole_type + Nottingham_score + 
+      Chemo + Antiher2 + 
+       Pathologic_response + Patho_N_stage + 
+      Patho_T_stage,
+    data = train_data,
+    ntree = 1000,
+    na.action = "na.impute",
+    
+  )
+ vimp_vals <- vimp(mod)$importance
+  vimp_list[[i]] <- vimp_vals
+  # Save prediction result
+pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+  # Extract risk scores
+  risk_scores <- pred$predicted
+  nrow(test_data)
+length(risk_scores)
+  # Create survival object for test data
+  surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+
+  # Compute concordance index
+  cindex_vals[i] <- survConcordance(surv_obj ~ risk_scores)$concordance
+}
+# Average C-index across folds
+mean_cindex <- mean(cindex_vals)
+print(mean_cindex)
+vimp_df <- do.call(cbind, vimp_list)
+vimp_summary <- data.frame(
+  Variable = rownames(vimp_df),
+  Mean = rowMeans(vimp_df, na.rm = TRUE),
+  SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+)
+
+vimp_summary %>%
+  arrange(Mean)
+```
+
+
+## dichotomous variable models
+
+### model one
+```{r}
+set.seed(123)
+folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+cindex_vals <- numeric(length(folds))
+vimp_list <- vector("list", length(folds))
+for (i in seq_along(folds)) {
+  train_data <- clean[folds[[1]], ]
+  test_data  <- clean[-folds[[1]], ]
+  
+  mod <- rfsrc(
+    Surv(time = Time_to_event, event = Recurrence) ~ 
+      Race_binary + Mole_type_tri + Nottingham_score_binary + Surgery + Surgery_type + 
+      Chemo_adjuvent + Antiher2_treatment + Endocrine + Oophorectomy + Ovarian_status + 
+      Neoadjuvant + Pathologic_response + Patho_N_binary + 
+      Patho_T_binary + Patho_M_Binary + Near_response_strict_binary,
+    data = train_data,
+    ntree = 1000,
+    na.action = "na.impute"
+  )
+ vimp_vals <- vimp(mod)$importance
+  vimp_list[[i]] <- vimp_vals
+  # ✅ Save prediction result
+pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+  # Extract risk scores
+  risk_scores <- pred$predicted
+  nrow(test_data)
+length(risk_scores)
+  # Create survival object for test data
+  surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+
+  # Compute concordance index
+  cindex_vals[i] <- survConcordance(surv_obj ~ risk_scores)$concordance
+}
+# Average C-index across folds
+mean_cindex <- mean(cindex_vals)
+print(mean_cindex)
+vimp_df <- do.call(cbind, vimp_list)
+vimp_summary <- data.frame(
+  Variable = rownames(vimp_df),
+  Mean = rowMeans(vimp_df, na.rm = TRUE),
+  SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+)
+
+vimp_summary %>%
+  arrange(Mean)
+```
+
+### model two 
+```{r}
+
+set.seed(123)
+folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+cindex_vals <- numeric(length(folds))
+vimp_list <- vector("list", length(folds))
+for (i in seq_along(folds)) {
+  train_data <- clean[folds[[1]], ]
+  test_data  <- clean[-folds[[1]], ]
+  
+  mod <- rfsrc(
+    Surv(time = Time_to_event, event = Recurrence) ~ 
+      Race_binary + Mole_type_tri + Nottingham_score_binary + 
+      Chemo_adjuvent + Antiher2_treatment + Endocrine + Oophorectomy + Pathologic_response + Patho_N_binary + 
+      Patho_T_binary + Near_response_strict_binary,
+    data = train_data,
+    ntree = 1000,
+    na.action = "na.impute"
+  )
+ vimp_vals <- vimp(mod)$importance
+  vimp_list[[i]] <- vimp_vals
+  # ave prediction result
+pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+  # Extract risk scores
+  risk_scores <- pred$predicted
+  nrow(test_data)
+length(risk_scores)
+  # Create survival object for test data
+  surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+
+  # Compute concordance index
+  cindex_vals[i] <- survConcordance(surv_obj ~ risk_scores)$concordance
+}
+# Average C-index across folds
+mean_cindex <- mean(cindex_vals)
+print(mean_cindex)
+vimp_df <- do.call(cbind, vimp_list)
+vimp_summary <- data.frame(
+  Variable = rownames(vimp_df),
+  Mean = rowMeans(vimp_df, na.rm = TRUE),
+  SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+)
+
+vimp_summary %>%
+  arrange(Mean)
+```
+
+
+### model three 
+```{r}
+
+set.seed(123)
+folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+cindex_vals <- numeric(length(folds))
+vimp_list <- vector("list", length(folds))
+for (i in seq_along(folds)) {
+  train_data <- clean[folds[[1]], ]
+  test_data  <- clean[-folds[[1]], ]
+  
+  mod <- rfsrc(
+    Surv(time = Time_to_event, event = Recurrence) ~ Mole_type_tri + Nottingham_score_binary + 
+      Chemo_adjuvent + Antiher2_treatment + Endocrine + Oophorectomy + Pathologic_response + Patho_N_binary + Near_response_strict_binary,
+    data = train_data,
+    ntree = 1000,
+    na.action = "na.impute"
+  )
+ vimp_vals <- vimp(mod)$importance
+  vimp_list[[i]] <- vimp_vals
+  # ave prediction result
+pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+  # Extract risk scores
+  risk_scores <- pred$predicted
+  nrow(test_data)
+length(risk_scores)
+  # Create survival object for test data
+  surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+
+  # Compute concordance index
+  cindex_vals[i] <- survConcordance(surv_obj ~ risk_scores)$concordance
+}
+# Average C-index across folds
+mean_cindex <- mean(cindex_vals)
+print(mean_cindex)
+vimp_df <- do.call(cbind, vimp_list)
+vimp_summary <- data.frame(
+  Variable = rownames(vimp_df),
+  Mean = rowMeans(vimp_df, na.rm = TRUE),
+  SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+)
+
+vimp_summary %>%
+  arrange(Mean)
+```
+
+### model 4
+```{r}
+set.seed(123)
+folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+cindex_vals <- numeric(length(folds))
+vimp_list <- vector("list", length(folds))
+for (i in seq_along(folds)) {
+  train_data <- clean[folds[[1]], ]
+  test_data  <- clean[-folds[[1]], ]
+  
+  mod <- rfsrc(
+    Surv(time = Time_to_event, event = Recurrence) ~ Mole_type_tri + Nottingham_score_binary + Antiher2_treatment + Endocrine + Oophorectomy + Pathologic_response + Patho_N_binary + Near_response_strict_binary,
+    data = train_data,
+    ntree = 1000,
+    na.action = "na.impute"
+  )
+ vimp_vals <- vimp(mod)$importance
+  vimp_list[[i]] <- vimp_vals
+  # ave prediction result
+pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+  # Extract risk scores
+  risk_scores <- pred$predicted
+  nrow(test_data)
+length(risk_scores)
+  # Create survival object for test data
+  surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+
+  # Compute concordance index
+  cindex_vals[i] <- survConcordance(surv_obj ~ risk_scores)$concordance
+}
+# Average C-index across folds
+mean_cindex <- mean(cindex_vals)
+print(mean_cindex)
+vimp_df <- do.call(cbind, vimp_list)
+vimp_summary <- data.frame(
+  Variable = rownames(vimp_df),
+  Mean = rowMeans(vimp_df, na.rm = TRUE),
+  SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+)
+
+vimp_summary %>%
+  arrange(Mean)
+```
+
+### model 5
+```{r}
+seed <- sample(seq(from = 1, to = 10000), size = 30, replace = FALSE)
+saveRDS(seeds, "seed.txt")
+list = NULL
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+  
+  for (j in seq_along(folds)) {
+    train_data <- clean[folds[[j]], ]
+    test_data  <- clean[-folds[[j]], ]
+    
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~ Mole_type_tri + T_stage_binary +
+  N_stage + Antiher2_treatment + Endocrine + Oophorectomy +
+  Pathologic_response + Patho_N_binary + Near_response_strict_binary,
+      data = train_data,
+      ntree = 1000,
+      na.action = "na.impute"
+    )
+    
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+    Variable = rownames(vimp_df),
+    Mean = rowMeans(vimp_df, na.rm = TRUE),
+    SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  vimp_summary <- vimp_summary %>% arrange(Mean)
+  list[[as.character(s)]] <- list(cindex = mean_cindex, vimp = vimp_summary)
+}
+
+list
+# After loop
+cindex_all <- sapply(list, function(x) x$cindex)
+cindex_all
+mean(cindex_all)
+sd(cindex_all)/sqrt(4)
+list
+# Aggregate variable importance
+all_vimp <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp, na.rm = TRUE)
+all_vimp
+vimp_summary <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp),
+  SD       = apply(all_vimp, 1, sd)
+)
+
+vimp_summary
+```
+
+
+### model 6
+```{r}
+seed <- sample(seq(from = 1, to = 10000), size = 30, replace = FALSE)
+saveRDS(seeds, "seed_7.txt")
+list = NULL
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+  
+  for (j in seq_along(folds)) {
+    train_data <- clean[folds[[j]], ]
+    test_data  <- clean[-folds[[j]], ]
+    
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~ Mole_type_tri + Histology + T_stage_binary + Surgery_type + N_stage + Antiher2 + Endocrine + Oophorectomy + Pathologic_response + Patho_N_binary + Near_response_strict,
+      data = train_data,
+      ntree = 1000,
+      na.action = "na.impute"
+    )
+    
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+    Variable = rownames(vimp_df),
+    Mean = rowMeans(vimp_df, na.rm = TRUE),
+    SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  vimp_summary <- vimp_summary %>% arrange(Mean)
+  list[[as.character(s)]] <- list(cindex = mean_cindex, vimp = vimp_summary)
+}
+
+list
+# After loop
+cindex_all <- sapply(list, function(x) x$cindex)
+cindex_all
+mean(cindex_all)
+sd(cindex_all)/sqrt(4)
+list
+# Aggregate variable importance
+all_vimp <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp, na.rm = TRUE)
+all_vimp
+vimp_summary <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp),
+  SD       = apply(all_vimp, 1, sd)
+)
+
+vimp_summary
+```
+
+
+### model 8
+```{r}
+seed <- sample(seq(from = 1, to = 10000), size = 30, replace = FALSE)
+saveRDS(seeds, "seed_9.txt")
+list = NULL
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+  
+  for (j in seq_along(folds)) {
+    train_data <- clean[folds[[j]], ]
+    test_data  <- clean[-folds[[j]], ]
+    
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~  Race_binary + Mole_type_tri + Nottingham_score_binary + Surgery + Surgery_type + 
+      Chemo_adjuvent + Antiher2_treatment + Endocrine + Oophorectomy + Ovarian_status + 
+      Neoadjuvant + Pathologic_response + Patho_N_binary + 
+      Patho_T_binary + Patho_M_Binary + Near_response_strict_binary,
+      data = train_data,
+      ntree = 1000,
+      na.action = "na.impute"
+    )
+    
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+    Variable = rownames(vimp_df),
+    Mean = rowMeans(vimp_df, na.rm = TRUE),
+    SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  vimp_summary <- vimp_summary %>% arrange(Mean)
+  list[[as.character(s)]] <- list(cindex = mean_cindex, vimp = vimp_summary)
+}
+
+list
+# After loop
+cindex_all_8 <- sapply(list, function(x) x$cindex)
+cindex_all
+mean(cindex_all_8)
+sd(cindex_all_8)/sqrt(4)
+
+# Aggregate variable importance
+all_vimp_8 <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp_8, na.rm = TRUE)
+all_vimp_8
+vimp_summary_8 <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp),
+  SD       = apply(all_vimp, 1, sd)
+)
+
+vimp_summary_8
+```
+
+model 9 (original binary model)
+```{r}
+seed <- sample(seq(from = 1, to = 10000), size = 30, replace = FALSE)
+saveRDS(seeds, "seed_9.txt")
+list = NULL
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+  
+  for (j in seq_along(folds)) {
+    train_data <- clean[folds[[j]], ]
+    test_data  <- clean[-folds[[j]], ]
+    
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~  Race + Mole_type + Nottingham_score + Surgery + Surgery_type + 
+      Chemo + Antiher2 + Endocrine + Oophorectomy + Ovarian_status + 
+      Neoadjuvant + Pathologic_response + Patho_N_stage + 
+      Patho_T_stage + Patho_M_stage,
+      data = train_data,
+      ntree = 1000,
+      na.action = "na.impute"
+    )
+    
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+    Variable = rownames(vimp_df),
+    Mean = rowMeans(vimp_df, na.rm = TRUE),
+    SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  vimp_summary <- vimp_summary %>% arrange(Mean)
+  list[[as.character(s)]] <- list(cindex = mean_cindex, vimp = vimp_summary)
+}
+
+list
+# After loop
+cindex_all_9 <- sapply(list, function(x) x$cindex)
+cindex_all_9
+mean(cindex_all_9)
+sd(cindex_all_9)/sqrt(4)
+
+# Aggregate variable importance
+all_vimp <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp, na.rm = TRUE)
+all_vimp
+vimp_summary_9 <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp),
+  SD       = apply(all_vimp, 1, sd)
+)
+
+vimp_summary_9
+```
+
+## combinations of orginial and dichotomous variables
+
+### model 11 (combo model binary model)
+```{r}
+seed <- sample(seq(from = 1, to = 10000), size = 30, replace = FALSE)
+saveRDS(seeds, "seed_11.txt")
+list = NULL
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+  
+  for (j in seq_along(folds)) {
+    train_data <- clean[folds[[j]], ]
+    test_data  <- clean[-folds[[j]], ]
+    
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~  Mole_type_tri + Nottingham_score_binary + 
+      Chemo + Antiher2 + Endocrine + Oophorectomy  + 
+      Neoadjuvant + Pathologic_response + Patho_N_stage + 
+      Patho_T_stage + Patho_M_Binary + Near_response_strict_binary,
+      data = train_data,
+      ntree = 1000,
+      na.action = "na.impute"
+    )
+    
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+    Variable = rownames(vimp_df),
+    Mean = rowMeans(vimp_df, na.rm = TRUE),
+    SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  vimp_summary <- vimp_summary %>% arrange(Mean)
+  list[[as.character(s)]] <- list(cindex = mean_cindex, vimp = vimp_summary)
+}
+
+list
+# After loop
+cindex_all_11 <- sapply(list, function(x) x$cindex)
+cindex_all_11
+mean(cindex_all_11)
+sd(cindex_all_11)/sqrt(4)
+
+# Aggregate variable importance
+all_vimp_11 <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp_11, na.rm = TRUE)
+all_vimp_11
+vimp_summary_11 <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp_11),
+  SD       = apply(all_vimp_11, 1, sd)
+)
+
+vimp_summary_11
+```
+
+### model 12 (combo model binary model)
+```{r}
+seed <- sample(seq(from = 1, to = 10000), size = 30, replace = FALSE)
+saveRDS(seeds, "seed_11.txt")
+list = NULL
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+  
+  for (j in seq_along(folds)) {
+    train_data <- clean[folds[[j]], ]
+    test_data  <- clean[-folds[[j]], ]
+    
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~  Mole_type + Nottingham_score + 
+      Chemo + Antiher2 + Endocrine + Pathologic_response + Patho_N_stage + 
+      Patho_T_stage + Patho_M_Binary + Near_response_strict_binary,
+      data = train_data,
+      ntree = 1000,
+      na.action = "na.impute"
+    )
+    
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+    Variable = rownames(vimp_df),
+    Mean = rowMeans(vimp_df, na.rm = TRUE),
+    SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  vimp_summary <- vimp_summary %>% arrange(Mean)
+  list[[as.character(s)]] <- list(cindex = mean_cindex, vimp = vimp_summary)
+}
+
+list
+# After loop
+cindex_all_12 <- sapply(list, function(x) x$cindex)
+cindex_all_12
+mean(cindex_all_12)
+sd(cindex_all_12)/sqrt(4)
+
+# Aggregate variable importance
+all_vimp_12 <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp_12, na.rm = TRUE)
+all_vimp_11
+vimp_summary_12 <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp_12),
+  SD       = apply(all_vimp_12, 1, sd)
+)
+
+vimp_summary_12
+```
+
+
+### model 13 (combo model binary model)
+```{r}
+seed <- sample(seq(from = 1, to = 10000), size = 30, replace = FALSE)
+saveRDS(seeds, "seed_13.txt")
+list = NULL
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+  
+  for (j in seq_along(folds)) {
+    train_data <- clean[folds[[j]], ]
+    test_data  <- clean[-folds[[j]], ]
+    
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~  Mole_type + Nottingham_score + 
+      Chemo + Antiher2 + Endocrine + Pathologic_response + Patho_N_stage + 
+      Patho_T_stage + Patho_M_Binary + Near_response_strict_binary,
+      data = train_data,
+      ntree = 1000,
+      na.action = "na.impute"
+    )
+    
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+    Variable = rownames(vimp_df),
+    Mean = rowMeans(vimp_df, na.rm = TRUE),
+    SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  vimp_summary <- vimp_summary %>% arrange(Mean)
+  list[[as.character(s)]] <- list(cindex = mean_cindex, vimp = vimp_summary)
+}
+
+list
+# After loop
+cindex_all_13 <- sapply(list, function(x) x$cindex)
+cindex_all_13
+mean(cindex_all_13)
+sd(cindex_all_13)/sqrt(4)
+
+# Aggregate variable importance
+all_vimp_13 <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp_13, na.rm = TRUE)
+all_vimp_13
+vimp_summary_13 <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp_13),
+  SD       = apply(all_vimp_13, 1, sd)
+)
+
+vimp_summary_13
+```
+
+
+### model 14 second best (0.7527296)
+```{r}
+seed <- sample(seq(from = 1, to = 10000), size = 30, replace = FALSE)
+saveRDS(seeds, "seed_14.txt")
+list = NULL
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+  
+  for (j in seq_along(folds)) {
+    train_data <- clean[folds[[j]], ]
+    test_data  <- clean[-folds[[j]], ]
+    
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~  Mole_type_tri + Histology + T_stage_binary +
+       Surgery_type + N_stage + Antiher2 + Endocrine + Oophorectomy + Pathologic_response + Patho_N_binary + Near_response_strict,
+      data = train_data,
+      ntree = 1000,
+      na.action = "na.impute"
+    )
+    
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+    Variable = rownames(vimp_df),
+    Mean = rowMeans(vimp_df, na.rm = TRUE),
+    SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  vimp_summary <- vimp_summary %>% arrange(Mean)
+  list[[as.character(s)]] <- list(cindex = mean_cindex, vimp = vimp_summary)
+}
+
+list
+# After loop
+cindex_all_14 <- sapply(list, function(x) x$cindex)
+cindex_all_14
+mean(cindex_all_14)
+sd(cindex_all_14)/sqrt(4)
+
+# Aggregate variable importance
+all_vimp_14 <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp_14, na.rm = TRUE)
+all_vimp_14
+vimp_summary_14 <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp_14),
+  SD       = apply(all_vimp_14, 1, sd)
+)
+
+vimp_summary_14
+```
+
+### model 15 (best 0.7554698)
+
+```{r}
+seed <- sample(seq(from = 1, to = 10000), size = 30, replace = FALSE)
+saveRDS(seeds, "seed_15.txt")
+list = NULL
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+  
+  for (j in seq_along(folds)) {
+    train_data <- clean[folds[[j]], ]
+    test_data  <- clean[-folds[[j]], ]
+    
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~  Mole_type_tri + Histology  +
+       Surgery_type + N_stage + Antiher2 + Endocrine + Oophorectomy + Pathologic_response + Patho_N_binary + Near_response_strict,
+      data = train_data,
+      ntree = 1000,
+      na.action = "na.impute"
+    )
+    
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+    Variable = rownames(vimp_df),
+    Mean = rowMeans(vimp_df, na.rm = TRUE),
+    SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  vimp_summary <- vimp_summary %>% arrange(Mean)
+  list[[as.character(s)]] <- list(cindex = mean_cindex, vimp = vimp_summary)
+}
+
+list
+# After loop
+cindex_all_15 <- sapply(list, function(x) x$cindex)
+cindex_all_15
+mean(cindex_all_15)
+sd(cindex_all_15)/sqrt(4)
+
+# Aggregate variable importance
+all_vimp_15 <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp_15, na.rm = TRUE)
+all_vimp_15
+vimp_summary_15 <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp_15),
+  SD       = apply(all_vimp_15, 1, sd)
+)
+
+vimp_summary_15
+```
+
+### 16 (removed surgery type not as good .7488518)
+
+```{r}
+seed <- sample(seq(from = 1, to = 10000), size = 30, replace = FALSE)
+saveRDS(seeds, "seed_16.txt")
+list = NULL
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+  
+  for (j in seq_along(folds)) {
+    train_data <- clean[folds[[j]], ]
+    test_data  <- clean[-folds[[j]], ]
+    
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~  Mole_type_tri + Histology + N_stage + Antiher2 + Endocrine + Oophorectomy + Pathologic_response + Patho_N_binary + Near_response_strict,
+      data = train_data,
+      ntree = 1000,
+      na.action = "na.impute"
+    )
+    
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict(mod, newdata = test_data, na.action = "na.impute")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+    Variable = rownames(vimp_df),
+    Mean = rowMeans(vimp_df, na.rm = TRUE),
+    SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  vimp_summary <- vimp_summary %>% arrange(Mean)
+  list[[as.character(s)]] <- list(cindex = mean_cindex, vimp = vimp_summary)
+}
+
+list
+# After loop
+cindex_all_16 <- sapply(list, function(x) x$cindex)
+cindex_all_16
+mean(cindex_all_16)
+sd(cindex_all_16)/sqrt(4)
+
+# Aggregate variable importance
+all_vimp_16 <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp_16, na.rm = TRUE)
+all_vimp_16
+vimp_summary_16 <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp_16),
+  SD       = apply(all_vimp_16, 1, sd)
+)
+
+vimp_summary_16
+```
+
+### model 17 (removed histology new best 0.7713017)
+
+```{r}
+seeds <- sample(seq(from = 1, to = 10000), size = 30, replace = FALSE)
+saveRDS(seeds, "seed_17.txt")
+list = NULL
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+  
+  for (j in seq_along(folds)) {
+    train_data <- clean[folds[[j]], ]
+    test_data  <- clean[-folds[[j]], ]
+    
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~  Mole_type_tri + Surgery_type + N_stage + Antiher2_treatment + Endocrine + Oophorectomy + Pathologic_response + Patho_N_binary + Near_response_loose,
+      data = train_data,
+      ntree = 1500,
+      na.action = "na.imput",
+     nodesize = 1,
+     mtry = 2
+     
+    )
+    
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict.rfsrc(mod, newdata = test_data, na.action = "na.imput")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+    Variable = rownames(vimp_df),
+    Mean = rowMeans(vimp_df, na.rm = TRUE),
+    SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  vimp_summary <- vimp_summary %>% arrange(Mean)
+  list[[as.character(s)]] <- list(cindex = mean_cindex, vimp = vimp_summary)
+}
+
+list
+# After loop
+cindex_all_17 <- sapply(list, function(x) x$cindex)
+cindex_all_17
+mean <- mean(cindex_all_17)
+mean
+se <- sd(cindex_all_17)/sqrt(100)
+nine5ci <- mean + se * c(-1.96, 1.96)
+nine5ci
+# Aggregate variable importance
+all_vimp_17 <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp_17, na.rm = TRUE)
+all_vimp_17
+vimp_summary_17 <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp_17),
+  SD       = apply(all_vimp_17, 1, sd)
+)
+
+vimp_summary_17
+```
+
+# best model and comparisons
+
+### 17 changing my predict (removed histology new best 0.782874)-flagship model
+```{r}
+#seeds <- sample(seq(from = 1, to = 10000), size = 100, replace = FALSE)
+df <- clean %>% select(mole_type_three, Surgery_type, N_stage, Antiher2, Endocrine, Oophorectomy, Pathologic_response, Patho_N_binary, Near_response_strict)
+vis_miss(df, sort_miss = TRUE)
+sum(complete.cases(df))
+list = NULL
+seeds <- readRDS("seed_17.rmd")
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE) 
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+
+  for (j in seq_along(folds)) {
+    test_data <- clean[-folds[[j]], ]
+    train_data  <- clean[folds[[j]], ]
+    
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~  mole_type_three + Surgery_type + N_stage + Antiher2 + Endocrine + Oophorectomy + Near_response_strict + T_stage,
+      data = train_data,
+      ntree = 4000,
+      na.action = "na.imput",
+     nodesize = 1,
+     mtry = 2,
+    )
+  
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict.rfsrc(mod, newdata = test_data, na.action = "na.imput")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+    Variable = rownames(vimp_df),
+    Mean = rowMeans(vimp_df, na.rm = TRUE),
+    SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  vimp_summary <- vimp_summary %>% arrange(Mean)
+  list[[as.character(s)]] <- list(cindex = mean_cindex, vimp = vimp_summary)
+}
+
+list
+# After loop
+cindex_all_17_v2_fix <- sapply(list, function(x) x$cindex)
+cindex_all_17_v2_fix
+mean <- mean(cindex_all_17_v2_fix)
+mean
+se <- sd(cindex_all_17_v2_fix)/sqrt(100)
+nine5ci <- mean + se * c(-1.96, 1.96)
+nine5ci
+# Aggregate variable importance
+all_vimp_17_v2_fix <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp_17_v2_fix, na.rm = TRUE)
+all_vimp_17_v2_fix
+vimp_summary_17_v2_fix <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp_17_v2_fix),
+  SD       = apply(all_vimp_17_v2_fix, 1, sd)
+)
+#[1] 0.7754595, [1] 0.7712222 0.7796968
+
+vimp_summary_17_v2_fix
+#0.7790911-0.7833892
+
+```
+
+### original model
+```{r}
+#seeds <- sample(seq(from = 1, to = 10000), size = 100, replace = FALSE)
+seeds <- readRDS("seed_17.rmd")
+list = NULL
+seeds
+for (s in seeds) {
+  set.seed(s)
+  folds <- createFolds(clean$Recurrence, k = 4, returnTrain = TRUE)
+  cindex_vals <- numeric(length(folds))
+  vimp_list <- vector("list", length(folds))
+  
+  for (j in seq_along(folds)) {
+    train_data <- clean[folds[[j]], ]
+    test_data  <- clean[-folds[[j]], ]
+   train_data$dummy <- 1
+   test_data$dummy <- 1
+    mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~  Race + Mole_type + T_stage + N_stage + Surgery_type + 
+      Chemo + Antiher2 + Endocrine + Oophorectomy + Ovarian_status + Pathologic_response + Patho_N_stage +
+      Patho_T_stage + Patho_M_stage + Near_response_strict,
+      data = train_data,
+      ntree = 4000,
+      na.action = "na.imput"
+    )
+  
+    vimp_vals <- vimp(mod)$importance
+    vimp_list[[j]] <- vimp_vals
+    
+    pred <- predict.rfsrc(mod, newdata = test_data, na.action = "na.imput")
+    risk_scores <- pred$predicted
+    surv_obj <- Surv(test_data$Time_to_event, test_data$Recurrence)
+    cindex_vals[j] <- survConcordance(surv_obj ~ risk_scores)$concordance
+  }
+  
+  # Store average c-index and VIMP summary
+  mean_cindex <- mean(cindex_vals)
+  print(mean_cindex)
+  
+  vimp_df <- do.call(cbind, vimp_list)
+  vimp_summary <- data.frame(
+  Variable = rownames(vimp_df),
+  Mean = rowMeans(vimp_df, na.rm = TRUE),
+  SD = apply(vimp_df, 1, sd, na.rm = TRUE)
+  )
+  
+  list[[as.character(s)]] <- list(cindex = mean_cindex)
+}
+
+list
+# After loop
+cindex_all_og <- sapply(list, function(x) x$cindex)
+cindex_all_og
+mean <- mean(cindex_all_og)
+mean
+se <- sd(cindex_all_og)/sqrt(100)
+nine5ci <- mean + se * c(-1.96, 1.96)
+nine5ci
+# Aggregate variable importance
+all_vimp_og <- do.call(cbind, lapply(list, function(x) x$vimp$Mean))
+rowMeans(all_vimp_og, na.rm = TRUE)
+all_vimp_og
+vimp_summary_og <- data.frame(
+  Variable = list[[1]]$vimp$Variable,
+  Mean     = rowMeans(all_vimp_og),
+  SD       = apply(all_vimp_og, 1, sd)
+)
+
+vimp_summary_og
+#[1] 0.7367926, 0.7324617 0.7411234 
+#0.7249231-0.7204966
+
+cindex.comp(0.7367926, 0.7754595)
+
+
+get.tree(mod, 1)
+
+library(compareC)
+
+compareC(time = clean$Time_to_event,
+         status = clean$Recurrence,
+         score1 = 0.7367926,
+         score2 = 0.7754595)
+```
+
+## model 17 (graphing prediction for a specific subgroup) 
+```{r}
+library(scales)
+
+set.seed(8)
+ mod <- rfsrc(
+     Surv(Time_to_event, Recurrence) ~  mole_type_three + Surgery_type + N_stage + Antiher2 + Endocrine + Oophorectomy + Near_response_strict,
+      data = train_data,
+      ntree = 4000,
+      na.action = "na.imput",
+     nodesize = 1,
+     mtry = 2,
+     k = 4
+    )
+plot <- plot.survival(mod, show.plots = TRUE)
+smp.o <- subsample(mod, B=25,
+subratio=.5)
+plot.subsample(smp.o, sorted = TRUE)
+
+smp.o
+```
+
+# graphs and plots
+
+## node plot 
+```{r}
+library(party)
+surv_tree <- ctree(Surv(Time_to_event, Recurrence) ~  mole_type_three + Surgery_type + N_stage + Antiher2 + Endocrine + Oophorectomy + Near_response_strict, 
+                   data = clean)
+png("ctree_with_KM.png", width = 1600, height = 1000, res = 200)
+plot(surv_tree)  # Keeps KM curves
+dev.off()
+
+cleaned_data %>%
+  filter(Surgery == "1")
+```
+
+## km plot graph
+```{r}
+km_plot <- survfit(Surv(Time_to_event/365, Recurrence) ~ mole_type_three, data = clean)
+library(survival)
+ttle <- paste0("Time to Reccurence by ","Receptor Status")
+library(survminer)
+library(ggplot2)
+library(ggfortify)
+# Build the plot
+the_plot <- autoplot(km_plot, conf.int = FALSE) +  # remove confidence intervals
+  labs(
+    col = ttle,
+    fill = ttle,
+    title = ttle,
+    x = "Time (years)",
+    y = "Recurrence-Free Probability"
+  ) +
+  theme_light(base_size = 16) +  # overall font size
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(size = 26, face = "bold"),
+    legend.title = element_text(size = 14, hjust = 0),
+    legend.text = element_text(size = 14, hjust = 0),
+    axis.title = element_text(size = 16),
+    axis.text = element_text(size = 14)
+  ) +
+  scale_color_brewer(palette = "Dark2") +    # colorblind-friendly
+  scale_fill_brewer(palette = "Dark2")       # colorblind-friendly
+the_plot
+ggsave("survival_plot_square.png", plot = the_plot, width = 9, height = 5)
+
+```
+
+
+## graphs of neoadjuvent models 
+```{r}
+box_data <- data.frame(
+  group = c("Receptor Status", "Surgery Type", "N Stage", "Antiher-2 Therapy", 
+            "Endocrine Therapy", "Oophorectomy", "Near Complete Response"),
+  ymin = c(-0.004 , -0.030,  0.006, 0.025,  -0.001,  0.012, 0.092),      # min or lower error bound
+  middle = c(0.067,  0.039, 0.108,  0.096, 0.075, 0.090,  0.210),        # main value
+  ymax = c( 0.138, 0.108, 0.210, 0.167, 0.151, 0.168, 0.328)             # max or upper error bound
+) %>% 
+  mutate(significance = ifelse(ymin >= 0, "Significant", "Not Significant")) %>%
+  arrange(desc(middle))
+
+
+
+ggplot(data = box_data, aes(x = reorder(group, middle), y = middle, fill = significance)) + 
+  geom_col(width = 0.6) +  # bar height = 'middle'
+  geom_errorbar(aes(ymin = ymin, ymax = ymax), width = 0.2, linewidth = 0.6) +  # error bars
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +  # zero reference line
+  scale_fill_manual(values = c("Significant" = "#FFCB05", "Not Significant" = "#648FFF"),
+                    name = "Variable Significance") +
+  scale_x_discrete(labels = wrap_format(10)) +
+  labs(
+    title = "The Importance of Variables Used",
+    x = "Variables",
+    y = "Variable Importance (VIMP)"
+  ) +
+  coord_cartesian(ylim = c(-0.1, .4)) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
+    axis.title.x = element_text(size = 18, face = "bold"),
+    axis.title.y = element_text(size = 15, face ="bold"),
+    axis.text.y = element_text(size = 14, color = "black"),
+    axis.text.x = element_text(size = 14, color = "black"),
+    legend.text =  element_text(size = 14, color = "black"),
+    legend.title =  element_text(size = 14, color = "black", face = "bold")
+  )
+ggsave("Figures/vimp.jpg", units = "in", width = 9, height = 5, dpi = 300)
+```
+
+
+## risk curve 1
+```{r}
+risk_curve = NULL
+for(i in 0:3) {
+  val <- as.character(i)
+  
+  person <- data.frame(
+  mole_type_three        = "Triple Negative",                   # "HER+", "Luminal-like", "Triple Negative"
+  Surgery_type         = "0",                                 # levels are "0","1"; so keep it as a string
+  N_stage              = i,                                 # levels are "0","1","2","3"
+  Antiher2             = "None",                              # Adjuvant Only Both Neoadjuvant Only None
+  Endocrine            = "None",                              # Adjuvant Only, Both, Neoadjuvant Only, None
+  Oophorectomy         = "No",                                # "No" / "Yes"
+  Near_response_strict = "Not complete",                      # "Not complete" "Complete" "Near-complete"
+  stringsAsFactors = FALSE
+)
+  
+for (v in names(person)) {
+  person[[v]] <- factor(person[[v]],
+                        levels = levels(mod$xvar[[v]]))
+}
+  pred <- predict(mod, newdata = person)
+curve_df <- data.frame(time = pred$time.interest,
+                       surv = pred$survival[1, ])
+curve_df$T_stage <- i
+
+  name <- paste0("person_", i)
+  risk_curve <- rbind2(risk_curve, curve_df)
+
+  assign(x = "risk_curve", value = risk_curve, envir = .GlobalEnv)
+}
+risk_curve
+ggplot(risk_curve, aes(time / 365, surv, color = as.character(T_stage), group = as.character(T_stage))) + 
+  scale_color_manual(values = c("0" = "#D81B60", "1" = "#1E88E5", "2" = "#FFC107", "3" = "#004D40"), 
+                    labels = c("N0", "N1", "N2", "N3"), 
+                    name = "N stage") +
+  geom_step(linewidth = 1) +
+  labs(x = "Time (years)", y = "Recurrence-Free Probability",
+       title = "Predicted Recurrence-Free Curve for Triple Negative Cancer") + 
+  scale_y_continuous(limits = c(.2, 1), expand = c(0, 0)) + 
+  theme_minimal(base_size = 15) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 18, face = "bold"),
+    axis.title.y = element_text(size = 15, face ="bold"),
+    axis.text.y = element_text(size = 14, color = "black"),
+    axis.text.x = element_text(size = 14, color = "black"),
+    legend.text =  element_text(size = 14, color = "black"),
+    legend.title =  element_text(size = 14, color = "black", face = "bold"))
+
+ggsave("Figures/triple_neg.jpg", units = "in", width = 7, height = 7, dpi = 300)
+```
+
+## risk curve 2
+
+```{r}
+str(person)
+risk_curve = NULL
+for(i in 0:3) {
+  val <- as.character(i)
+  
+  person <- data.frame(
+  mole_type_three        = "PR+ or ER+",                   # "HER+", "Luminal-like", "Triple Negative"
+  Surgery_type         = "0",                                 # levels are "0","1"; so keep it as a string
+  N_stage              = i,                                 # levels are "0","1","2","3"
+  Antiher2             = "None",                              # Adjuvant Only Both Neoadjuvant Only None
+  Endocrine            = "Neoadjuvant Only",                  # Adjuvant Only, Both, Neoadjuvant Only, None
+  Oophorectomy         = "No",                                # "No" / "Yes"
+  Near_response_strict = "Not complete",                      # "Not complete" "Complete" "Near-complete"
+  stringsAsFactors = FALSE
+)
+  
+for (v in names(person)) {
+  person[[v]] <- factor(person[[v]],
+                        levels = levels(mod$xvar[[v]]))
+}
+  pred <- predict(mod, newdata = person)
+curve_df <- data.frame(time = pred$time.interest,
+                       surv = pred$survival[1, ])
+curve_df$T_stage <- i
+
+  name <- paste0("person_", i)
+  risk_curve <- rbind2(risk_curve, curve_df)
+
+  assign(x = "risk_curve", value = risk_curve, envir = .GlobalEnv)
+}
+risk_curve
+ggplot(risk_curve, aes(time / 365, surv, color = as.character(T_stage), group = as.character(T_stage))) + 
+  scale_color_manual(values = c("0" = "#D81B60", "1" = "#1E88E5", "2" = "#FFC107", "3" = "#004D40"), 
+                    labels = c("N0", "N1", "N2", "N3"), 
+                    name = "N stage") +
+  geom_step(linewidth = 1) +
+  labs(x = "Time (years)", y = "Recurrence-Free Probability",
+       title = "Predicted Recurrence-Free Curve for ER+ or HR+ Cancer") +
+  theme_minimal(base_size = 15) +
+  theme(title = element_text(size = 14, face = "bold"),
+        legend.title = element_text(size = 14, face = "bold"))
+ggsave("Figures/ER_PR.jpg", units = "in", width = 5, height = 9, dpi = 300)
+
+a <- data %>%
+  filter(!is.na(Surgery)) %>%
+  count() 
+
+b <- data %>%
+  filter(Surgery == 0) %>%
+  count()
+
+a-nrow(data)
+
+b-nrow(data)
+  
+```
+
+### risk curve 3
+
+```{r}
+str(person)
+risk_curve = NULL
+for(i in 0:3) {
+  val <- as.character(i)
+  
+  person <- data.frame(
+  mole_type_three        = "HER2+",                    # "HER+", "Luminal-like", "Triple Negative"
+  Surgery_type         = "0",                               # levels are "0","1"; so keep it as a string
+  N_stage              = i,                                 # levels are "0","1","2","3"
+  Antiher2             = "Neoadjuvant Only",                # Adjuvant Only Both Neoadjuvant Only None
+  Endocrine            = "None",                            # Adjuvant Only, Both, Neoadjuvant Only, None
+  Oophorectomy         = "No",                              # "No" / "Yes"
+  Pathologic_response  = "Not Complete",                    # Not Complete, DCIS Only, LCIS Only, Complete
+  Patho_N_binary       = "medium/heavy lymph involvment",   # "No/small lymph involvment", "medium/heavy lymph involvment"
+  Near_response_strict = "Not complete",                    # "Not complete" "Complete" "Near-complete"
+  stringsAsFactors = FALSE
+)
+  
+for (v in names(person)) {
+  person[[v]] <- factor(person[[v]],
+                        levels = levels(mod$xvar[[v]]))
+}
+  pred <- predict(mod, newdata = person)
+curve_df <- data.frame(time = pred$time.interest,
+                       surv = pred$survival[1, ])
+curve_df$T_stage <- i
+
+  name <- paste0("person_", i)
+  risk_curve <- rbind2(risk_curve, curve_df)
+
+  assign(x = "risk_curve", value = risk_curve, envir = .GlobalEnv)
+}
+risk_curve
+ggplot(risk_curve, aes(time / 365, surv, color = as.character(T_stage), group = as.character(T_stage))) + 
+  scale_color_manual(values = c("0" = "#D81B60", "1" = "#1E88E5", "2" = "#FFC107", "3" = "#004D40"), 
+                    labels = c("N0", "N1", "N2", "N3"), 
+                    name = "N stage") +
+  geom_step(linewidth = 1) +
+    scale_y_continuous(limits = c(.2, 1), expand = c(0, 0)) + 
+  labs(x = "Time (years)", y = "Recurrence-Free Probability",
+       title = "Predicted Recurrence-Free Curve for HER2+ Cancer") +
+  theme_minimal(base_size = 15) +
+ theme(
+    legend.position = "bottom",
+    plot.title = element_text(hjust = 0.5, size = 15, face = "bold"),
+    axis.title.x = element_text(size = 18, face = "bold"),
+    axis.title.y = element_text(size = 15, face ="bold"),
+    axis.text.y = element_text(size = 14, color = "black"),
+    axis.text.x = element_text(size = 14, color = "black"),
+    legend.text =  element_text(size = 14, color = "black"),
+    legend.title =  element_text(size = 14, color = "black", face = "bold"))
+ggsave("Figures/HER2+.jpg", units = "in", width = 7, height = 7, dpi = 300)
+```
+```{r}
+bar_plot<- data.frame(
+ Neoadjuvent_Models = c("Initial Survival Forest", "Final Survival forest"),
+C_index = c(0.7367926, 0.7754595),
+  standard_error = c(0.0043309, 0.0042373)
+)#[1] 0.7367926, 0.7324617 0.7411234 
+#[1] 0.7754595, [1] 0.7712222 0.7796968
+
+
+ggplot(bar_plot, aes(x = reorder(Neoadjuvent_Models, -C_index), y = C_index, fill = Neoadjuvent_Models)) + 
+  geom_bar(stat = "identity", width = 0.6) +
+  geom_errorbar(aes(ymin = C_index - standard_error, ymax = C_index + standard_error), 
+                width = .5, linewidth = .5) + ylim(0, 1) +
+  coord_cartesian(ylim = c(0.5, 1)) +
+  labs(
+    title = "C-index Across Neoadjuvant Models",
+    x = "Model",
+    y = "C-index"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(axis.text.x = element_text(angle = 20, hjust = 1),
+        legend.position = "none") +
+  scale_fill_brewer(palette = "Set2")
+ggsave("Comparison plot.jpg", dpi = 300)
+cleaned_data$Age_at_mammo
+```
+
